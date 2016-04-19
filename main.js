@@ -52,13 +52,21 @@ Background.prototype.draw = function (ctx) {
     ctx.drawImage(this.image, 0, 0);
 	ctx.beginPath();
 	ctx.fillStyle = "red";
+	ctx.font = "10px Arial";
 	var arrayLength = this.game.activeVoteCoins.length;
 	for (var i = 0; i < arrayLength; i++) {
+		ctx.fillStyle = "red";
 		var voteCoin = this.game.activeVoteCoins[i];
 		ctx.arc(voteCoin.x, voteCoin.y, 50, 0, 2*Math.PI);
-		ctx.closePath();
 		ctx.fill();
+		ctx.fillStyle = "black";
+		ctx.beginPath();
+		ctx.fillText(voteCoin.state,voteCoin.x - 25,voteCoin.y );
+		ctx.fillText(voteCoin.vote,voteCoin.x - 5,voteCoin.y + 20);
+		ctx.closePath();
 	}
+	
+
 }
 Background.prototype.update = function () {};
 
@@ -109,6 +117,7 @@ TrumpWalker.prototype.update = function() {
 			if (distance < 80) { 
 				// collision detected! 
 				this.game.activeVoteCoins.splice(i, 1);
+				this.game.scoreBoard.innerHTML = voteCoin.vote + parseInt(this.game.scoreBoard.innerHTML);
 			}
 		}	
 	}
@@ -126,9 +135,11 @@ TrumpWalker.prototype.draw = function (ctx) {
 	}
 };
 
-function VoteCoin(x, y) {	
+function VoteCoin(x, y, state, vote) {	
 	this.x = x;
 	this.y = y;
+	this.vote = vote;
+	this.state = state;
 }
 // the "main" code starts here...
 
@@ -139,10 +150,13 @@ AM.queueDownload("./img/MAGABackground.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
+	var score = document.getElementById("score")
 	//2d context 
     var ctx = canvas.getContext("2d");
     var gameEngine = new GameEngine();
-	gameEngine.activeVoteCoins = [new VoteCoin(60, 55), new VoteCoin(700, 55), new VoteCoin(60, 450), new VoteCoin(700, 450)];
+	gameEngine.scoreBoard = score; 
+	gameEngine.activeVoteCoins = [new VoteCoin(60, 55, "New York", 95), new VoteCoin(700, 55, "Connecticut", 28), 
+	   new VoteCoin(60, 450, "Delaware", 16), new VoteCoin(700, 450, "Rhode Island", 19)];
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
