@@ -118,6 +118,12 @@ TrumpWalker.prototype.update = function() {
 				// collision detected! 
 				this.game.activeVoteCoins.splice(i, 1);
 				this.game.scoreBoard.innerHTML = voteCoin.vote + parseInt(this.game.scoreBoard.innerHTML);
+				var pendingLength = this.game.pendingVoteCoins.length;
+				if(pendingLength > 0) {
+					 var toAddVoteCoin = this.game.pendingVoteCoins[pendingLength - 1];
+					 this.game.activeVoteCoins.push(toAddVoteCoin);
+					 this.game.pendingVoteCoins.splice(pendingLength - 1, 1);
+				}
 			}
 		}	
 	}
@@ -157,6 +163,8 @@ AM.downloadAll(function () {
 	gameEngine.scoreBoard = score; 
 	gameEngine.activeVoteCoins = [new VoteCoin(60, 55, "New York", 95), new VoteCoin(700, 55, "Connecticut", 28), 
 	   new VoteCoin(60, 450, "Delaware", 16), new VoteCoin(700, 450, "Rhode Island", 19)];
+	gameEngine.pendingVoteCoins = [new VoteCoin(180, 55, "Maryland", 38), new VoteCoin(444, 80, "Pennsylvania", 17), 
+	   new VoteCoin(68, 270, "Indiana", 57), new VoteCoin(180, 250, "Nebraska", 36)];
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
