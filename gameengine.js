@@ -102,21 +102,33 @@ GameEngine.prototype.init = function (ctx) {
 GameEngine.prototype.startInput = function () {
     console.log('Starting input');
     var that = this;
-
-    this.ctx.canvas.addEventListener("keyup", function (e) {
-        if (e.which === 68) {
-            that.theDKey = true;
-            //console.log("d key pressed");
-        }
-        if (e.which === 70) {
-            that.theFKey = true;
-            //console.log("f key pressed");
-        }
-        //console.log(e);
-        e.preventDefault(); // prevents event from bubbling up DOM hierarchy
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        if(e.which == 37) {
+			that.left = true;
+		} else if(e.which == 38) {
+			that.up = true;
+		} else if(e.which == 39) {
+			that.right = true;
+		} else if(e.which == 40) {
+			that.down = true
+		}
+		console.log("here!");
+		    e.preventDefault(); // prevents event from bubbling up DOM hierarchy
     }, false);
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        if(e.which == 37) {
+			that.left = false;
+		} else if(e.which == 38) {
+			that.up = false;
+		} else if(e.which == 39) {
+			that.right = false;
+		} else if(e.which == 40) {
+			that.down = false
+		}
+		    e.preventDefault(); // prevents event from bubbling up DOM hierarchy
 
-    console.log('Input started');
+    }, false);
+	console.log("input handled!");
 };
 
 GameEngine.prototype.addEntity = function (entity) {

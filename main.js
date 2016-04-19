@@ -45,7 +45,7 @@ Animation.prototype.isDone = function () {
 function Background(game) {
     this.game = game;
     this.ctx = game.ctx;
-    this.image = AM.getAsset("./img/BradyTrump2016.png");
+    this.image = AM.getAsset("./img/MAGABackground.png");
 }
 
 Background.prototype.draw = function (ctx) {
@@ -54,31 +54,35 @@ Background.prototype.draw = function (ctx) {
 Background.prototype.update = function () {};
 
 
-function TrumpWalker(game, direction) {
+function TrumpWalker(game) {
     this.walkRightAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"),100, 50, 46.5, 3, 0.10, 30, false, 1);
 	this.walkLeftAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 50, 50, 46.5, 3, 0.10, 30, false, 1);
 	this.walkDownAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 0, 50, 46.5, 3, 0.10, 30, false, 1);
 	this.walkUpAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 150, 50, 46.5, 3, 0.10, 30, false, 1);
     this.game = game;
-	this.direction = direction;
+	this.direction = 1;
     this.ctx = game.ctx;
-    this.x = 900;
+    this.x = 300;
 	this.speed = 100;
 	this.y  = 250;
 }
 
 TrumpWalker.prototype.update = function() {
-	if(this.direction == 1) {
+	if(this.game.right) {
 		this.x += this.game.clockTick * this.speed;
-	} else if(this.direction == 2) {
+		this.direction = 1;
+	} else if(this.game.left) {
 		this.x -= this.game.clockTick * this.speed;
-	} else if(this.direction == 3) {
+		this.direction = 2;
+	} else if(this.game.down) {
 		this.y += this.game.clockTick * this.speed;
-	} else {
+		this.direction = 3;
+	} else if(this.game.up){
 		this.y -= this.game.clockTick * this.speed;
+		this.direction = 4;
 	}
-	if(this.x > 1800 || this.x < 0) {
-		this.x = 900;
+	if(this.x > 700 || this.x < 0) {
+		this.x = 300;
 	}
 	if(this.y > 600 || this.y < 0) {
 		this.y = 250;
@@ -86,13 +90,13 @@ TrumpWalker.prototype.update = function() {
 };
 
 TrumpWalker.prototype.draw = function (ctx) { 
-	if(this.direction == 1) {
+	if(this.game.right || this.direction == 1) {
 		this.walkRightAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-	} else if(this.direction == 2) {
+	} else if(this.game.left || this.direction == 2) {
 		this.walkLeftAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-	} else if(this.direction == 3) {
+	} else if(this.game.down || this.direction == 3) {
 		this.walkDownAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-	} else {
+	} else if(this.game.up || this.direction == 4){
 		this.walkUpAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
 	}
 };
@@ -102,7 +106,7 @@ TrumpWalker.prototype.draw = function (ctx) {
 var AM = new AssetManager();
 
 AM.queueDownload("./img/TrumpWalker.png");
-AM.queueDownload("./img/BradyTrump2016.png");
+AM.queueDownload("./img/MAGABackground.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -112,8 +116,6 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
-    gameEngine.addEntity(new TrumpWalker(gameEngine, 1));
-	gameEngine.addEntity(new TrumpWalker(gameEngine, 2));
-	gameEngine.addEntity(new TrumpWalker(gameEngine, 3));
-	gameEngine.addEntity(new TrumpWalker(gameEngine, 4));
+	gameEngine.addEntity(new TrumpWalker(gameEngine));
+
 });
