@@ -31,11 +31,11 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
                  xindex * this.frameWidth, this.frameStartY,  // source from sheet
                  this.frameWidth, this.frameHeight,
                  x, y, 60, 60);
-};
+}
 
 Animation.prototype.currentFrame = function () {
     return Math.floor(this.elapsedTime / this.frameDuration);
-};
+}
 
 Animation.prototype.isDone = function () {
     return (this.elapsedTime >= this.totalTime);
@@ -51,17 +51,15 @@ function Background(game) {
 Background.prototype.draw = function (ctx) {
     ctx.drawImage(this.image, 0, 0);
 	ctx.beginPath();
-ctx.arc(60,55,50,0,2*Math.PI);
-ctx.fill();
-ctx.fillStyle = "red";
-ctx.arc(700,55,50,0,2*Math.PI);
-ctx.closePath();
-ctx.arc(60,450,50,0,2*Math.PI);
-ctx.closePath();
-ctx.arc(700,450,50,0,2*Math.PI);
-ctx.fill();
-
-};
+	ctx.fillStyle = "red";
+	var arrayLength = this.game.activeVoteCoins.length;
+	for (var i = 0; i < arrayLength; i++) {
+		var voteCoin = this.game.activeVoteCoins[i];
+		ctx.arc(voteCoin.x, voteCoin.y, 50, 0, 2*Math.PI);
+		ctx.closePath();
+		ctx.fill();
+	}
+}
 Background.prototype.update = function () {};
 
 
@@ -79,6 +77,7 @@ function TrumpWalker(game) {
 }
 
 TrumpWalker.prototype.update = function() {
+	var isMoving = this.game.right || this.game.left || this.game.down || this.game.up;
 	if(this.game.right) {
 		this.x += this.game.clockTick * this.speed;
 		this.direction = 1;
@@ -98,7 +97,22 @@ TrumpWalker.prototype.update = function() {
 	if(this.y > 600 || this.y < 0) {
 		this.y = 250;
 	}
-};
+	//collision
+	if(isMoving) {
+		var arrayLength = this.game.activeVoteCoins.length;
+		for (var i = arrayLength-1; i >= 0; i --) {
+			var voteCoin = this.game.activeVoteCoins[i];
+			var dx = this.x - voteCoin.x; 
+			var dy = this.y - voteCoin.y; 
+			var distance = Math.sqrt(dx * dx + dy * dy);
+			//80 feels right
+			if (distance < 80) { 
+				// collision detected! 
+				this.game.activeVoteCoins.splice(i, 1);
+			}
+		}	
+	}
+}
 
 TrumpWalker.prototype.draw = function (ctx) { 
 	if(this.game.right || this.direction == 1) {
@@ -112,6 +126,10 @@ TrumpWalker.prototype.draw = function (ctx) {
 	}
 };
 
+function VoteCoin(x, y) {	
+	this.x = x;
+	this.y = y;
+}
 // the "main" code starts here...
 
 var AM = new AssetManager();
@@ -124,9 +142,10 @@ AM.downloadAll(function () {
 	//2d context 
     var ctx = canvas.getContext("2d");
     var gameEngine = new GameEngine();
+	gameEngine.activeVoteCoins = [new VoteCoin(60, 55), new VoteCoin(700, 55), new VoteCoin(60, 450), new VoteCoin(700, 450)];
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
 	gameEngine.addEntity(new TrumpWalker(gameEngine));
 
-});
+})
