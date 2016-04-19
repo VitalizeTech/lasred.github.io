@@ -5,6 +5,8 @@
   */
 
 //Purpose of Animation oject - track how long animation has been running, draw appropriate frame
+var rightLimit = 700;
+var botLimit = 600;
 function Animation(spriteSheet, frameStartY, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
     this.frameWidth = frameWidth;
@@ -12,7 +14,7 @@ function Animation(spriteSheet, frameStartY, frameWidth, frameHeight, sheetWidth
     this.frameHeight = frameHeight;
     this.sheetWidth = sheetWidth;
     this.frames = frames;
-	this.frameStartY = frameStartY;
+    this.frameStartY = frameStartY;
     this.totalTime = frameDuration * frames;
     this.elapsedTime = 0;
     this.loop = loop;
@@ -23,7 +25,7 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     if (this.isDone()) {
         if (this.loop) this.elapsedTime = 0;
     }
-	var frame = this.currentFrame();
+    var frame = this.currentFrame();
     var xindex = 0;
     var yindex = 0;
     xindex = frame % this.sheetWidth;
@@ -65,80 +67,113 @@ Background.prototype.draw = function (ctx) {
 		ctx.fillText(voteCoin.vote,voteCoin.x - 5,voteCoin.y + 20);
 		ctx.closePath();
 	}
-	
-
 }
-Background.prototype.update = function () {};
 
+Background.prototype.update = function () { };
 
 function TrumpWalker(game) {
-    this.walkRightAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"),100, 50, 46.5, 3, 0.10, 30, false, 1);
-	this.walkLeftAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 50, 50, 46.5, 3, 0.10, 30, false, 1);
-	this.walkDownAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 0, 50, 46.5, 3, 0.10, 30, false, 1);
-	this.walkUpAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 150, 50, 46.5, 3, 0.10, 30, false, 1);
+    this.walkRightAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 96, 50, 49, 3, 0.10, 30, false, 1);
+    this.walkLeftAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 49, 50, 49, 3, 0.10, 30, false, 1);
+    this.walkDownAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 0, 50, 49, 3, 0.10, 30, false, 1);
+    this.walkUpAnimation = new Animation(AM.getAsset("./img/TrumpWalker.png"), 145, 50, 49, 3, 0.10, 30, false, 1);
     this.game = game;
-	this.direction = 1;
+    this.direction = 1;
     this.ctx = game.ctx;
     this.x = 300;
-	this.speed = 100;
-	this.y  = 250;
+    this.speed = 100;
+    this.y = 250;
+    this.topLimit = 10;
+    this.botLimit = 150;
+    this.rightLimit = 10;
+    this.leftLimit = 10;
+    this.nextPosition = function (direction) {
+        switch (direction) {
+            case "right": {
+                return this.x + this.game.clockTick * this.speed;
+            }
+            case "left": {
+                return this.x - this.game.clockTick * this.speed;
+            }
+            case "up": {
+                return this.y - this.game.clockTick * this.speed;
+            }
+            case "down": {
+                return this.y + this.game.clockTick * this.speed;
+            }
+            default: {
+                return this.game.clockTick * this.speed;
+            }
+        }
+    }
+
+    this.canMove = function (direction) {
+        var nextPos = this.nextPosition(direction);
+        switch (direction) {
+            case "right": {
+                return (nextPos <= (rightLimit - this.rightLimit));
+            }
+            case "left": {
+                return (nextPos >= this.leftLimit);
+            }
+            case "up": {
+                return (nextPos >= this.topLimit);
+            }
+            case "down": {
+                return (nextPos <= (botLimit - this.botLimit));
+            }
+        }
+    }
 }
 
-TrumpWalker.prototype.update = function() {
-	var isMoving = this.game.right || this.game.left || this.game.down || this.game.up;
-	if(this.game.right) {
-		this.x += this.game.clockTick * this.speed;
-		this.direction = 1;
-	} else if(this.game.left) {
-		this.x -= this.game.clockTick * this.speed;
-		this.direction = 2;
-	} else if(this.game.down) {
-		this.y += this.game.clockTick * this.speed;
-		this.direction = 3;
-	} else if(this.game.up){
-		this.y -= this.game.clockTick * this.speed;
-		this.direction = 4;
-	}
-	if(this.x > 700 || this.x < 0) {
-		this.x = 300;
-	}
-	if(this.y > 600 || this.y < 0) {
-		this.y = 250;
-	}
-	//collision
-	if(isMoving) {
-		var arrayLength = this.game.activeVoteCoins.length;
-		for (var i = arrayLength-1; i >= 0; i --) {
-			var voteCoin = this.game.activeVoteCoins[i];
-			var dx = this.x - voteCoin.x; 
-			var dy = this.y - voteCoin.y; 
-			var distance = Math.sqrt(dx * dx + dy * dy);
-			//80 feels right
-			if (distance < 80) { 
-				// collision detected! 
-				this.game.activeVoteCoins.splice(i, 1);
-				this.game.scoreBoard.innerHTML = voteCoin.vote + parseInt(this.game.scoreBoard.innerHTML);
-				var pendingLength = this.game.pendingVoteCoins.length;
-				if(pendingLength > 0) {
-					 var toAddVoteCoin = this.game.pendingVoteCoins[pendingLength - 1];
-					 this.game.activeVoteCoins.push(toAddVoteCoin);
-					 this.game.pendingVoteCoins.splice(pendingLength - 1, 1);
-				}
-			}
-		}	
-	}
+TrumpWalker.prototype.update = function () {
+    var isMoving = this.game.right || this.game.left || this.game.down || this.game.up;
+    if (this.game.right) {
+        this.x = this.canMove("right") ? this.nextPosition("right") : this.x;
+        this.direction = 1;
+    } else if (this.game.left) {
+        this.x = this.canMove("left") ? this.nextPosition("left") : this.x;
+        this.direction = 2;
+    } else if (this.game.down) {
+        this.y = this.canMove("down") ? this.nextPosition("down") : this.y;
+        this.direction = 3;
+    } else if (this.game.up) {
+        this.y = this.canMove("up") ? this.nextPosition("up") : this.y;
+        this.direction = 4;
+    }
+    //collision
+    if (isMoving) {
+        var arrayLength = this.game.activeVoteCoins.length;
+        for (var i = arrayLength - 1; i >= 0; i--) {
+            var voteCoin = this.game.activeVoteCoins[i];
+            var dx = this.x - voteCoin.x;
+            var dy = this.y - voteCoin.y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            //80 feels right
+            if (distance < 80) {
+                // collision detected! 
+                this.game.activeVoteCoins.splice(i, 1);
+                this.game.scoreBoard.innerHTML = voteCoin.vote + parseInt(this.game.scoreBoard.innerHTML);
+                var pendingLength = this.game.pendingVoteCoins.length;
+                if (pendingLength > 0) {
+                    var toAddVoteCoin = this.game.pendingVoteCoins[pendingLength - 1];
+                    this.game.activeVoteCoins.push(toAddVoteCoin);
+                    this.game.pendingVoteCoins.splice(pendingLength - 1, 1);
+                }
+            }
+        }
+    }
 }
 
-TrumpWalker.prototype.draw = function (ctx) { 
-	if(this.game.right || this.direction == 1) {
-		this.walkRightAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-	} else if(this.game.left || this.direction == 2) {
-		this.walkLeftAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-	} else if(this.game.down || this.direction == 3) {
-		this.walkDownAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-	} else if(this.game.up || this.direction == 4){
-		this.walkUpAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-	}
+TrumpWalker.prototype.draw = function (ctx) {
+    if (this.game.right || this.direction == 1) {
+        this.walkRightAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    } else if (this.game.left || this.direction == 2) {
+        this.walkLeftAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    } else if (this.game.down || this.direction == 3) {
+        this.walkDownAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    } else if (this.game.up || this.direction == 4) {
+        this.walkUpAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    }
 };
 
 function VoteCoin(x, y, state, vote) {	
@@ -168,6 +203,5 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
-	gameEngine.addEntity(new TrumpWalker(gameEngine));
-
+    gameEngine.addEntity(new TrumpWalker(gameEngine));
 })
