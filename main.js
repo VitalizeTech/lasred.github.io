@@ -50,6 +50,17 @@ function Background(game) {
 
 Background.prototype.draw = function (ctx) {
     ctx.drawImage(this.image, 0, 0);
+	ctx.beginPath();
+ctx.arc(60,55,50,0,2*Math.PI);
+ctx.fill();
+ctx.fillStyle = "red";
+ctx.arc(700,55,50,0,2*Math.PI);
+ctx.closePath();
+ctx.arc(60,450,50,0,2*Math.PI);
+ctx.closePath();
+ctx.arc(700,450,50,0,2*Math.PI);
+ctx.fill();
+
 };
 Background.prototype.update = function () {};
 

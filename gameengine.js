@@ -112,7 +112,6 @@ GameEngine.prototype.startInput = function () {
 		} else if(e.which == 40) {
 			that.down = true
 		}
-		console.log("here!");
 		    e.preventDefault(); // prevents event from bubbling up DOM hierarchy
     }, false);
     this.ctx.canvas.addEventListener("keyup", function (e) {
