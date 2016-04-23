@@ -2,10 +2,7 @@
 
 AM.queueDownload("./img/Trump.png");
 AM.queueDownload("./img/MAGABackground.png");
-AM.queueDownload("./img/flags/NY.gif");
-AM.queueDownload("./img/flags/CT.gif");
-AM.queueDownload("./img/flags/RI.gif");
-AM.queueDownload("./img/flags/DE.gif");
+AM.queueDownload("./img/flags/spritesheet.png");
 
 
 AM.downloadAll(function () {
@@ -26,13 +23,13 @@ AM.downloadAll(function () {
         new VoteCoin(RI, 68, 270),
         new VoteCoin(CT, 180, 250)];
     gameEngine.pendingVoteCoins = [
-        //new VoteCoin(180, 55, "Maryland", 38, AM.getAsset("./img/flags/NY.gif")),
-        //new VoteCoin(444, 80, "Pennsylvania", 17, AM.getAsset("./img/flags/NY.gif")),
-	    //new VoteCoin(68, 270, "Indiana", 57, AM.getAsset("./img/flags/NY.gif")),
-        //new VoteCoin(180, 250, "Nebraska", 36, AM.getAsset("./img/flags/NY.gif"))];
-    ];
+        new VoteCoin(MD, 180, 55),
+        new VoteCoin(PA, 444, 80),
+	    new VoteCoin(IN, 68, 270),
+        new VoteCoin(NE, 180, 250)];
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
     gameEngine.addEntity(new TrumpWalker(gameEngine, AM.getAsset("./img/Trump.png")));
 })
+var FLAGS = AM.getAsset("./img/flags/spritesheet.png");
