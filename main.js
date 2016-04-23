@@ -56,20 +56,14 @@ function Background(game) {
 
 Background.prototype.draw = function (ctx) {
     ctx.drawImage(this.image, 0, 0);
-    ctx.beginPath();
-    ctx.fillStyle = "red";
-    ctx.font = "10px Arial";
+    ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;
     for (var i = 0; i < arrayLength; i++) {
-        ctx.fillStyle = "red";
-        var voteCoin = this.game.activeVoteCoins[i];
-        ctx.arc(voteCoin.x, voteCoin.y, 50, 0, 2 * Math.PI);
-        ctx.fill();
+        var coin = this.game.activeVoteCoins[i];
+        var image = coin.image;
+        ctx.drawImage(image, coin.x, coin.y, coin.width * 0.25, coin.height * 0.25);
         ctx.fillStyle = "black";
-        ctx.beginPath();
-        ctx.fillText(voteCoin.state, voteCoin.x - 25, voteCoin.y);
-        ctx.fillText(voteCoin.vote, voteCoin.x - 5, voteCoin.y + 20);
-        ctx.closePath();
+        ctx.wrapText(coin.state + "\n" + coin.vote, coin.x + 25, coin.y + 25, 160, 16);
     }
 }
 Background.prototype.update = function () { };
@@ -219,9 +213,14 @@ TrumpWalker.prototype.draw = function (ctx) {
                  anim.frameHeight);
 };
 
-function VoteCoin(x, y, state, vote) {
+function VoteCoin(flag, x, y) {
     this.x = x;
     this.y = y;
-    this.vote = vote;
-    this.state = state;
+    this.vote = flag.vote;
+    this.state = flag.name;
+    this.path = flag.path;
+    this.width = flag.width;
+    this.height = flag.height;
+    this.flag = flag;
+    this.image = AM.getAsset(this.path);
 }

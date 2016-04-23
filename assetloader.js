@@ -20,10 +20,17 @@ AM.downloadAll(function () {
     gameEngine.scoreBoard = score;
     gameEngine.scoreMessage = message;
     gameEngine.scoreType = voteType;
-    gameEngine.activeVoteCoins = [new VoteCoin(60, 55, "New York", 95), new VoteCoin(700, 55, "Connecticut", 28),
-	   new VoteCoin(60, 450, "Delaware", 16), new VoteCoin(700, 450, "Rhode Island", 19)];
-    gameEngine.pendingVoteCoins = [new VoteCoin(180, 55, "Maryland", 38), new VoteCoin(444, 80, "Pennsylvania", 17),
-	   new VoteCoin(68, 270, "Indiana", 57), new VoteCoin(180, 250, "Nebraska", 36)];
+    gameEngine.activeVoteCoins = [
+        new VoteCoin(NY, 180, 55),
+        new VoteCoin(DE, 444, 80),
+        new VoteCoin(RI, 68, 270),
+        new VoteCoin(CT, 180, 250)];
+    gameEngine.pendingVoteCoins = [
+        //new VoteCoin(180, 55, "Maryland", 38, AM.getAsset("./img/flags/NY.gif")),
+        //new VoteCoin(444, 80, "Pennsylvania", 17, AM.getAsset("./img/flags/NY.gif")),
+	    //new VoteCoin(68, 270, "Indiana", 57, AM.getAsset("./img/flags/NY.gif")),
+        //new VoteCoin(180, 250, "Nebraska", 36, AM.getAsset("./img/flags/NY.gif"))];
+    ];
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
