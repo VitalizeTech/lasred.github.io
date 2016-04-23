@@ -1,6 +1,8 @@
 ﻿var AM = new AssetManager();
 
 AM.queueDownload("./img/Trump.png");
+AM.queueDownload("./img/gunman.png");
+AM.queueDownload("./img/bluehairedgirl.png");
 AM.queueDownload("./img/MAGABackground.png");
 AM.queueDownload("./img/flags/spritesheet.png");
 
@@ -31,5 +33,7 @@ AM.downloadAll(function () {
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));
     gameEngine.addEntity(new TrumpWalker(gameEngine, AM.getAsset("./img/Trump.png")));
+    gameEngine.addEntity(new Gunman(gameEngine, AM.getAsset("./img/gunman.png")));
+    gameEngine.addEntity(new BlueHair(gameEngine, AM.getAsset("./img/bluehairedgirl.png")));
 })
 var FLAGS = AM.getAsset("./img/flags/spritesheet.png");
