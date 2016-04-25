@@ -1,4 +1,20 @@
-﻿var AM = new AssetManager();
+
+
+/**
+ * Returns a random number between min (inclusive) and max (exclusive)
+ */
+function getRandom(min1, max1, min2, max2) {
+    xcoord = Math.round(Math.random() * (max1 - min1) + min1);
+    ycoord = Math.round(Math.random() * (max2 - min2) + min2);
+    xy = new CoordPoint(xcoord, ycoord);
+    console.log(xcoord);
+    return xy;
+}
+
+
+
+
+var AM = new AssetManager();
 
 AM.queueDownload("./img/Trump.png");
 AM.queueDownload("./img/gunman.png");
@@ -20,15 +36,15 @@ AM.downloadAll(function () {
     gameEngine.scoreMessage = message;
     gameEngine.scoreType = voteType;
     gameEngine.activeVoteCoins = [
-        new VoteCoin(NY, 180, 55),
-        new VoteCoin(DE, 444, 80),
-        new VoteCoin(RI, 68, 270),
-        new VoteCoin(CT, 180, 250)];
+        new VoteCoin(NY, getRandom(0, 200, 0, 150)),
+        new VoteCoin(DE, getRandom(0, 200, 300, 450)),
+        new VoteCoin(RI, getRandom(400, 600, 0, 150)),
+        new VoteCoin(CT, getRandom(400, 600, 400, 450))];
     gameEngine.pendingVoteCoins = [
-        new VoteCoin(MD, 180, 55),
-        new VoteCoin(PA, 444, 80),
-	    new VoteCoin(IN, 68, 270),
-        new VoteCoin(NE, 180, 250)];
+        new VoteCoin(MD, getRandom(0,1,0,1)),
+        new VoteCoin(PA, getRandom(0,1,0,1)),
+	    new VoteCoin(IN, getRandom(0,1,0,1)),
+        new VoteCoin(NE, getRandom(0,1,0,1))];
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));

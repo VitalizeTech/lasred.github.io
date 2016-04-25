@@ -6,7 +6,7 @@
    Interface between the virtual game world and the user.
 */
 //Game engine syncs up with the browser by calling this function
-//Wait until next time browser updates 
+//Wait until next time browser updates
 window.requestAnimFrame = (function () {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
@@ -37,7 +37,7 @@ GameEngine.prototype.start = function () {
         requestAnimFrame(gameLoop, that.ctx.canvas);
     })();
 };
-//every loop, game engine will update and draw every entiity 
+//every loop, game engine will update and draw every entity
 GameEngine.prototype.update = function () {
     var entitiesCount = this.entities.length;
     for (var i = 0; i < entitiesCount; i++) {
@@ -48,7 +48,7 @@ GameEngine.prototype.update = function () {
     }
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
-            this.entities.splice(i, 1); 
+            this.entities.splice(i, 1);
         }
     }
 };
@@ -61,7 +61,7 @@ GameEngine.prototype.draw = function () {
     }
     this.ctx.restore();
 };
-//Tracks exactly how ong has it since it last updated 
+//Tracks exactly how long has it since it last updated
 function Timer() {
     this.gameTime = 0;
     this.maxStep = 0.05;
@@ -77,6 +77,19 @@ Timer.prototype.tick = function () {
     this.gameTime += gameDelta;
     return gameDelta;
 };
+
+
+
+//Holds an X and a Y value.
+function CoordPoint(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+
+
+
+
 
 function GameEngine() {
     this.entities = [];
