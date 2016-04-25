@@ -1,4 +1,50 @@
-﻿function TrumpWalker(game, spritesheet) {
+
+
+/**
+ * Returns a random number between min (inclusive) and max (exclusive)
+ */
+function getRandom(min1, max1, min2, max2) {
+    xcoord = Math.round(Math.random() * (max1 - min1) + min1);
+    ycoord = Math.round(Math.random() * (max2 - min2) + min2);
+    xy = new CoordPoint(xcoord, ycoord);
+
+    return xy;
+}
+
+/**
+* Returns an updated coin.
+*/
+function updateCoords(theCoin, activelist) {
+    var newcoin = theCoin;
+
+    //update newcoin.x and newcoin.y
+    var goodfit = true;
+    var acoord;
+    do {
+        goodfit = true; //reset
+        acoord = getRandom(0, 700, 0, 450);
+        for (q = 0; q < activelist.length - 1; q++) {
+            if (Math.abs(acoord.x - activelist[q].x) < 200) {
+                if (Math.abs(acoord.y - activelist[q].y) < 150) {
+                    goodfit = false;
+                    console.log("Bad coord. X is " + acoord.x + " and Y is " + acoord.y);
+                }
+            }
+        }
+    } while (goodfit == false);
+
+    newcoin.x = acoord.x;
+    newcoin.y = acoord.y;
+
+    return newcoin;
+}
+
+
+
+
+
+
+function TrumpWalker(game, spritesheet) {
     this.animation = new Animation(spritesheet, 49, 48.2, 3, 0.10, 12, true, 1);
     this.game = game;
     this.direction = 0;
@@ -100,9 +146,13 @@ TrumpWalker.prototype.update = function () {
                 }
                 var pendingLength = this.game.pendingVoteCoins.length;
                 if (pendingLength > 0) {
-                    var toAddVoteCoin = this.game.pendingVoteCoins[pendingLength - 1];
-                    this.game.activeVoteCoins.push(toAddVoteCoin);
+                    var toUpdateVoteCoin = this.game.pendingVoteCoins[pendingLength - 1];
                     this.game.pendingVoteCoins.splice(pendingLength - 1, 1);
+
+                    var toAddVoteCoin = updateCoords(toUpdateVoteCoin, this.game.activeVoteCoins);
+
+                    this.game.activeVoteCoins.push(toAddVoteCoin);
+
                 }
             }
         }
