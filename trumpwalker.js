@@ -14,8 +14,9 @@ function getRandom(min1, max1, min2, max2) {
 /**
 * Returns an updated coin.
 */
-function updateCoords(theCoin, activelist) {
+function updateCoords(theCoin, activelist, Tx, Ty) {
     var newcoin = theCoin;
+
 
     //update newcoin.x and newcoin.y
     var goodfit = true;
@@ -23,18 +24,36 @@ function updateCoords(theCoin, activelist) {
     do {
         goodfit = true; //reset
         acoord = getRandom(0, 700, 0, 450);
-        for (q = 0; q < activelist.length - 1; q++) {
+
+        for (q = 0; q < activelist.length; q++) {
             if (Math.abs(acoord.x - activelist[q].x) < 200) {
                 if (Math.abs(acoord.y - activelist[q].y) < 150) {
                     goodfit = false;
-                    console.log("Bad coord. X is " + acoord.x + " and Y is " + acoord.y);
+
+                    console.log("Bad coord for " + newcoin.state + " : " + acoord.x + "," + acoord.y);
+                    console.log("          because the coordinate differences were " + (acoord.x - activelist[q].x) + "," + (acoord.y - activelist[q].y));
+                    console.log("The above coord interfered with " + activelist[q].state + " : " + activelist[q].x + "," + activelist[q].y);
                 }
             }
         }
+
+
+        if (((Tx - acoord.x < 220) && (Tx - acoord.x > 0)) || ((acoord.x  - Tx) < 30 && (acoord.x - Tx > 0))) {
+            if (( (Ty - acoord.y < 170) && (Ty - acoord.y > 0) ) || ( (acoord.y - Ty < 30) && (acoord.y - Ty) ) ){
+                goodfit = false;
+
+                console.log("Jumped on Trump!");
+                
+            }
+
+        }
+
+
     } while (goodfit == false);
 
     newcoin.x = acoord.x;
     newcoin.y = acoord.y;
+    console.log(newcoin.state + " :: " + newcoin.x + "," + newcoin.y);
 
     return newcoin;
 }
@@ -147,7 +166,7 @@ TrumpWalker.prototype.update = function () {
                     var toUpdateVoteCoin = this.game.pendingVoteCoins[pendingLength - 1];
                     this.game.pendingVoteCoins.splice(pendingLength - 1, 1);
 
-                    var toAddVoteCoin = updateCoords(toUpdateVoteCoin, this.game.activeVoteCoins);
+                    var toAddVoteCoin = updateCoords(toUpdateVoteCoin, this.game.activeVoteCoins, this.x, this.y);
 
                     this.game.activeVoteCoins.push(toAddVoteCoin);
 
