@@ -131,17 +131,15 @@ TrumpWalker.prototype.update = function () {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
                 this.game.scoreBoard.innerHTML = voteCoin.vote + parseInt(this.game.scoreBoard.innerHTML);
-                if (this.game.scoreType.innerHTML == "Delegates") {
-                    if (this.game.scoreBoard.innerHTML >= 50) {
-                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML.replace('  ', 'You won the Republican nomination!');
-                        this.game.scoreType.innerHTML = this.game.scoreType.innerHTML.replace('Delegates', 'Electoral Votes');
+                if (this.game.scoreBoard.innerHTML >= 50) {
+                    if (this.game.scoreType.innerHTML == "Delegates") {
+                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the Republican nomination!';
+                        this.game.scoreType.innerHTML = this.game.scoreType.innerHTML = 'Electoral Votes';
                         this.game.scoreBoard.innerHTML = 0;
                     }
-                }
-                else if (this.game.scoreType.innerHTML == "Electoral Votes") {
-                    if (this.game.scoreBoard.innerHTML >= 50) {
-                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML.replace('You won the Republican nomination!', 'You won the presidential election!');
-                        //pop up new screen for congrats or enter name for high score or something?
+                    else{
+                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
+                        // TODO pop up new screen for congrats or enter name for high score or something?
                     }
                 }
                 var pendingLength = this.game.pendingVoteCoins.length;

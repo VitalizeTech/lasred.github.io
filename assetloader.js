@@ -26,15 +26,12 @@ AM.queueDownload("./img/flags/spritesheet.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
-    var score = document.getElementById("score");
-    var message = document.getElementById("message");
-    var voteType = document.getElementById("score_type");
     //2d context 
     var ctx = canvas.getContext("2d");
     var gameEngine = new GameEngine();
-    gameEngine.scoreBoard = score;
-    gameEngine.scoreMessage = message;
-    gameEngine.scoreType = voteType;
+    gameEngine.scoreBoard = document.getElementById("score");
+    gameEngine.scoreMessage = document.getElementById("message");
+    gameEngine.scoreType = document.getElementById("score_type");
     gameEngine.activeVoteCoins = [
         new VoteCoin(NY, getRandom(0, 200, 0, 150)),
         new VoteCoin(DE, getRandom(0, 200, 300, 450)),
