@@ -52,10 +52,18 @@ function Background(game) {
     this.game = game;
     this.ctx = game.ctx;
     this.image = AM.getAsset("./img/MAGABackground.png");
+	this.lyinTedAsset = AM.getAsset("./img/LyinTed.png");
+	this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
 }
 
 Background.prototype.draw = function (ctx) {
     ctx.drawImage(this.image, 0, 0);
+	if (this.game.scoreMessage.innerHTML.length > 0) {
+		ctx.drawImage(this.crookedHillaryAsset, 300, 175, 150, 150);
+	} else {
+		ctx.drawImage(this.lyinTedAsset, 300, 175, 150, 150);
+	}
+
     ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;
     for (var i = 0; i < arrayLength; i++) {

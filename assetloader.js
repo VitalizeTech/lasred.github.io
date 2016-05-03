@@ -21,7 +21,8 @@ AM.queueDownload("./img/gunman.png");
 AM.queueDownload("./img/bluehairedgirl.png");
 AM.queueDownload("./img/MAGABackground.png");
 AM.queueDownload("./img/flags/spritesheet.png");
-
+AM.queueDownload("./img/CrookedHillary.png");
+AM.queueDownload("./img/LyinTed.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
