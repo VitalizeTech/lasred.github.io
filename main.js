@@ -31,13 +31,11 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     var yindex = 0;
     xindex = frame % this.sheetWidth;
     yindex = Math.floor(frame / this.sheetWidth);
-
-    ctx.drawImage(this.spriteSheet,
-                 xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
-                 this.frameWidth, this.frameHeight,
-                 x, y,
-                 this.frameWidth * this.scale,
-                 this.frameHeight * this.scale);
+	ctx.drawImage(this.spriteSheet,
+		xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
+		this.frameWidth, this.frameHeight,
+		x, y, this.frameWidth * this.scale,
+		   this.frameHeight * this.scale);
 }
 
 Animation.prototype.currentFrame = function () {
@@ -63,7 +61,6 @@ Background.prototype.draw = function (ctx) {
 	} else {
 		ctx.drawImage(this.lyinTedAsset, 300, 175, 150, 150);
 	}
-
     ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;
     for (var i = 0; i < arrayLength; i++) {
