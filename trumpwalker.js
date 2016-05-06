@@ -1,68 +1,3 @@
-
-
-/**
- * Returns a random number between min (inclusive) and max (exclusive)
- */
-function getRandom(min1, max1, min2, max2) {
-    xcoord = Math.round(Math.random() * (max1 - min1) + min1);
-    ycoord = Math.round(Math.random() * (max2 - min2) + min2);
-    xy = new CoordPoint(xcoord, ycoord);
-
-    return xy;
-}
-
-/**
-* Returns an updated coin.
-*/
-function updateCoords(theCoin, activelist, Tx, Ty) {
-    var newcoin = theCoin;
-
-
-    //update newcoin.x and newcoin.y
-    var goodfit = true;
-    var acoord;
-    do {
-        goodfit = true; //reset
-        acoord = getRandom(0, 700, 0, 450);
-
-        for (q = 0; q < activelist.length; q++) {
-            if (Math.abs(acoord.x - activelist[q].x) < 200) {
-                if (Math.abs(acoord.y - activelist[q].y) < 150) {
-                    goodfit = false;
-
-                    console.log("Bad coord for " + newcoin.state + " : " + acoord.x + "," + acoord.y);
-                    console.log("          because the coordinate differences were " + (acoord.x - activelist[q].x) + "," + (acoord.y - activelist[q].y));
-                    console.log("The above coord interfered with " + activelist[q].state + " : " + activelist[q].x + "," + activelist[q].y);
-                }
-            }
-        }
-
-
-        if (((Tx - acoord.x < 220) && (Tx - acoord.x > 0)) || ((acoord.x  - Tx) < 30 && (acoord.x - Tx > 0))) {
-            if (( (Ty - acoord.y < 170) && (Ty - acoord.y > 0) ) || ( (acoord.y - Ty < 30) && (acoord.y - Ty) ) ){
-                goodfit = false;
-
-                console.log("Jumped on Trump!");
-                
-            }
-
-        }
-
-
-    } while (goodfit == false);
-
-    newcoin.x = acoord.x;
-    newcoin.y = acoord.y;
-    console.log(newcoin.state + " :: " + newcoin.x + "," + newcoin.y);
-
-    return newcoin;
-}
-
-
-
-
-
-
 function TrumpWalker(game, spritesheet) {
     this.animation = new Animation(spritesheet, 49, 48.2, 3, 0.10, 12, true, 1);
     this.game = game;
@@ -149,7 +84,7 @@ TrumpWalker.prototype.update = function () {
             if (distance < 80) {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
-                this.game.scoreBoard.innerHTML = voteCoin.vote + parseInt(this.game.scoreBoard.innerHTML);
+                this.game.scoreBoard.innerHTML = parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
                 if (this.game.scoreBoard.innerHTML >= 50) {
                     if (this.game.scoreType.innerHTML == "Delegates") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the Republican nomination!';
@@ -161,15 +96,9 @@ TrumpWalker.prototype.update = function () {
                         // TODO pop up new screen for congrats or enter name for high score or something?
                     }
                 }
-                var pendingLength = this.game.pendingVoteCoins.length;
-                if (pendingLength > 0) {
-                    var toUpdateVoteCoin = this.game.pendingVoteCoins[pendingLength - 1];
-                    this.game.pendingVoteCoins.splice(pendingLength - 1, 1);
-
-                    var toAddVoteCoin = updateCoords(toUpdateVoteCoin, this.game.activeVoteCoins, this.x, this.y);
-
+                var toAddVoteCoin = createVoteCoin(this.game);
+                if (toAddVoteCoin != null) {
                     this.game.activeVoteCoins.push(toAddVoteCoin);
-
                 }
             }
         }

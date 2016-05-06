@@ -1,19 +1,3 @@
-
-
-/**
- * Returns a random number between min (inclusive) and max (exclusive)
- */
-function getRandom(min1, max1, min2, max2) {
-    xcoord = Math.round(Math.random() * (max1 - min1) + min1);
-    ycoord = Math.round(Math.random() * (max2 - min2) + min2);
-    xy = new CoordPoint(xcoord, ycoord);
-    console.log(xcoord, ycoord);
-    return xy;
-}
-
-
-
-
 var AM = new AssetManager();
 
 AM.queueDownload("./img/Trump.png");
@@ -34,37 +18,12 @@ AM.downloadAll(function () {
     gameEngine.scoreBoard = document.getElementById("score");
     gameEngine.scoreMessage = document.getElementById("message");
     gameEngine.scoreType = document.getElementById("score_type");
-    gameEngine.activeVoteCoins = [
-        new VoteCoin(NY, getRandom(0, 200, 0, 150)),
-        new VoteCoin(DE, getRandom(0, 200, 300, 450)),
-        new VoteCoin(RI, getRandom(400, 600, 0, 150)),
-        new VoteCoin(CT, getRandom(400, 600, 400, 450))];
-    gameEngine.pendingVoteCoins = [
-        new VoteCoin(MD, getRandom(0,1,0,1)),
-        new VoteCoin(PA, getRandom(0,1,0,1)),
-	    new VoteCoin(IN, getRandom(0,1,0,1)),
-        new VoteCoin(NE, getRandom(0,1,0,1)),
-
-        new VoteCoin(AK, getRandom(0,1,0,1)),
-        new VoteCoin(AL, getRandom(0,1,0,1)),
-	    new VoteCoin(AR, getRandom(0,1,0,1)),
-        new VoteCoin(AZ, getRandom(0,1,0,1)),
-        new VoteCoin(CA, getRandom(0,1,0,1)),
-        new VoteCoin(CO, getRandom(0,1,0,1)),
-	    new VoteCoin(FL, getRandom(0,1,0,1)),
-        new VoteCoin(GA, getRandom(0,1,0,1)),
-        new VoteCoin(HI, getRandom(0,1,0,1)),
-	    new VoteCoin(IA, getRandom(0,1,0,1)),
-        new VoteCoin(ID, getRandom(0,1,0,1)),
-        new VoteCoin(IL, getRandom(0,1,0,1)),
-	    new VoteCoin(IN, getRandom(0,1,0,1)),
-        new VoteCoin(KS, getRandom(0,1,0,1)),
-        new VoteCoin(KY, getRandom(0,1,0,1)),
-	    new VoteCoin(LA, getRandom(0,1,0,1)),
-        new VoteCoin(MA, getRandom(0,1,0,1)),
-        new VoteCoin(MD, getRandom(0,1,0,1)),
-	    new VoteCoin(ME, getRandom(0,1,0,1))
-    ];
+    createFlags();
+    gameEngine.activeVoteCoins = [];
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine));

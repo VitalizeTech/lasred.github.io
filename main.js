@@ -74,9 +74,9 @@ Background.prototype.draw = function (ctx) {
         var coin = this.game.activeVoteCoins[i];
 
         ctx.drawImage(
-    FLAGS, 0, coin.flagy, coin.width, coin.height, coin.x, coin.y, coin.width * 0.2, coin.height * 0.2);
+    FLAGS, coin.flagx, coin.flagy, coin.width, coin.height, coin.x, coin.y, coin.width * 0.2, coin.height * 0.2);
         ctx.fillStyle = "black";
-        ctx.wrapText(coin.state + "\n\t\t\t\t" + coin.vote, coin.x + 5, coin.y + 15, 160, 16);
+        ctx.wrapText(coin.state + "\n\t" + coin.vote, coin.x + 5, coin.y + 15, 160, 16);
     }
 }
 Background.prototype.update = function () { };
