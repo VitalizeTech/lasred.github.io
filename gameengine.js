@@ -42,13 +42,17 @@ GameEngine.prototype.update = function () {
     var entitiesCount = this.entities.length;
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
-        if (!entity.removeFromWorld) {
-            entity.update();
+        if (this.entities[i] != null) {
+            if (!entity.removeFromWorld) {
+                entity.update();
+            }
         }
     }
     for (var i = this.entities.length - 1; i >= 0; --i) {
-        if (this.entities[i].removeFromWorld) {
-            this.entities.splice(i, 1);
+        if (this.entities[i] != null) {
+            if (this.entities[i].removeFromWorld) {
+                this.entities.splice(i, 1);
+            }
         }
     }
 };
@@ -57,7 +61,9 @@ GameEngine.prototype.draw = function () {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.ctx.save();
     for (var i = 0; i < this.entities.length; i++) {
-        this.entities[i].draw(this.ctx);
+        if (this.entities[i] != null) {
+            this.entities[i].draw(this.ctx);
+        }
     }
     this.ctx.restore();
 };
@@ -100,6 +106,16 @@ function GameEngine() {
     this.wheel = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
+
+/*
+    var arey = [1,2,3,4,5,6,7,8];
+    console.log("length of arey is " + arey.length); //8
+    console.log("[5] is " + arey[5]); //6
+    delete arey[5];
+    console.log("[5] after deleting is " + arey[5]); //undefined
+    console.log("length after deleting is " + arey.length); //8
+*/
+
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -146,7 +162,15 @@ GameEngine.prototype.startInput = function () {
 GameEngine.prototype.addEntity = function (entity) {
     console.log('added entity');
     this.entities.push(entity);
+
 };
+
+
+//removes whatever is in the position of the entities array.
+GameEngine.prototype.removeEntity = function (position) {
+    console.log("removing from position " + position);
+    delete this.entities[position];
+}
 
 function Entity(game, x, y) {
     this.game = game;

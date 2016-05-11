@@ -13,7 +13,7 @@ AM.queueDownload("./img/assassin.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
-    //2d context 
+    //2d context
     var ctx = canvas.getContext("2d");
     var gameEngine = new GameEngine();
     gameEngine.scoreBoard = document.getElementById("score");
@@ -36,6 +36,8 @@ AM.downloadAll(function () {
 	gameEngine.addEntity(new ReporterWalker(gameEngine, AM.getAsset("./img/reporter.png"), 175, 150, 11, 500, 100, 0.5, 100, 70));
 	gameEngine.addEntity(new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 75, 190, 4, 500, 400, 0.5, 100, 70));
 	gameEngine.addEntity(new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 33, 48, 4, 100,  400, 0.1, 4, 100));
-
+    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.png"));
+    firstBullet.entityPos = gameEngine.entities.length;
+	gameEngine.addEntity(firstBullet);
 })
 var FLAGS = AM.getAsset("./img/flags/spritesheet.png");
