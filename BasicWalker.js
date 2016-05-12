@@ -105,9 +105,9 @@ BasicWalker.prototype.takeStepTowards = function(x, y, distanceAway) {
 	}
 }
 BasicWalker.prototype.isAwayFromOtherEntities = function(x, y) {
-	for(var i=0; i<this.game.entities.length; i ++) {
-		var entity = this.game.entities[i];
-		if(entity != this && Math.sqrt(Math.pow(this.game.entities[i].x-x, 2) + Math.pow(this.game.entities[i].y - y, 2)) < 50) {
+	for(var i=0; i<this.game.characters.length; i ++) {
+		var entity = this.game.characters[i];
+		if(entity != this && Math.sqrt(Math.pow(this.game.characters[i].x-x, 2) + Math.pow(this.game.characters[i].y - y, 2)) < 50) {
 			return false;
 		}
 	}

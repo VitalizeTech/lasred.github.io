@@ -27,15 +27,23 @@ AM.downloadAll(function () {
     gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
     gameEngine.init(ctx);
     gameEngine.start();
+	gameEngine.characters = [];
     gameEngine.addEntity(new Background(gameEngine));
 	var trumpWalker = new TrumpWalker(gameEngine, AM.getAsset("./img/Trump.png"));
+	gameEngine.characters.push(trumpWalker);
 	gameEngine.leader = trumpWalker;
     gameEngine.addEntity(trumpWalker);
-    gameEngine.addEntity(new IvankaWalker(gameEngine, AM.getAsset("./img/ivanka.png"), 32, 50, 3, 200, 250, 0.1, 4, 100));
-	gameEngine.addEntity(new Bullet(gameEngine, AM.getAsset("./img/Canada.png")))
-	gameEngine.addEntity(new ReporterWalker(gameEngine, AM.getAsset("./img/reporter.png"), 175, 150, 11, 500, 100, 0.5, 100, 70));
-	gameEngine.addEntity(new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 75, 190, 4, 500, 400, 0.5, 100, 70));
-	gameEngine.addEntity(new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 33, 48, 4, 100,  400, 0.1, 4, 100));
+	var ivankaWalker = new IvankaWalker(gameEngine, AM.getAsset("./img/ivanka.png"), 32, 50, 3, 200, 250, 0.1, 4, 100);
+	gameEngine.characters.push(ivankaWalker);
+    gameEngine.addEntity(ivankaWalker);
+	var reporterWalker = new ReporterWalker(gameEngine, AM.getAsset("./img/reporter.png"), 175, 150, 11, 500, 100, 0.5, 100, 70);
+	gameEngine.characters.push(reporterWalker);
+	gameEngine.addEntity(reporterWalker);
+	var cartelWalker = new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 75, 190, 4, 500, 400, 0.5, 100, 70);
+	gameEngine.addEntity(cartelWalker);
+	var assassinWalker = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 33, 48, 4, 100,  400, 0.1, 4, 100);
+	gameEngine.characters.push(assassinWalker);
+	gameEngine.addEntity(assassinWalker);
     var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.png"));
     firstBullet.entityPos = gameEngine.entities.length;
 	gameEngine.addEntity(firstBullet);
