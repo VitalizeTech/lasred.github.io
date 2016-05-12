@@ -25,17 +25,23 @@ function Bullet(game, spritesheet) {
 }
 
 
-
+function toRadians (angle) {
+  return angle * (Math.PI / 180);
+}
 
 
 Bullet.prototype.update = function () {
 
-    this.x += potentialX[this.xmoves];
-	this.y += potentialY[this.ymoves];
+    //this.x += potentialX[this.xmoves];
+	//this.y += potentialY[this.ymoves];
+
+	this.x += Math.cos( toRadians(this.game.entities[0].degree + 180)) * 4;
+	this.y += Math.sin( toRadians(this.game.entities[0].degree + 180)) * 4;
+	console.log("degrees are " + this.x + ", " + this.y);
 
 	if (this.x < 50 || this.x > 500 || this.y < 50 || this.y > 350) {
 
-		if (bulletCount < 5) { //including the original bullet, max bullets will be 1 more than this value.
+		if (bulletCount < 2) { //including the original bullet, max bullets will be 1 more than this value.
 			console.log("bulletCount is " + bulletCount);
 
 			var abul = new Bullet(this.game, AM.getAsset("./img/Canada.png"));
@@ -46,10 +52,7 @@ Bullet.prototype.update = function () {
 		}
 	}
 
-
-
-
-	if(this.x < 0 || this.x > 650) {
+	if(this.x < 0 || this.x > (Math.random()*150 + 700)) {
 		//this.moves = Math.floor(Math.random() * potentialX.length);
 		//this.x = 350;
 		//this.y = 250;
@@ -58,7 +61,7 @@ Bullet.prototype.update = function () {
 		this.game.removeEntity(this.entityPos);
 		bulletCount -= 1;
 
-	} else if (this.y < 0 || this.y > 450) {
+	} else if (this.y < 0 || this.y > (Math.random()*100 + 450)) {
 		//this.moves = Math.floor(Math.random() * potentialX.length);
 		//this.y = 250;
 		//this.x = 350;

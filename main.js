@@ -1,7 +1,7 @@
 /*
-  Computational World - Herobound gladators, Ansher Wars 
-  JavaScript - interpreted language, not compiled into binary file 
-  JavaScript provides interactive elements of web page 
+  Computational World - Herobound gladators, Ansher Wars
+  JavaScript - interpreted language, not compiled into binary file
+  JavaScript provides interactive elements of web page
   */
 
 //Purpose of Animation oject - track how long animation has been running, draw appropriate frame
@@ -57,7 +57,7 @@ function Background(game) {
 
 Background.prototype.draw = function (ctx) {
     ctx.drawImage(this.image, 0, 0);
-	this.degree += 0.1;
+	this.degree += 0.9;
 	if (this.game.scoreMessage.innerHTML.length > 0) {
 		ctx.drawImage(this.crookedHillaryAsset, 300, 175, 150, 150);
 	} else {
