@@ -53,27 +53,36 @@ function Background(game) {
 	this.lyinTedAsset = AM.getAsset("./img/LyinTed.png");
 	this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
 	this.degree = 0;
+	this.fire = true;
+}
+
+function rotatePoint(point, center, angle) {
+    angle = (angle) * (Math.PI / 180); // Convert to radians
+    var rotatedX = Math.cos(angle) * (point.x - center.x) - Math.sin(angle) * (point.y - center.y) + center.x;
+    var rotatedY = Math.sin(angle) * (point.x - center.x) + Math.cos(angle) * (point.y - center.y) + center.y;
+
+    return { x: rotatedX, y: rotatedY };
 }
 var timeElapsed = 0;
 Background.prototype.draw = function (ctx) {
 	timeElapsed += 1;
-	if(timeElapsed == 20) {
+	this.degree += 0.9;
+	if(timeElapsed == 50) {
 		timeElapsed = 0;
-		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.game.entities[0].degree);
+		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.degree);
 		this.game.entities.push(newBullet);
 	}
     ctx.drawImage(this.image, 0, 0, 1170, 700);
-	this.degree += 0.9;
+	ctx.save();
+	ctx.translate( 525.5, 287.5);
+	ctx.rotate(this.degree*Math.PI/180);
+	ctx.translate(0, 0);
 	if (this.game.scoreMessage.innerHTML.length > 0) {
-		ctx.drawImage(this.crookedHillaryAsset, 550, 325, 125, 125);
+		ctx.drawImage(this.crookedHillaryAsset, -50, -70, 125, 125);
 	} else {
-		ctx.save();
-		ctx.translate( 550, 325);
-		ctx.rotate(this.degree*Math.PI/180);
-		ctx.translate(0, 0);
-		ctx.drawImage(this.lyinTedAsset, -75, -75, 125, 125);
-		ctx.restore();
+		ctx.drawImage(this.lyinTedAsset, -62.5, -62.5, 125, 125);
 	}
+	ctx.restore();
     ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;
     for (var i = 0; i < arrayLength; i++) {

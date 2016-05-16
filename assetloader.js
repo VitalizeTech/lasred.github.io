@@ -29,7 +29,6 @@ AM.downloadAll(function () {
     gameEngine.start();
 	gameEngine.characters = [];
     gameEngine.addEntity(new Background(gameEngine));
-
 	var trumpWalker = new TrumpWalker(gameEngine, AM.getAsset("./img/Trump.png"));
 	gameEngine.characters.push(trumpWalker);
 	gameEngine.leader = trumpWalker;

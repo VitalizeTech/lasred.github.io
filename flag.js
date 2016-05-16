@@ -47,7 +47,6 @@ function getRandom(gameEngine) {
     var goodfit = true;
     var acoord = new CoordPoint(0, 0);
     var activelist = gameEngine.activeVoteCoins;
-    console.log("Length is " + activelist.length);
     do {
         goodfit = true; //reset
         var xcoord = Math.round(1063 * Math.random());

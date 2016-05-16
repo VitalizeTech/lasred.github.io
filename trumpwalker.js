@@ -3,7 +3,7 @@ function TrumpWalker(game, spritesheet) {
     this.game = game;
     this.direction = 0;
     this.ctx = game.ctx;
-    this.x = 300;
+    this.x = 100;
     this.speed = 100;
     this.y = 250;
     this.topLimit = 10;

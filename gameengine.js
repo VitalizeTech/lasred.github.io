@@ -84,18 +84,11 @@ Timer.prototype.tick = function () {
     return gameDelta;
 };
 
-
-
 //Holds an X and a Y value.
 function CoordPoint(x, y) {
     this.x = x;
     this.y = y;
 }
-
-
-
-
-
 
 function GameEngine() {
     this.entities = [];
