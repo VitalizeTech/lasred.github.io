@@ -5,8 +5,8 @@
   */
 
 //Purpose of Animation oject - track how long animation has been running, draw appropriate frame
-var rightLimit = 700;
-var botLimit = 600;
+var rightLimit = 1140;
+var botLimit = 700;
 
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
@@ -54,25 +54,30 @@ function Background(game) {
 	this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
 	this.degree = 0;
 }
-
+var timeElapsed = 0;
 Background.prototype.draw = function (ctx) {
-    ctx.drawImage(this.image, 0, 0);
+	timeElapsed += 1;
+	if(timeElapsed == 20) {
+		timeElapsed = 0;
+		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.game.entities[0].degree);
+		this.game.entities.push(newBullet);
+	}
+    ctx.drawImage(this.image, 0, 0, 1170, 700);
 	this.degree += 0.9;
 	if (this.game.scoreMessage.innerHTML.length > 0) {
-		ctx.drawImage(this.crookedHillaryAsset, 300, 175, 150, 150);
+		ctx.drawImage(this.crookedHillaryAsset, 550, 325, 125, 125);
 	} else {
 		ctx.save();
-		ctx.translate( 375, 275);
+		ctx.translate( 550, 325);
 		ctx.rotate(this.degree*Math.PI/180);
 		ctx.translate(0, 0);
-		ctx.drawImage(this.lyinTedAsset, -75, -75, 150, 150);
+		ctx.drawImage(this.lyinTedAsset, -75, -75, 125, 125);
 		ctx.restore();
 	}
     ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;
     for (var i = 0; i < arrayLength; i++) {
         var coin = this.game.activeVoteCoins[i];
-
         ctx.drawImage(
     FLAGS, coin.flagx, coin.flagy, coin.width, coin.height, coin.x, coin.y, coin.width * 0.2, coin.height * 0.2);
         ctx.fillStyle = "black";

@@ -48,7 +48,7 @@ AM.downloadAll(function () {
 	var assassinWalker = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 33, 48, 4, assassinLocation.x,  assassinLocation.y, 0.1, 4, 100);
 	gameEngine.characters.push(assassinWalker);
 	gameEngine.addEntity(assassinWalker);
-    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.png"));
+    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.png"), gameEngine.entities[0].degree);
     firstBullet.entityPos = gameEngine.entities.length;
 	gameEngine.addEntity(firstBullet);
 })
@@ -58,8 +58,8 @@ function getRandomCoordinates(characters) {
     var acoord = new CoordPoint(0, 0);
     do {
         goodfit = true; //reset
-        var xcoord = Math.round(Math.random() * 700);
-        var ycoord = Math.round(Math.random() * 450);
+        var xcoord = Math.round(Math.random() * 1040);
+        var ycoord = Math.round(Math.random() * 560);
         acoord = new CoordPoint(xcoord, ycoord);
         // Check against existing coins
         for (var q = 0; q < characters.length; q++) {

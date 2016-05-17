@@ -50,8 +50,8 @@ function getRandom(gameEngine) {
     console.log("Length is " + activelist.length);
     do {
         goodfit = true; //reset
-        var xcoord = Math.round(Math.random() * 700);
-        var ycoord = Math.round(Math.random() * 450);
+        var xcoord = Math.round(1063 * Math.random());
+        var ycoord = Math.round(647 * Math.random());
         acoord = new CoordPoint(xcoord, ycoord);
 
         // Check against existing coins
