@@ -3,9 +3,9 @@ function Bullet(game, spritesheet, degree) {
     this.game = game;
     this.ctx = game.ctx;
     this.speed = 4;
-	this.degree = degree;
+	this.degree = degree + 15;
 	this.position = this.game.entities.length - 1;
-	var newPoint = findNewPoint(510, 275, this.degree + 15, 70);
+	var newPoint = findNewPoint(510, 275, this.degree, 40);
     this.x = newPoint.x;
     this.y = newPoint.y;
 }

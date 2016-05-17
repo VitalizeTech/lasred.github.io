@@ -77,11 +77,14 @@ Background.prototype.draw = function (ctx) {
 	ctx.translate( 525.5, 287.5);
 	ctx.rotate(this.degree*Math.PI/180);
 	ctx.translate(0, 0);
-	if (this.game.scoreMessage.innerHTML.length > 0) {
-		ctx.drawImage(this.crookedHillaryAsset, -50, -70, 125, 125);
-	} else {
-		ctx.drawImage(this.lyinTedAsset, -62.5, -62.5, 125, 125);
-	}
+	ctx.drawImage(this.game.scoreMessage.innerHTML.length > 0 ?
+        this.crookedHillaryAsset : this.lyinTedAsset,
+        -62.5, -62.5, 125, 125);
+	//if (this.game.scoreMessage.innerHTML.length > 0) {
+	//	ctx.drawImage(this.crookedHillaryAsset, -50, -70, 125, 125);
+	//} else {
+	//	ctx.drawImage(this.lyinTedAsset, -62.5, -62.5, 125, 125);
+	//}
 	ctx.restore();
     ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;
