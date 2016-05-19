@@ -70,6 +70,41 @@ TrumpWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
+    
+    //bullet collision against trumpWalker
+    //get length of array
+    var l = this.game.entities.length;
+    //for loop to check each bullets position in relation to Trump to check for collision
+    for(var i = 6; i < l; i++) {
+        //getting the x and y coordinates of the bullet
+        var eX = this.game.entities[i].x;
+        var eY = this.game.entities[i].y;
+        //getting the x and y coordinates of TrumpWalker
+        var tX = this.game.entities[1].x;
+        var tY = this.game.entities[1].y;
+        //calculate distance bullet is from TrumpWalker
+        var dX = tX - eX;
+        var dY = tY - eY;
+        var dist = Math.sqrt(dX * dX + dY * dY);
+        //check for collison
+        if(dist < 30) {
+            this.game.entities[1].removeFromWorld = true;
+            
+            //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
+            if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
+                location.reload();
+            }
+            else {
+                for(var i = 0; i < this.game.entities.length; i++) {
+                    this.game.entities[i].removeFromWorld = true;
+                }
+                document.body.style.backgroundImage = "url('./img/Game_Over.png')";
+                document.body.style.backgroundRepeat = "no-repeat";
+            }
+        }
+    }
+    
+    
     //collision
     if (isMoving) {
         this.isPaused = false;
