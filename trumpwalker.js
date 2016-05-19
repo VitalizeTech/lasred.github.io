@@ -84,7 +84,15 @@ TrumpWalker.prototype.update = function () {
             if (distance < 80) {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
-                this.game.scoreBoard.innerHTML = parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
+
+                //add bonus if Ivanka is active.
+                if (this.ivankaActive) {
+                    this.game.scoreBoard.innerHTML = 1.5*parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
+                } else {
+                    this.game.scoreBoard.innerHTML = parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
+                }
+
+
                 if (this.game.scoreBoard.innerHTML >= 50) {
                     if (this.game.scoreType.innerHTML == "Delegates") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the Republican nomination!';

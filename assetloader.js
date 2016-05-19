@@ -34,6 +34,7 @@ AM.downloadAll(function () {
 	gameEngine.leader = trumpWalker;
     gameEngine.addEntity(trumpWalker);
 	var ivankaWalker = new IvankaWalker(gameEngine, AM.getAsset("./img/ivanka.png"), 32, 50, 3, 220, 250, 0.1, 4, 100);
+    ivankaWalker.entityPos = gameEngine.entities.length;
 	gameEngine.characters.push(ivankaWalker);
     gameEngine.addEntity(ivankaWalker);
 	var reporterLocation = getRandomCoordinates(gameEngine.characters);
@@ -69,5 +70,3 @@ function getRandomCoordinates(characters) {
      } while (!goodfit)
     return acoord;
 }
-
-
