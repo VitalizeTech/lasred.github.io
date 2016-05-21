@@ -45,6 +45,7 @@ GameEngine.prototype.update = function () {
         if (this.entities[i] != null) {
             if (!entity.removeFromWorld) {
                 entity.update();
+                
             }
         }
     }
@@ -99,6 +100,9 @@ function GameEngine() {
     this.wheel = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
+    this.ivankaBoost = 1;
+    this.reporterBoost = 1;
+
 
 /*
     var arey = [1,2,3,4,5,6,7,8];
