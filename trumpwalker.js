@@ -71,11 +71,11 @@ TrumpWalker.prototype.update = function () {
         isMoving = true;
     }
     
-    //bullet collision against trumpWalker
+    //Assassin, Cartel and Bullet collison for Trump
     //get length of array
     var l = this.game.entities.length;
     //for loop to check each bullets position in relation to Trump to check for collision
-    for(var i = 6; i < l; i++) {
+    for(var i = 5; i < l; i++) {
         //getting the x and y coordinates of the bullet
         var eX = this.game.entities[i].x;
         var eY = this.game.entities[i].y;
@@ -87,58 +87,58 @@ TrumpWalker.prototype.update = function () {
         var dY = tY - eY;
         var dist = Math.sqrt(dX * dX + dY * dY);
         //check for collison
-        if(dist < 30) {
-			this.game.entities[i].removeFromWorld = true;
-			//if(i == 6) {
-				//this.game.entities.splice(6, 1);
-			//} else if (i == 7) {
-				//this.game.entities.splice(7, 1);
-			//} else if (i == 8) {
-				//this.game.entities.splice(8, 1);
-			//}
-			
-			if(this.game.healthBar.src.match("./img/1-4health.png")) {
-				this.game.healthBar.src = "./img/0-4health.png";
-				
-				this.game.entities[1].removeFromWorld = true;
-            
-				//this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
-				if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
-					location.reload();
-				}
-				else {
-					for(var i = 0; i < this.game.entities.length; i++) {
-						this.game.entities[i].removeFromWorld = true;
-					}
-                document.body.style.backgroundImage = "url('./img/Game_Over.png')";
-                document.body.style.backgroundRepeat = "no-repeat";
+        if(dist < 20) {
+            //if the collision is a bullet remove it from the world
+            if(i > 6) {
+                this.game.entities[i].removeFromWorld = true;
             }
-				
-				
-			} else if(this.game.healthBar.src.match("./img/2-4health.png")) {
-				this.game.healthBar.src = "./img/1-4health.png";
-			} else if(this.game.healthBar.src.match("./img/3-4health.png")) {
-				this.game.healthBar.src = "./img/2-4health.png";
-			} else if(this.game.healthBar.src.match("./img/4-4health.png")) {
-				this.game.healthBar.src = "./img/3-4health.png";
-			} 
-		}
-		
-		//if(this.game.healthBar.src.match("./img/0-4health.png")) {
-            //this.game.entities[1].removeFromWorld = true;
+            //if the collision is the assassin or the cartel move them off the playable area
+            if(i < 7) {
+                if(Math.random() > .5) {
+                    this.game.entities[i].x = ((Math.random() * 2170) + 1400);
+                    if(Math.random() > .5) {
+                        this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                    }
+                    else {
+                        this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                    }
+                }
+                else {
+                    this.game.entities[i].x = (((Math.random() * 2170) + 1400)*-1);
+                    if(Math.random() > .5) {
+                        this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                    }
+                    else {
+                        this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                    }
+                }
+            }
             
-            ////this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
-            //if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
-                //location.reload();
-            //}
-            //else {
-                //for(var i = 0; i < this.game.entities.length; i++) {
-                    //this.game.entities[i].removeFromWorld = true;
-                //}
-                //document.body.style.backgroundImage = "url('./img/Game_Over.png')";
-                //document.body.style.backgroundRepeat = "no-repeat";
-            //}
-        //}
+            //update health bar based on current health
+            if(this.game.healthBar.src.match("./img/4-4health.png")) {
+                this.game.healthBar.src = "./img/3-4health.png";
+            } else if(this.game.healthBar.src.match("./img/3-4health.png")) {
+                this.game.healthBar.src = "./img/2-4health.png";
+            } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
+                this.game.healthBar.src = "./img/1-4health.png";
+            } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
+                this.game.healthBar.src = "./img/0-4health.png";
+                
+                this.game.entities[1].removeFromWorld = true;
+                
+                //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
+                if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
+                    location.reload();
+                }
+                else {
+                    for(var i = 0; i < this.game.entities.length; i++) {
+                        this.game.entities[i].removeFromWorld = true;
+                    }
+                    document.body.style.backgroundImage = "url('./img/Game_Over.png')";
+                    document.body.style.backgroundRepeat = "no-repeat";
+                }
+            }
+        }
     }
     
     //collision
@@ -155,18 +155,32 @@ TrumpWalker.prototype.update = function () {
             if (distance < 80) {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
-                this.game.scoreBoard.innerHTML = parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
-                if (this.game.scoreBoard.innerHTML >= 270) {
-					if (this.game.scoreType.innerHTML == "Electors") {
-						this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
-						// TODO pop up new screen for congrats or enter name for high score or something?
-					}
-				}
-				if (this.game.scoreBoard.innerHTML >= 1237) {
+                this.game.scoreBoard.innerHTML = Math.round((parseInt(voteCoin.vote) * this.game.ivankaBoost * this.game.reporterBoost)) + parseInt(this.game.scoreBoard.innerHTML);
+                if (this.game.scoreBoard.innerHTML >= 270) { //270
+                    if (this.game.scoreType.innerHTML == "Electors") {
+                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
+                        //this.game.entities[0].image = AM.getAsset("./img/win.jpg");
+                        //this.game.entities[1].removeFromWorld = true;
+                        //console.log("# of entities: " + this.game.entities.length);
+                        for(var k = 0; k < this.game.entities.length; k++) {
+                            this.game.entities[k].removeFromWorld = true;
+                            console.log("removing entity " + k);
+                        }
+                        //this.game.entities.splice(1, (this.game.entities.length));
+                        document.body.style.backgroundImage = "url('./img/win.jpg')";
+                        document.body.style.backgroundRepeat = "no-repeat";
+                        //this.game.entities[0].image = AM.getAsset("./img/win.jpg");
+                        //console.log("# of entities: " + this.game.entities.length);
+                        
+                        
+                    }
+                }
+                if (this.game.scoreBoard.innerHTML >= 1237) { //1237
                     if (this.game.scoreType.innerHTML == "Delegates") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the Republican nomination!';
                         this.game.scoreType.innerHTML = this.game.scoreType.innerHTML = 'Electors';
                         this.game.scoreBoard.innerHTML = 0;
+                        this.game.entities[0].image = AM.getAsset("./img/whiteHouse.jpg");
                     }
                 }
                 var toAddVoteCoin = createVoteCoin(this.game);
@@ -174,6 +188,7 @@ TrumpWalker.prototype.update = function () {
                     this.game.activeVoteCoins.push(toAddVoteCoin);
                 }
             }
+
         }
     } else {
         this.isPaused = true;
@@ -189,7 +204,7 @@ TrumpWalker.prototype.update = function () {
             this.pausedFor++;
         }
     }
-}
+};
 
 TrumpWalker.prototype.draw = function (ctx) {
     var anim = this.animation;
