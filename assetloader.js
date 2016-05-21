@@ -16,6 +16,9 @@ AM.queueDownload("./img/3-4health.png");
 AM.queueDownload("./img/2-4health.png");
 AM.queueDownload("./img/1-4health.png");
 AM.queueDownload("./img/0-4health.png");
+AM.queueDownload("./img/whiteHouse.jpg");
+AM.queueDownload("./img/debateRoom.jpg");
+AM.queueDownload("./img/win.jpg");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
@@ -47,11 +50,16 @@ AM.downloadAll(function () {
 	var reporterWalker = new ReporterWalker(gameEngine, AM.getAsset("./img/reporter.png"), 49, 48.2, 3, reporterLocation.x, reporterLocation.y, 0.1, 12, 100);
 	gameEngine.characters.push(reporterWalker);
 	gameEngine.addEntity(reporterWalker);
+    var secretServiceLocation = getRandomCoordinates(gameEngine.characters);
+    var secretServiceWalker = new SecretServiceWalker(gameEngine, AM.getAsset("./img/secret_service.png"), 49, 48.2, 3, secretServiceLocation.x, secretServiceLocation.y, 0.1, 12, 90);
+    gameEngine.characters.push(secretServiceWalker);
+    gameEngine.addEntity(secretServiceWalker);
 	var cartelLocation = getRandomCoordinates(gameEngine.characters);
-	var cartelWalker = new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 49, 48.2, 3, cartelLocation.x, cartelLocation.y, 0.5, 12, 70);
+	var cartelWalker = new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 49, 48.2, 3, cartelLocation.x, cartelLocation.y, 0.1, 12, 85);
+    gameEngine.characters.push(cartelWalker);
 	gameEngine.addEntity(cartelWalker);
 	var assassinLocation = getRandomCoordinates(gameEngine.characters);
-	var assassinWalker = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 33, 48, 4, assassinLocation.x,  assassinLocation.y, 0.1, 4, 100);
+	var assassinWalker = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 32, 48, 4, assassinLocation.x,  assassinLocation.y, 0.1, 16, 90);
 	gameEngine.characters.push(assassinWalker);
 	gameEngine.addEntity(assassinWalker);
     var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.png"), gameEngine.entities[0].degree);
