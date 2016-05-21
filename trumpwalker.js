@@ -88,22 +88,58 @@ TrumpWalker.prototype.update = function () {
         var dist = Math.sqrt(dX * dX + dY * dY);
         //check for collison
         if(dist < 30) {
-            this.game.entities[1].removeFromWorld = true;
+			this.game.entities[i].removeFromWorld = true;
+			//if(i == 6) {
+				//this.game.entities.splice(6, 1);
+			//} else if (i == 7) {
+				//this.game.entities.splice(7, 1);
+			//} else if (i == 8) {
+				//this.game.entities.splice(8, 1);
+			//}
+			
+			if(this.game.healthBar.src.match("./img/1-4health.png")) {
+				this.game.healthBar.src = "./img/0-4health.png";
+				
+				this.game.entities[1].removeFromWorld = true;
             
-            //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
-            if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
-                location.reload();
-            }
-            else {
-                for(var i = 0; i < this.game.entities.length; i++) {
-                    this.game.entities[i].removeFromWorld = true;
-                }
+				//this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
+				if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
+					location.reload();
+				}
+				else {
+					for(var i = 0; i < this.game.entities.length; i++) {
+						this.game.entities[i].removeFromWorld = true;
+					}
                 document.body.style.backgroundImage = "url('./img/Game_Over.png')";
                 document.body.style.backgroundRepeat = "no-repeat";
             }
-        }
+				
+				
+			} else if(this.game.healthBar.src.match("./img/2-4health.png")) {
+				this.game.healthBar.src = "./img/1-4health.png";
+			} else if(this.game.healthBar.src.match("./img/3-4health.png")) {
+				this.game.healthBar.src = "./img/2-4health.png";
+			} else if(this.game.healthBar.src.match("./img/4-4health.png")) {
+				this.game.healthBar.src = "./img/3-4health.png";
+			} 
+		}
+		
+		//if(this.game.healthBar.src.match("./img/0-4health.png")) {
+            //this.game.entities[1].removeFromWorld = true;
+            
+            ////this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
+            //if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
+                //location.reload();
+            //}
+            //else {
+                //for(var i = 0; i < this.game.entities.length; i++) {
+                    //this.game.entities[i].removeFromWorld = true;
+                //}
+                //document.body.style.backgroundImage = "url('./img/Game_Over.png')";
+                //document.body.style.backgroundRepeat = "no-repeat";
+            //}
+        //}
     }
-    
     
     //collision
     if (isMoving) {
@@ -120,15 +156,17 @@ TrumpWalker.prototype.update = function () {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
                 this.game.scoreBoard.innerHTML = parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
-                if (this.game.scoreBoard.innerHTML >= 50) {
+                if (this.game.scoreBoard.innerHTML >= 270) {
+					if (this.game.scoreType.innerHTML == "Electors") {
+						this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
+						// TODO pop up new screen for congrats or enter name for high score or something?
+					}
+				}
+				if (this.game.scoreBoard.innerHTML >= 1237) {
                     if (this.game.scoreType.innerHTML == "Delegates") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the Republican nomination!';
-                        this.game.scoreType.innerHTML = this.game.scoreType.innerHTML = 'Electoral Votes';
+                        this.game.scoreType.innerHTML = this.game.scoreType.innerHTML = 'Electors';
                         this.game.scoreBoard.innerHTML = 0;
-                    }
-                    else{
-                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
-                        // TODO pop up new screen for congrats or enter name for high score or something?
                     }
                 }
                 var toAddVoteCoin = createVoteCoin(this.game);
