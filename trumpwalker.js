@@ -113,34 +113,6 @@ TrumpWalker.prototype.update = function () {
                     }
                 }
             }
-            
-            //update health bar based on current health
-            if(this.game.healthBar.src.match("./img/4-4health.png")) {
-                this.game.healthBar.src = "./img/3-4health.png";
-				this.game.health.innerHTML = "3";
-            } else if(this.game.healthBar.src.match("./img/3-4health.png")) {
-                this.game.healthBar.src = "./img/2-4health.png";
-				this.game.health.innerHTML = "2";
-            } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
-                this.game.healthBar.src = "./img/1-4health.png";
-				this.game.health.innerHTML = "1";
-            } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
-                this.game.healthBar.src = "./img/0-4health.png";
-                this.game.health.innerHTML = "0";
-                this.game.entities[1].removeFromWorld = true;
-                
-                //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
-                if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
-                    location.reload();
-                }
-                else {
-                    for(var i = 0; i < this.game.entities.length; i++) {
-                        this.game.entities[i].removeFromWorld = true;
-                    }
-                    document.body.style.backgroundImage = "url('./img/Game_Over.png')";
-                    document.body.style.backgroundRepeat = "no-repeat";
-                }
-            }
         }
     }
     
@@ -162,9 +134,6 @@ TrumpWalker.prototype.update = function () {
                 if (this.game.scoreBoard.innerHTML >= 270) { //270
                     if (this.game.scoreType.innerHTML == "Electors") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
-                        //this.game.entities[0].image = AM.getAsset("./img/win.jpg");
-                        //this.game.entities[1].removeFromWorld = true;
-                        //console.log("# of entities: " + this.game.entities.length);
                         for(var k = 0; k < this.game.entities.length; k++) {
                             this.game.entities[k].removeFromWorld = true;
                             console.log("removing entity " + k);
