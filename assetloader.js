@@ -35,6 +35,7 @@ AM.downloadAll(function () {
     gameEngine.scoreMessage = document.getElementById("message");
     gameEngine.scoreType = document.getElementById("score_type");
     gameEngine.healthBar = document.getElementById("healthBar");
+	gameEngine.health = document.getElementById("health");
     createFlags();
     gameEngine.activeVoteCoins = [];
     gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));

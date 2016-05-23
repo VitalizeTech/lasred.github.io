@@ -117,13 +117,16 @@ TrumpWalker.prototype.update = function () {
             //update health bar based on current health
             if(this.game.healthBar.src.match("./img/4-4health.png")) {
                 this.game.healthBar.src = "./img/3-4health.png";
+				this.game.health.innerHTML = "3";
             } else if(this.game.healthBar.src.match("./img/3-4health.png")) {
                 this.game.healthBar.src = "./img/2-4health.png";
+				this.game.health.innerHTML = "2";
             } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
                 this.game.healthBar.src = "./img/1-4health.png";
+				this.game.health.innerHTML = "1";
             } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
                 this.game.healthBar.src = "./img/0-4health.png";
-                
+                this.game.health.innerHTML = "0";
                 this.game.entities[1].removeFromWorld = true;
                 
                 //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
