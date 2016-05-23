@@ -13,7 +13,7 @@ function IvankaWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
     this.isPaused = true;
     this.pausedFor = 0;
     this.pDirection = 2;
-    this.timeLimit = 2000;
+    this.timeLimit = 1000;
     
     this.nextPosition = function (direction) {
         switch (direction) {
@@ -63,7 +63,7 @@ IvankaWalker.prototype.update = function () {
     
     if(iX > 0 && iX < 1170 && iY > 0 && iY < 700) {
         //this.game.scoreMessage.innerHTML = 'Time left with Ivanka = ' + this.timeLimit;
-        if(this.timeLimit === 2000) {
+        if(this.timeLimit === 1000) {
             this.game.scoreMessage.innerHTML = 'Ivanka is helping you campaign and is boosting your popularity. This will increase your popularity in each state you visit.';
             this.timeLimit--;
             this.game.ivankaBoost = 1.25;
@@ -88,7 +88,7 @@ IvankaWalker.prototype.update = function () {
                     this.game.entities[2].y = (((Math.random() * 1400) + 900)*-1);
                 }
             }
-            this.timeLimit = 2000;
+            this.timeLimit = 1000;
             this.game.ivankaBoost = 1;
         }
         else {
