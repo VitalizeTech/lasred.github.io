@@ -54,23 +54,44 @@ function AssassinWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
 }
 
 AssassinWalker.prototype.update = function () {
+    //if Game score reaches a certain point each assassin gets a speed change to up the difficulty
+    var gameScore = this.game.scoreBoard.innerHTML;
+    var assassinNum = 0;
+    if(gameScore > 600) {
+        this.speed = 90;
+    }
+    if(this.game.scoreType.innerHTML == "Electors") {
+        this.speed = 95;
+        if(gameScore > 150) {
+            this.speed = 100;
+        }
+    }
+    
     var isMoving = false;
+    var assassinX = 0;
+    var assassinY = 0;
     //find Trump Location
     var trumpX = this.game.entities[1].x;
     var trumpY = this.game.entities[1].y;
+    //find out which entity the Assassin is. This will allow multiple assassins to exist at the same time.
+    for(var i = 6; i < this.game.entities.length; i++) {
+        if((this.x === this.game.entities[i].x) && (this.y === this.game.entities[i].y)) {
+            //once the Assassin has been found set the assassinX and Y variables so distance can be calculated
+            assassinX = this.game.entities[i].x;
+            assassinY = this.game.entities[i].y;
+            assassinNum = i;
+        }
+    }
     
-    //find SecretService Location
-    var serveX = this.game.entities[6].x;
-    var serveY = this.game.entities[6].y;
-    
-    var dX = serveX - trumpX;
-    var dY = serveY - trumpY;
+    //calculate distance on x and y from trump
+    var dX = assassinX - trumpX;
+    var dY = assassinY - trumpY;
     
     
     var closestMove = 0;
     //finds current distance from trumpWalker
     var baseDist = Math.sqrt(dX * dX + dY * dY);
-    //finds distance if secretServiceWalker moves in any direction
+    //finds distance if Assassin moves in any direction
     var leftDist = Math.sqrt((dX-1) * (dX-1) + dY * dY);
     var rightDist = Math.sqrt((dX+1) * (dX+1) + dY * dY);
     var upDist = Math.sqrt(dX * dX + (dY-1) * (dY-1));
@@ -132,26 +153,28 @@ AssassinWalker.prototype.update = function () {
         isMoving = true;
     }
     
-    //    //bullet collision against secretServiceWalker
-    //    //get length of array
-    //    var l = this.game.entities.length;
-    //    //for loop to check each bullets position in relation to Trump to check for collision
-    //    for(var i = 7; i < l; i++) {
-    //        //getting the x and y coordinates of the bullet
-    //        var eX = this.game.entities[i].x;
-    //        var eY = this.game.entities[i].y;
-    //        //getting the x and y coordinates of TrumpWalker
-    //        var tX = this.game.entities[5].x;
-    //        var tY = this.game.entities[5].y;
-    //        //calculate distance bullet is from TrumpWalker
-    //        var dX = tX - eX;
-    //        var dY = tY - eY;
-    //        var dist = Math.sqrt(dX * dX + dY * dY);
-    //        //check for collison
-    //        if(dist < 30) {
-    //            this.game.entities[5].removeFromWorld = true;
-    //        }
-    //    }
+    //release check for the second and third assassin. Once a certain score is reached they are allowed to enter the playable area
+    if((assassinNum === 10 && gameScore < 900 && this.game.scoreType.innerHTML == "Delegates") || (assassinNum === 11 && this.game.scoreType.innerHTML == "Delegates")){
+        if(Math.random() > .5) {
+            this.game.entities[assassinNum].x = ((Math.random() * 2170) + 1400);
+            if(Math.random() > .5) {
+                this.game.entities[assassinNum].y = ((Math.random() * 1400) + 900);
+            }
+            else {
+                this.game.entities[assassinNum].y = (((Math.random() * 1400) + 900)*-1);
+            }
+        }
+        else {
+            this.game.entities[assassinNum].x = (((Math.random() * 2170) + 1400)*-1);
+            if(Math.random() > .5) {
+                this.game.entities[assassinNum].y = ((Math.random() * 1400) + 900);
+            }
+            else {
+                this.game.entities[assassinNum].y = (((Math.random() * 1400) + 900)*-1);
+            }
+        }
+    }
+    
     
     //helps with animation don't delete or modify
     if (isMoving) {
