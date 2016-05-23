@@ -1,5 +1,4 @@
 /*
-  Computational World - Herobound gladators, Ansher Wars
   JavaScript - interpreted language, not compiled into binary file
   JavaScript provides interactive elements of web page
   */
@@ -49,7 +48,7 @@ Animation.prototype.isDone = function () {
 function Background(game) {
     this.game = game;
     this.ctx = game.ctx;
-    this.image = AM.getAsset("./img/MAGABackground.png");
+    this.image = AM.getAsset("./img/debateRoom.jpg");
 	this.lyinTedAsset = AM.getAsset("./img/LyinTed.png");
 	this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
 	this.degree = 0;
@@ -69,7 +68,13 @@ Background.prototype.draw = function (ctx) {
 	this.degree += 0.9;
 	if(timeElapsed == 50) {
 		timeElapsed = 0;
-		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.degree);
+		var newBullet;
+		if(this.game.scoreType.innerHTML == "Delegates") {
+			newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree);
+		}
+		else {
+			newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.PNG"), this.degree);
+		}
 		this.game.entities.push(newBullet);
 	}
     ctx.drawImage(this.image, 0, 0, 1170, 700);
@@ -77,14 +82,14 @@ Background.prototype.draw = function (ctx) {
 	ctx.translate( 525.5, 287.5);
 	ctx.rotate(this.degree*Math.PI/180);
 	ctx.translate(0, 0);
-	ctx.drawImage(this.game.scoreMessage.innerHTML.length > 0 ?
-        this.crookedHillaryAsset : this.lyinTedAsset,
-        -62.5, -62.5, 125, 125);
-	//if (this.game.scoreMessage.innerHTML.length > 0) {
-	//	ctx.drawImage(this.crookedHillaryAsset, -50, -70, 125, 125);
-	//} else {
-	//	ctx.drawImage(this.lyinTedAsset, -62.5, -62.5, 125, 125);
-	//}
+//	ctx.drawImage(this.game.scoreMessage.innerHTML.length > 0 ?
+//        this.crookedHillaryAsset : this.lyinTedAsset,
+//        -62.5, -62.5, 125, 125);
+	if (this.game.scoreType.innerHTML == "Delegates") {
+		ctx.drawImage(this.lyinTedAsset, -50, -70, 125, 125);
+	} else {
+		ctx.drawImage(this.crookedHillaryAsset, -62.5, -62.5, 125, 125);
+	}
 	ctx.restore();
     ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Trump Adventures</title>
@@ -12,16 +12,42 @@
     <script type="text/javascript" src="./main.js"></script>
 	<script type="text/javascript" src="./bullet.js"></script>
 	<script type="text/javascript" src="./ReporterWalker.js"></script>
+    <script type="text/javascript" src="./BenCarsonWalker.js"></script>
 	<script type="text/javascript" src="./CartelWalker.js"></script>
 	<script type="text/javascript" src="./AssassinWalker.js"></script>
+    <script type="text/javascript" src="./SecretServiceWalker.js"></script>
 	<script type="text/javascript" src="./assetloader.js"></script>
 </head>
 <body>
-    <h1 id="score_title" style="position: absolute; top:10px; right:100px; width:40px; height:25px">Score:</h1>
-    <h1 id="score" style="position: absolute; top:10px; right:0px; width:40px; height:25px">0</h1>
-	<h2 id="score_type" style="position: absolute; top:50px; right:100px; width:40px; height:25px">Delegates</h1>
-	<center><h3 id="message" style="position: absolute; top:195px; right:30px; width:130px; height:25px"></h1></center>
+    <h2 id="health_title" style="position: absolute; top:-10px; right:210px; 
+		width:40px; height:25px">Health:</h2>
+	<h2 id="health" style="position: absolute; top:-10px; right:110px; 
+		width:40px; height:25px">4</h2>
+
+    <h2 id="score_title" style="position: absolute; top:55px; right:210px; 
+		width:40px; height:25px">Score:</h2>
+    <h2 id="score" style="position: absolute; top:55px; right:120px; width:60px; height:25px">0</h2>
+    <h3 id="score_type" style="position: absolute; top:61px; right:26px; width:100px; height:25px">Delegates</h3>
+    <center><h3 id="message" style="position: absolute; top:195px; right:110px; width:130px; height:25px"></h1></center>
     <!--HTML5 - easy way to make games-->
     <canvas id="gameWorld" tabindex="1" width="2000" height="600"></canvas>
+    <img id="healthBar" style="position: absolute; top:40px; right:50px; width:200px; height:30px" src="./img/4-4health.png"></img>
+            
+            <audio id="gameAudio">
+                <source src="./music/Test_Song.mp3" type="audio/mpeg">
+            </audio>
+            <audio id="securitySlap" preload>
+                <source src="./music/slap.wav" type="audio/wav">
+            </audio>
+            <audio id="personGrunt" preload>
+                <source src="./music/Person_Grunt.wav" type="audio/wav">
+            </audio>
+            <audio id="trumpDying" preload>
+                <source src="./music/We_Are_Dying.wav" type="audio/wav">
+            </audio>
+            <audio id="trumpDead" preload>
+                <source src="./music/Dead_Trump.wav" type="audio/wav">
+            </audio>
+            
 </body>
 </html>

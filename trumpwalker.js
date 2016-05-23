@@ -12,6 +12,9 @@ function TrumpWalker(game, spritesheet) {
     this.leftLimit = 10;
     this.isPaused = true;
     this.pausedFor = 0;
+    this.weDying = document.getElementById("trumpDying");
+    this.weDead = document.getElementById("trumpDead");
+
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -70,6 +73,82 @@ TrumpWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
+
+    //Assassin, Cartel and Bullet collison for Trump
+    //get length of array
+    var l = this.game.entities.length;
+    //for loop to check each bullets position in relation to Trump to check for collision
+    for(var i = 4; i < l; i++) {
+        //getting the x and y coordinates of the bullet
+        var eX = this.game.entities[i].x;
+        var eY = this.game.entities[i].y;
+        //getting the x and y coordinates of TrumpWalker
+        var tX = this.game.entities[1].x;
+        var tY = this.game.entities[1].y;
+        //calculate distance bullet is from TrumpWalker
+        var dX = tX - eX;
+        var dY = tY - eY;
+        var dist = Math.sqrt(dX * dX + dY * dY);
+        //check for collison
+        if(dist < 30) {
+            if(i > 5) {
+                //if the collision is a bullet remove it from the world
+                if(i > 11) {
+                    this.game.entities[i].removeFromWorld = true;
+                }
+                //if the collision is the assassin or the cartel move them off the playable area
+                if(i < 12) {
+                    if( i > 8) {
+                        this.game.scoreMessage.innerHTML = 'The Assassin slipped past your defenses and caused you harm!';
+                    }
+                    else {
+                        this.game.scoreMessage.innerHTML = 'The Cartel slipped past your defenses and caused you harm!';
+                    }
+                    if(Math.random() > .5) {
+                        this.game.entities[i].x = ((Math.random() * 2170) + 1400);
+                        if(Math.random() > .5) {
+                            this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                        }
+                        else {
+                            this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                        }
+                    }
+                    else {
+                        this.game.entities[i].x = (((Math.random() * 2170) + 1400)*-1);
+                        if(Math.random() > .5) {
+                            this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                        }
+                        else {
+                            this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                        }
+                    }
+                }
+            }
+            //if the collision is the assassin or the cartel move them off the playable area
+            if(i === 4) {
+                this.game.scoreMessage.innerHTML = 'You caught up to Ben Carson and he has healed you a little bit.';
+                if(Math.random() > .5) {
+                    this.game.entities[i].x = ((Math.random() * 2170) + 1400);
+                    if(Math.random() > .5) {
+                        this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                    }
+                    else {
+                        this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                    }
+                }
+                else {
+                    this.game.entities[i].x = (((Math.random() * 2170) + 1400)*-1);
+                    if(Math.random() > .5) {
+                        this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                    }
+                    else {
+                        this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                    }
+                }
+            }
+        }
+    }
+
     //collision
     if (isMoving) {
         this.isPaused = false;
@@ -85,23 +164,25 @@ TrumpWalker.prototype.update = function () {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
 
-                //add bonus if Ivanka is active.
-                if (this.ivankaActive) {
-                    this.game.scoreBoard.innerHTML = 1.5*parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
-                } else {
-                    this.game.scoreBoard.innerHTML = parseInt(voteCoin.vote) + parseInt(this.game.scoreBoard.innerHTML);
+                this.game.scoreBoard.innerHTML = Math.round((parseInt(voteCoin.vote) * this.game.ivankaBoost * this.game.reporterBoost)) + parseInt(this.game.scoreBoard.innerHTML);
+                if (this.game.scoreBoard.innerHTML >= 270) { //270
+                    if (this.game.scoreType.innerHTML == "Electors") {
+                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
+                        for(var k = 0; k < this.game.entities.length; k++) {
+                            this.game.entities[k].removeFromWorld = true;
+                            console.log("removing entity " + k);
+                        }
+                        document.body.style.backgroundImage = "url('./img/win.jpg')";
+                        document.body.style.backgroundRepeat = "no-repeat";
+                    }
                 }
+                if (this.game.scoreBoard.innerHTML >= 1237) { //1237
 
-
-                if (this.game.scoreBoard.innerHTML >= 50) {
                     if (this.game.scoreType.innerHTML == "Delegates") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the Republican nomination!';
-                        this.game.scoreType.innerHTML = this.game.scoreType.innerHTML = 'Electoral Votes';
+                        this.game.scoreType.innerHTML = this.game.scoreType.innerHTML = 'Electors';
                         this.game.scoreBoard.innerHTML = 0;
-                    }
-                    else{
-                        this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
-                        // TODO pop up new screen for congrats or enter name for high score or something?
+                        this.game.entities[0].image = AM.getAsset("./img/whiteHouse.jpg");
                     }
                 }
                 var toAddVoteCoin = createVoteCoin(this.game);
@@ -109,6 +190,7 @@ TrumpWalker.prototype.update = function () {
                     this.game.activeVoteCoins.push(toAddVoteCoin);
                 }
             }
+
         }
     } else {
         this.isPaused = true;
@@ -124,7 +206,7 @@ TrumpWalker.prototype.update = function () {
             this.pausedFor++;
         }
     }
-}
+};
 
 TrumpWalker.prototype.draw = function (ctx) {
     var anim = this.animation;

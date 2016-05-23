@@ -39,12 +39,14 @@ GameEngine.prototype.start = function () {
 };
 //every loop, game engine will update and draw every entity
 GameEngine.prototype.update = function () {
+    
     var entitiesCount = this.entities.length;
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
         if (this.entities[i] != null) {
             if (!entity.removeFromWorld) {
                 entity.update();
+                
             }
         }
     }
@@ -99,6 +101,12 @@ function GameEngine() {
     this.wheel = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
+    this.ivankaBoost = 1;
+    this.reporterBoost = 1;
+    this.startAudio = document.getElementById("gameAudio");
+    this.startAudio.volume = .2;
+    this.startAudio.play();
+    //startAudio.ended will tell true or false if song is over.
 
 /*
     var arey = [1,2,3,4,5,6,7,8];
