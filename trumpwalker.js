@@ -123,41 +123,7 @@ TrumpWalker.prototype.update = function () {
                         }
                     }
                 }
-                
-                //update health bar based on current health
-                if(this.game.healthBar.src.match("./img/4-4health.png")) {
-                    this.game.healthBar.src = "./img/3-4health.png";
-                    this.weDying.volume = 1;
-                    this.weDying.play();
-                } else if(this.game.healthBar.src.match("./img/3-4health.png")) {
-                    this.game.healthBar.src = "./img/2-4health.png";
-                    this.weDying.volume = 1;
-                    this.weDying.play();
-                } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
-                    this.game.healthBar.src = "./img/1-4health.png";
-                    this.weDying.volume = 1;
-                    this.weDying.play();
-                } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
-                    this.game.healthBar.src = "./img/0-4health.png";
-                    this.weDead.volume = 1;
-                    this.weDead.play();
-                    
-                    this.game.entities[1].removeFromWorld = true;
-                    
-                    //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
-                    if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
-                        location.reload();
-                    }
-                    else {
-                        for(var i = 0; i < this.game.entities.length; i++) {
-                            this.game.entities[i].removeFromWorld = true;
-                        }
-                        document.body.style.backgroundImage = "url('./img/Game_Over.png')";
-                        document.body.style.backgroundRepeat = "no-repeat";
-                    }
-                }
             }
-            
             //if the collision is the assassin or the cartel move them off the playable area
             if(i === 4) {
                 this.game.scoreMessage.innerHTML = 'You caught up to Ben Carson and he has healed you a little bit.';

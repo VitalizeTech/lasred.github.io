@@ -70,10 +70,10 @@ Background.prototype.draw = function (ctx) {
 		timeElapsed = 0;
 		var newBullet;
 		if(this.game.scoreType.innerHTML == "Delegates") {
-			newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.degree);
+			newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree);
 		}
 		else {
-			newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.png"), this.degree);
+			newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.PNG"), this.degree);
 		}
 		this.game.entities.push(newBullet);
 	}

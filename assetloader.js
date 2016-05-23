@@ -5,7 +5,7 @@ AM.queueDownload("./img/MAGABackground.png");
 AM.queueDownload("./img/flags/spritesheet.png");
 AM.queueDownload("./img/CrookedHillary.png");
 AM.queueDownload("./img/LyinTed.png");
-AM.queueDownload("./img/Canada.png");
+AM.queueDownload("./img/Canada.PNG");
 AM.queueDownload("./img/ivanka.png");
 AM.queueDownload("./img/reporter.png");
 AM.queueDownload("./img/cartel.png");
@@ -24,7 +24,7 @@ AM.queueDownload("./img/maga.png");
 AM.queueDownload("./img/enemies.png");
 AM.queueDownload("./img/pointingTrump.png");
 AM.queueDownload("./img/allies.png");
-AM.queueDownload("./img/womenscard.png");
+AM.queueDownload("./img/womenscard.PNG");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
@@ -89,7 +89,7 @@ AM.downloadAll(function () {
     var assassinWalkerThree = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 32, 48, 4, assassinThreeLocation.x,  assassinThreeLocation.y, 0.1, 16, 90);
     gameEngine.characters.push(assassinWalkerThree);
     gameEngine.addEntity(assassinWalkerThree);
-    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.png"), gameEngine.entities[0].degree);
+    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.PNG"), gameEngine.entities[0].degree);
     firstBullet.entityPos = gameEngine.entities.length;
 	gameEngine.addEntity(firstBullet);
 })
