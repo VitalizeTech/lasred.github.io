@@ -1,4 +1,4 @@
-function IvankaWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x, y, frameDuration, frames, speed) {
+function BenCarsonWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x, y, frameDuration, frames, speed) {
     this.animation = new Animation(spritesheet, frameHeight, frameWidth, sheetWidth, frameDuration, frames, true, 1);
     this.game = game;
     this.direction = 1;
@@ -13,7 +13,6 @@ function IvankaWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
     this.isPaused = true;
     this.pausedFor = 0;
     this.pDirection = 2;
-    this.timeLimit = 1000;
     
     this.nextPosition = function (direction) {
         switch (direction) {
@@ -54,47 +53,9 @@ function IvankaWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
     }
 }
 
-IvankaWalker.prototype.update = function () {
+BenCarsonWalker.prototype.update = function () {
     var isMoving = false;
     
-    //find IvankaLocation
-    var iX = this.game.entities[2].x;
-    var iY = this.game.entities[2].y;
-    
-    if(iX > 0 && iX < 1170 && iY > 0 && iY < 700) {
-        //this.game.scoreMessage.innerHTML = 'Time left with Ivanka = ' + this.timeLimit;
-        if(this.timeLimit === 2000) {
-            this.game.scoreMessage.innerHTML = 'Ivanka is helping you campaign and is boosting your popularity. This will increase your popularity in each state you visit.';
-            this.timeLimit--;
-            this.game.ivankaBoost = 1.1;
-        }
-        else if(this.timeLimit === 0) {
-            this.game.scoreMessage.innerHTML = 'Ivanka has departed for a short time to relax after helping you gain support. Your increase in popularity has disappeared as a result.';
-            if(Math.random() > .5) {
-                this.game.entities[2].x = ((Math.random() * 2170) + 1400);
-                if(Math.random() > .5) {
-                    this.game.entities[2].y = ((Math.random() * 1400) + 900);
-                }
-                else {
-                    this.game.entities[2].y = (((Math.random() * 1400) + 900)*-1);
-                }
-            }
-            else {
-                this.game.entities[2].x = (((Math.random() * 2170) + 1400)*-1);
-                if(Math.random() > .5) {
-                    this.game.entities[2].y = ((Math.random() * 1400) + 900);
-                }
-                else {
-                    this.game.entities[2].y = (((Math.random() * 1400) + 900)*-1);
-                }
-            }
-            this.timeLimit = 2000;
-            this.game.ivankaBoost = 1;
-        }
-        else {
-            this.timeLimit--;
-        }
-    }
     //calculate next directional move
     if(Math.random() > .95) {
         this.direction = Math.floor(Math.random() *4);
@@ -140,7 +101,7 @@ IvankaWalker.prototype.update = function () {
     }
 };
 
-IvankaWalker.prototype.draw = function (ctx) {
+BenCarsonWalker.prototype.draw = function (ctx) {
     var anim = this.animation;
     anim.elapsedTime += this.game.clockTick;
     if (anim.isDone()) {

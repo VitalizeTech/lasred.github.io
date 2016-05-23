@@ -13,6 +13,8 @@ function SecretServiceWalker(game, spritesheet,  frameHeight, frameWidth, sheetW
     this.isPaused = true;
     this.pausedFor = 0;
     this.pDirection = 2;
+    this.slap = document.getElementById("securitySlap");
+    this.grunt = document.getElementById("personGrunt");
     
     this.nextPosition = function (direction) {
         switch (direction) {
@@ -66,16 +68,28 @@ SecretServiceWalker.prototype.update = function () {
     var trumpY = this.game.entities[1].y;
     
     //find SecretService Location
-    var serveX = this.game.entities[4].x;
-    var serveY = this.game.entities[4].y;
+    var serveX = this.game.entities[5].x;
+    var serveY = this.game.entities[5].y;
     
-    //find Cartel Location
-    var cartelX = this.game.entities[5].x;
-    var cartelY = this.game.entities[5].y;
+    //variables to find closest enemy to SecretServicewalker
+    var enemyX = 0;
+    var enemyY = 0;
+    var closestCurrentThreat = 0;
+    var closestDist = 10000;
     
-    //find Assassin Location
-    var assassinX = this.game.entities[6].x;
-    var assassinY = this.game.entities[6].y;
+    for(var i = 6; i < 12; i++) {
+        enemyX = this.game.entities[i].x;
+        enemyY = this.game.entities[i].y;
+        
+        var eX = serveX - enemyX;
+        var eY = serveY - enemyY;
+        
+        var enemyDist = Math.sqrt(eX * eX + eY * eY);
+        if(enemyDist < closestDist) {
+            closestDist = enemyDist;
+            closestCurrentThreat = i;
+        }
+    }
     
     //distance x and y for trump
     var dX = serveX - trumpX;
@@ -83,64 +97,34 @@ SecretServiceWalker.prototype.update = function () {
     
     //finds current distance from trumpWalker
     var baseDist = Math.sqrt(dX * dX + dY * dY);
-    
-    //distance x and y for cartel
-    var cX = serveX - cartelX;
-    var cY = serveY - cartelY;
-    
-    //distance x and y for assassin
-    var aX = serveX - assassinX;
-    var aY = serveY - assassinY;
-    
-    //finds current distance from cartel
-    var cartelDist = Math.sqrt(cX * cX + cY * cY);
-    
-    //finds current distance from assassin
-    var assassinDist = Math.sqrt(aX * aX + aY * aY);
-    
-    var closestThreat = Math.min(cartelDist, assassinDist);
-    if(closestThreat < 50) {
-        if(closestThreat < 20) {
-            if(closestThreat === cartelDist) {
+
+    //checks to see if the closest threat is close and if it is take action.
+    if(closestDist < 50) {
+        if(closestDist < 20) {
+            //var testSlap = new Audio("./music/slap.wav");
+            //testSlap.play();
+            if(Math.random() > .5) {
+                this.game.entities[closestCurrentThreat].x = ((Math.random() * 2170) + 1400);
                 if(Math.random() > .5) {
-                    this.game.entities[5].x = ((Math.random() * 2170) + 1400);
-                    if(Math.random() > .5) {
-                        this.game.entities[5].y = ((Math.random() * 1400) + 900);
-                    }
-                    else {
-                        this.game.entities[5].y = (((Math.random() * 1400) + 900)*-1);
-                    }
+                    this.game.entities[closestCurrentThreat].y = ((Math.random() * 1400) + 900);
                 }
                 else {
-                    this.game.entities[5].x = (((Math.random() * 2170) + 1400)*-1);
-                    if(Math.random() > .5) {
-                        this.game.entities[5].y = ((Math.random() * 1400) + 900);
-                    }
-                    else {
-                        this.game.entities[5].y = (((Math.random() * 1400) + 900)*-1);
-                    }
+                    this.game.entities[closestCurrentThreat].y = (((Math.random() * 1400) + 900)*-1);
                 }
+            }
+            else {
+                this.game.entities[closestCurrentThreat].x = (((Math.random() * 2170) + 1400)*-1);
+                if(Math.random() > .5) {
+                    this.game.entities[closestCurrentThreat].y = ((Math.random() * 1400) + 900);
+                }
+                else {
+                    this.game.entities[closestCurrentThreat].y = (((Math.random() * 1400) + 900)*-1);
+                }
+            }
+            if(closestCurrentThreat > 5 && closestCurrentThreat < 9) {
                 this.game.scoreMessage.innerHTML = 'Your Secret Service caught up with the Cartel. They have been stopped...for now...';
             }
-            if(closestThreat === assassinDist) {
-                if(Math.random() > .5) {
-                    this.game.entities[6].x = ((Math.random() * 2170) + 1400);
-                    if(Math.random() > .5) {
-                        this.game.entities[6].y = ((Math.random() * 1400) + 900);
-                    }
-                    else {
-                        this.game.entities[6].y = (((Math.random() * 1400) + 900)*-1);
-                    }
-                }
-                else {
-                    this.game.entities[6].x = (((Math.random() * 2170) + 1400)*-1);
-                    if(Math.random() > .5) {
-                        this.game.entities[6].y = ((Math.random() * 1400) + 900);
-                    }
-                    else {
-                        this.game.entities[6].y = (((Math.random() * 1400) + 900)*-1);
-                    }
-                }
+            if(closestCurrentThreat > 8) {
                 this.game.scoreMessage.innerHTML = 'Your Secret Service caught up with the Assassin. They have been stopped....for now...';
             }
             //finds distance if secretServiceWalker moves in any direction
@@ -148,20 +132,20 @@ SecretServiceWalker.prototype.update = function () {
             rightDist = Math.sqrt((dX+1) * (dX+1) + dY * dY);
             upDist = Math.sqrt(dX * dX + (dY-1) * (dY-1));
             downDist = Math.sqrt(dX * dX + (dY+1) * (dY+1));
+            
+            this.slap.volume = .2;
+            this.grunt.volume = .2;
+            
+            this.slap.play();
+            this.grunt.play();
         }
-        //if the closest threat is the cartel calculate the distances
-        else if(closestThreat === cartelDist) {
-            leftDist = Math.sqrt((cX-1) * (cX-1) + cY * cY);
-            rightDist = Math.sqrt((cX+1) * (cX+1) + cY * cY);
-            upDist = Math.sqrt(cX * cX + (cY-1) * (cY-1));
-            downDist = Math.sqrt(cX * cX + (cY+1) * (cY+1));
-        }
-        //if the closest threat is the assassin calculate the distances
-        else if(closestThreat === assassinDist) {
-            leftDist = Math.sqrt((aX-1) * (aX-1) + aY * aY);
-            rightDist = Math.sqrt((aX+1) * (aX+1) + aY * aY);
-            upDist = Math.sqrt(aX * aX + (aY-1) * (aY-1));
-            downDist = Math.sqrt(aX * aX + (aY+1) * (aY+1));
+        else if (closestCurrentThreat > 0) {
+            enemyX = this.game.entities[closestCurrentThreat].x;
+            enemyY = this.game.entities[closestCurrentThreat].y;
+            leftDist = Math.sqrt((serveX - enemyX-1) * (serveX - enemyX-1) + (serveY - enemyY) * (serveY - enemyY));
+            rightDist = Math.sqrt((serveX - enemyX+1) * (serveX - enemyX+1) + (serveY - enemyY) * (serveY - enemyY));
+            upDist = Math.sqrt((serveX - enemyX) * (serveX - enemyX) + (serveY - enemyY-1) * (serveY - enemyY-1));
+            downDist = Math.sqrt((serveX - enemyX) * (serveX - enemyX) + (serveY - enemyY+1) * (serveY - enemyY+1));
         }
         
     }
@@ -233,35 +217,37 @@ SecretServiceWalker.prototype.update = function () {
     //get length of array
     var l = this.game.entities.length;
     //for loop to check each bullets position in relation to Trump to check for collision
-    for(var i = 7; i < l; i++) {
+    for(var i = 13; i < l; i++) {
         //getting the x and y coordinates of the bullet
         var eX = this.game.entities[i].x;
         var eY = this.game.entities[i].y;
         //getting the x and y coordinates of SecretServiceWalker
-        var tX = this.game.entities[4].x;
-        var tY = this.game.entities[4].y;
+        var tX = this.game.entities[5].x;
+        var tY = this.game.entities[5].y;
         //calculate distance bullet is from SecretServiceWalker
         var dX = tX - eX;
         var dY = tY - eY;
         var dist = Math.sqrt(dX * dX + dY * dY);
         //check for collison
         if(dist < 30) {
+            this.grunt.volume = .2;
+            this.grunt.play();
             if(Math.random() > .5) {
-                this.game.entities[4].x = ((Math.random() * 2170) + 1170);
+                this.game.entities[5].x = ((Math.random() * 2170) + 1170);
                 if(Math.random() > .5) {
-                    this.game.entities[4].y = ((Math.random() * 1400) + 700);
+                    this.game.entities[5].y = ((Math.random() * 1400) + 700);
                 }
                 else {
-                    this.game.entities[4].y = (((Math.random() * 1400) + 700)*-1);
+                    this.game.entities[5].y = (((Math.random() * 1400) + 700)*-1);
                 }
             }
             else {
-                this.game.entities[4].x = (((Math.random() * 2170) + 1170)*-1);
+                this.game.entities[5].x = (((Math.random() * 2170) + 1170)*-1);
                 if(Math.random() > .5) {
-                    this.game.entities[4].y = ((Math.random() * 1400) + 700);
+                    this.game.entities[5].y = ((Math.random() * 1400) + 700);
                 }
                 else {
-                    this.game.entities[4].y = (((Math.random() * 1400) + 700)*-1);
+                    this.game.entities[5].y = (((Math.random() * 1400) + 700)*-1);
                 }
             }
             this.game.scoreMessage.innerHTML = 'Your Secret Service took a bullet for you. They are at the hospital recovering but a replacement for him will arrive soon.';

@@ -74,17 +74,15 @@ ReporterWalker.prototype.update = function () {
     if(baseDist < 20) {
         if(Math.random() > .5) {
             this.game.scoreMessage.innerHTML = 'The Reporter caught up to you for an interview and you have recieved a boost to your popularity for a short time. This will increase your popularity in each state.';
-            this.game.reporterBoost = 1.5;
-            this.reportTimer = 2000;
+            this.game.reporterBoost = 1.125;
+            this.reportTimer = 1000;
         }
         else {
             this.game.scoreMessage.innerHTML = 'The Reporter caught up to you for an interview and you have recieved a blow to  your popularity for a short time. This will reduce your popularity in each state.';
             this.game.reporterBoost = .75;
-            this.reportTimer = 2000;
+            this.reportTimer = 1000;
         }
-        if(this.reportTimer < 1) {
-            this.game.reporterBoost = 1;
-        }
+        
         
         if(Math.random() > .5) {
             this.game.entities[3].x = ((Math.random() * 2170) + 1400);
@@ -106,6 +104,11 @@ ReporterWalker.prototype.update = function () {
         }
         
     }
+    
+    if(this.reportTimer < 1) {
+            this.game.reporterBoost = 1;
+    }
+        
     //calculate next directional move
     if(Math.random() > .95) {
         this.direction = Math.floor(Math.random() *4);

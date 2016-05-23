@@ -12,6 +12,9 @@ function TrumpWalker(game, spritesheet) {
     this.leftLimit = 10;
     this.isPaused = true;
     this.pausedFor = 0;
+    this.weDying = document.getElementById("trumpDying");
+    this.weDead = document.getElementById("trumpDead");
+    
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -75,7 +78,7 @@ TrumpWalker.prototype.update = function () {
     //get length of array
     var l = this.game.entities.length;
     //for loop to check each bullets position in relation to Trump to check for collision
-    for(var i = 5; i < l; i++) {
+    for(var i = 4; i < l; i++) {
         //getting the x and y coordinates of the bullet
         var eX = this.game.entities[i].x;
         var eY = this.game.entities[i].y;
@@ -87,13 +90,77 @@ TrumpWalker.prototype.update = function () {
         var dY = tY - eY;
         var dist = Math.sqrt(dX * dX + dY * dY);
         //check for collison
-        if(dist < 20) {
-            //if the collision is a bullet remove it from the world
-            if(i > 6) {
-                this.game.entities[i].removeFromWorld = true;
+        if(dist < 30) {
+            if(i > 5) {
+                //if the collision is a bullet remove it from the world
+                if(i > 11) {
+                    this.game.entities[i].removeFromWorld = true;
+                }
+                //if the collision is the assassin or the cartel move them off the playable area
+                if(i < 12) {
+                    if( i > 8) {
+                        this.game.scoreMessage.innerHTML = 'The Assassin slipped past your defenses and caused you harm!';
+                    }
+                    else {
+                        this.game.scoreMessage.innerHTML = 'The Cartel slipped past your defenses and caused you harm!';
+                    }
+                    if(Math.random() > .5) {
+                        this.game.entities[i].x = ((Math.random() * 2170) + 1400);
+                        if(Math.random() > .5) {
+                            this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                        }
+                        else {
+                            this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                        }
+                    }
+                    else {
+                        this.game.entities[i].x = (((Math.random() * 2170) + 1400)*-1);
+                        if(Math.random() > .5) {
+                            this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                        }
+                        else {
+                            this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                        }
+                    }
+                }
+                
+                //update health bar based on current health
+                if(this.game.healthBar.src.match("./img/4-4health.png")) {
+                    this.game.healthBar.src = "./img/3-4health.png";
+                    this.weDying.volume = 1;
+                    this.weDying.play();
+                } else if(this.game.healthBar.src.match("./img/3-4health.png")) {
+                    this.game.healthBar.src = "./img/2-4health.png";
+                    this.weDying.volume = 1;
+                    this.weDying.play();
+                } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
+                    this.game.healthBar.src = "./img/1-4health.png";
+                    this.weDying.volume = 1;
+                    this.weDying.play();
+                } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
+                    this.game.healthBar.src = "./img/0-4health.png";
+                    this.weDead.volume = 1;
+                    this.weDead.play();
+                    
+                    this.game.entities[1].removeFromWorld = true;
+                    
+                    //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
+                    if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
+                        location.reload();
+                    }
+                    else {
+                        for(var i = 0; i < this.game.entities.length; i++) {
+                            this.game.entities[i].removeFromWorld = true;
+                        }
+                        document.body.style.backgroundImage = "url('./img/Game_Over.png')";
+                        document.body.style.backgroundRepeat = "no-repeat";
+                    }
+                }
             }
+            
             //if the collision is the assassin or the cartel move them off the playable area
-            if(i < 7) {
+            if(i === 4) {
+                this.game.scoreMessage.innerHTML = 'You caught up to Ben Carson and he has healed you a little bit.';
                 if(Math.random() > .5) {
                     this.game.entities[i].x = ((Math.random() * 2170) + 1400);
                     if(Math.random() > .5) {
@@ -112,30 +179,14 @@ TrumpWalker.prototype.update = function () {
                         this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
                     }
                 }
-            }
-            
-            //update health bar based on current health
-            if(this.game.healthBar.src.match("./img/4-4health.png")) {
-                this.game.healthBar.src = "./img/3-4health.png";
-            } else if(this.game.healthBar.src.match("./img/3-4health.png")) {
-                this.game.healthBar.src = "./img/2-4health.png";
-            } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
-                this.game.healthBar.src = "./img/1-4health.png";
-            } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
-                this.game.healthBar.src = "./img/0-4health.png";
                 
-                this.game.entities[1].removeFromWorld = true;
-                
-                //this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You bit the bullet!';
-                if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
-                    location.reload();
-                }
-                else {
-                    for(var i = 0; i < this.game.entities.length; i++) {
-                        this.game.entities[i].removeFromWorld = true;
-                    }
-                    document.body.style.backgroundImage = "url('./img/Game_Over.png')";
-                    document.body.style.backgroundRepeat = "no-repeat";
+                //update health bar based on current health
+                if(this.game.healthBar.src.match("./img/3-4health.png")) {
+                    this.game.healthBar.src = "./img/4-4health.png";
+                } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
+                    this.game.healthBar.src = "./img/3-4health.png";
+                } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
+                    this.game.healthBar.src = "./img/2-4health.png";
                 }
             }
         }
@@ -159,18 +210,14 @@ TrumpWalker.prototype.update = function () {
                 if (this.game.scoreBoard.innerHTML >= 270) { //270
                     if (this.game.scoreType.innerHTML == "Electors") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
-                        //this.game.entities[0].image = AM.getAsset("./img/win.jpg");
-                        //this.game.entities[1].removeFromWorld = true;
-                        //console.log("# of entities: " + this.game.entities.length);
+                        
                         for(var k = 0; k < this.game.entities.length; k++) {
                             this.game.entities[k].removeFromWorld = true;
                             console.log("removing entity " + k);
                         }
-                        //this.game.entities.splice(1, (this.game.entities.length));
+                        
                         document.body.style.backgroundImage = "url('./img/win.jpg')";
                         document.body.style.backgroundRepeat = "no-repeat";
-                        //this.game.entities[0].image = AM.getAsset("./img/win.jpg");
-                        //console.log("# of entities: " + this.game.entities.length);
                         
                         
                     }
