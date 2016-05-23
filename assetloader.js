@@ -24,6 +24,7 @@ AM.queueDownload("./img/maga.png");
 AM.queueDownload("./img/enemies.png");
 AM.queueDownload("./img/pointingTrump.png");
 AM.queueDownload("./img/allies.png");
+AM.queueDownload("./img/womenscard.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();

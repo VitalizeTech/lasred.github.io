@@ -1,5 +1,4 @@
 /*
-  Computational World - Herobound gladators, Ansher Wars
   JavaScript - interpreted language, not compiled into binary file
   JavaScript provides interactive elements of web page
   */
@@ -69,7 +68,13 @@ Background.prototype.draw = function (ctx) {
 	this.degree += 0.9;
 	if(timeElapsed == 50) {
 		timeElapsed = 0;
-		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.degree);
+		var newBullet;
+		if(this.game.scoreType.innerHTML == "Delegates") {
+			newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.degree);
+		}
+		else {
+			newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.png"), this.degree);
+		}
 		this.game.entities.push(newBullet);
 	}
     ctx.drawImage(this.image, 0, 0, 1170, 700);
