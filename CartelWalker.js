@@ -54,23 +54,44 @@ function CartelWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
 }
 
 CartelWalker.prototype.update = function () {
+    //if Game score reaches a certain point each cartel gets a speed change to up the difficulty
+    var gameScore = this.game.scoreBoard.innerHTML;
+    var cartelNum = 0;
+    if(gameScore > 600) {
+        this.speed = 90;
+    }
+    if(this.game.scoreType.innerHTML == "Electors") {
+        this.speed = 95;
+        if(gameScore > 150) {
+            this.speed = 100;
+        }
+    }
+    
     var isMoving = false;
+    var cartelX = 0;
+    var cartelY = 0;
     //find Trump Location
     var trumpX = this.game.entities[1].x;
     var trumpY = this.game.entities[1].y;
+    //find out which entity the Cartel is. This will allow multiple Cartel characters to exist at the same time.
+    for(var i = 6; i < this.game.entities.length; i++) {
+        if((this.x === this.game.entities[i].x) && (this.y === this.game.entities[i].y)) {
+            //once the Cartel has been found set the cartelX and Y variables so distance can be calculated
+            cartelX = this.game.entities[i].x;
+            cartelY = this.game.entities[i].y;
+            cartelNum = i;
+        }
+    }
     
-    //find SecretService Location
-    var serveX = this.game.entities[5].x;
-    var serveY = this.game.entities[5].y;
-    
-    var dX = serveX - trumpX;
-    var dY = serveY - trumpY;
+    //calculate distance on x and y from trump
+    var dX = cartelX - trumpX;
+    var dY = cartelY - trumpY;
     
     
     var closestMove = 0;
     //finds current distance from trumpWalker
     var baseDist = Math.sqrt(dX * dX + dY * dY);
-    //finds distance if secretServiceWalker moves in any direction
+    //finds distance if Cartel moves in any direction
     var leftDist = Math.sqrt((dX-1) * (dX-1) + dY * dY);
     var rightDist = Math.sqrt((dX+1) * (dX+1) + dY * dY);
     var upDist = Math.sqrt(dX * dX + (dY-1) * (dY-1));
@@ -95,7 +116,7 @@ CartelWalker.prototype.update = function () {
     
     //get lowest distance and set that as new direction
     var lowestDist = Math.min(leftDist, rightDist, upDist, downDist, baseDist);
-    if((currentDirDist - lowestDist) > .2) {
+    if((currentDirDist - lowestDist) > .125) {
         if(lowestDist === leftDist) {
             this.direction = 1;
         }
@@ -132,6 +153,27 @@ CartelWalker.prototype.update = function () {
         isMoving = true;
     }
     
+    //release check for the second and third cartel. Once a certain score is reached they are allowed to enter the playable area
+    if((cartelNum === 7 && gameScore < 900 && this.game.scoreType.innerHTML == "Delegates") || (cartelNum === 8 && this.game.scoreType.innerHTML == "Delegates")){
+        if(Math.random() > .5) {
+            this.game.entities[cartelNum].x = ((Math.random() * 2170) + 1400);
+            if(Math.random() > .5) {
+                this.game.entities[cartelNum].y = ((Math.random() * 1400) + 900);
+            }
+            else {
+                this.game.entities[cartelNum].y = (((Math.random() * 1400) + 900)*-1);
+            }
+        }
+        else {
+            this.game.entities[cartelNum].x = (((Math.random() * 2170) + 1400)*-1);
+            if(Math.random() > .5) {
+                this.game.entities[cartelNum].y = ((Math.random() * 1400) + 900);
+            }
+            else {
+                this.game.entities[cartelNum].y = (((Math.random() * 1400) + 900)*-1);
+            }
+        }
+    }
     
     //helps with animation don't delete or modify
     if (isMoving) {
