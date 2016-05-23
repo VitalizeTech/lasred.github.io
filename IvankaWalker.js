@@ -66,7 +66,7 @@ IvankaWalker.prototype.update = function () {
         if(this.timeLimit === 1000) {
             this.game.scoreMessage.innerHTML = 'Ivanka is helping you campaign and is boosting your popularity. This will increase your popularity in each state you visit.';
             this.timeLimit--;
-            this.game.ivankaBoost = 1.25;
+            this.game.ivankaBoost = 1.1;
         }
         else if(this.timeLimit === 0) {
             this.game.scoreMessage.innerHTML = 'Ivanka has departed for a short time to relax after helping you gain support. Your increase in popularity has disappeared as a result.';
