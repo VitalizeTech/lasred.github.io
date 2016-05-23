@@ -111,8 +111,6 @@ function getRandomCoordinates(characters) {
      } while (!goodfit)
     return acoord;
 }
-<<<<<<< HEAD
-=======
 
 //allows enemy units to get coordinates that are not in the playable area. This will allow the enemies to enter the playable area.
 function getEnemyRandomCoordinates(characters) {
@@ -151,6 +149,3 @@ function getEnemyRandomCoordinates(characters) {
     } while (!goodfit)
         return acoord;
 }
-
-
->>>>>>> origin/master
