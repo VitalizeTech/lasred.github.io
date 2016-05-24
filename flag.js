@@ -41,7 +41,7 @@ function createVoteCoin(gameEngine) {
 }
 
 /**
- * Returns a random spawn point
+ * Returns a random spawn point for the flag.
  */
 function getRandom(gameEngine) {
     var goodfit = true;
@@ -50,7 +50,7 @@ function getRandom(gameEngine) {
     do {
         goodfit = true; //reset
         var xcoord = Math.round(1063 * Math.random());
-        var ycoord = Math.round(647 * Math.random());
+        var ycoord = Math.round(547 * Math.random());
         acoord = new CoordPoint(xcoord, ycoord);
 
         // Check against existing coins

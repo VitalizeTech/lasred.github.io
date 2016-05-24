@@ -73,10 +73,10 @@ AM.downloadAll(function () {
     var cartelWalkerTwo = new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 49, 48.2, 3, cartelTwoLocation.x, cartelTwoLocation.y, 0.1, 12, 85);
     gameEngine.characters.push(cartelWalkerTwo);
     gameEngine.addEntity(cartelWalkerTwo);
-               var cartelThreeLocation = getEnemyRandomCoordinates(gameEngine.characters);
-               var cartelWalkerThree = new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 49, 48.2, 3, cartelThreeLocation.x, cartelThreeLocation.y, 0.1, 12, 85);
-               gameEngine.characters.push(cartelWalkerThree);
-               gameEngine.addEntity(cartelWalkerThree);
+    var cartelThreeLocation = getEnemyRandomCoordinates(gameEngine.characters);
+    var cartelWalkerThree = new CartelWalker(gameEngine, AM.getAsset("./img/cartel.png"), 49, 48.2, 3, cartelThreeLocation.x, cartelThreeLocation.y, 0.1, 12, 85);
+    gameEngine.characters.push(cartelWalkerThree);
+    gameEngine.addEntity(cartelWalkerThree);
 	var assassinLocation = getEnemyRandomCoordinates(gameEngine.characters);
 	var assassinWalker = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 32, 48, 4, assassinLocation.x,  assassinLocation.y, 0.1, 16, 90);
 	gameEngine.characters.push(assassinWalker);
@@ -102,7 +102,7 @@ function getRandomCoordinates(characters) {
         var xcoord = Math.round(Math.random() * 1040);
         var ycoord = Math.round(Math.random() * 560);
         acoord = new CoordPoint(xcoord, ycoord);
-        // Check against existing coins
+        // Check against existing characters
         for (var q = 0; q < characters.length; q++) {
             if (Math.abs(acoord.x - characters[q].x) < 200 && Math.abs(acoord.y - characters[q].y) < 150) {
                     goodfit = false;
@@ -140,7 +140,7 @@ function getEnemyRandomCoordinates(characters) {
             }
         }
         acoord = new CoordPoint(xcoord, ycoord);
-        // Check against existing coins
+        // Check against existing characters
         for (var q = 0; q < characters.length; q++) {
             if (Math.abs(acoord.x - characters[q].x) < 200 && Math.abs(acoord.y - characters[q].y) < 150) {
                 goodfit = false;

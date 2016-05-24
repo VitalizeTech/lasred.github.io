@@ -5,11 +5,11 @@ function TrumpWalker(game, spritesheet) {
     this.ctx = game.ctx;
     this.x = 100;
     this.speed = 100;
-    this.y = 250;
+    this.y = 550;
     this.topLimit = 10;
     this.botLimit = 150;
     this.rightLimit = 10;
-    this.leftLimit = 10;
+    this.left2imit = 10;
     this.isPaused = true;
     this.pausedFor = 0;
     this.weDying = document.getElementById("trumpDying");
