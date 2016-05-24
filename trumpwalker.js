@@ -149,7 +149,7 @@ TrumpWalker.prototype.update = function () {
         }
     }
 
-    //collision
+    //check whether or not Trump is touching a coin (and pick it up if he is)
     if (isMoving) {
         this.isPaused = false;
         this.pausedFor = 0;
