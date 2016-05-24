@@ -36,12 +36,7 @@ AM.downloadAll(function () {
     gameEngine.scoreType = document.getElementById("score_type");
     gameEngine.healthBar = document.getElementById("healthBar");
 	gameEngine.health = document.getElementById("health");
-    createFlags();
-    gameEngine.activeVoteCoins = [];
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+
     gameEngine.init(ctx);
     gameEngine.start();
 	gameEngine.characters = [];
@@ -92,6 +87,14 @@ AM.downloadAll(function () {
     var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.PNG"), gameEngine.entities[0].degree);
     firstBullet.entityPos = gameEngine.entities.length;
 	gameEngine.addEntity(firstBullet);
+
+    createFlags();
+    gameEngine.activeVoteCoins = [];
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    
 })
 var FLAGS = AM.getAsset("./img/flags/spritesheet.png");
 function getRandomCoordinates(characters) {

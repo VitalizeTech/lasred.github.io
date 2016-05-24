@@ -63,11 +63,13 @@ function getRandom(gameEngine) {
         }
 
         // Check against Trump's current location
-        //if (((Tx - acoord.x < 220) && (Tx - acoord.x > 0)) || ((acoord.x - Tx) < 30 && (acoord.x - Tx > 0))) {
-        //    if (((Ty - acoord.y < 170) && (Ty - acoord.y > 0)) || ((acoord.y - Ty < 30) && (acoord.y - Ty))) {
-        //        goodfit = false;
-        //    }
-        //}
+        if (((gameEngine.characters[0].x - acoord.x < 220) && (gameEngine.characters[0].x - acoord.x > 0))
+        || ((acoord.x - gameEngine.characters[0].x) < 30 && (acoord.x - gameEngine.characters[0].x > 0))) {
+                if (((gameEngine.characters[0].y - acoord.y < 170) && (gameEngine.characters[0].y - acoord.y > 0))
+                || ((acoord.y - gameEngine.characters[0].x < 30) && (acoord.y - gameEngine.characters[0].x))) {
+                    goodfit = false;
+                }
+        }
     } while (!goodfit)
 
     return acoord;
