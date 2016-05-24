@@ -160,7 +160,7 @@ TrumpWalker.prototype.update = function () {
             var dy = this.y - voteCoin.y;
             var distance = Math.sqrt(dx * dx + dy * dy);
             //80 feels right
-            if (distance < 80) {
+            if (dx > -40 && dx < 70 && dy > -50 && dy < 50) {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
 
