@@ -4,7 +4,7 @@ AM.queueDownload("./img/Trump.png");
 AM.queueDownload("./img/MAGABackground.png");
 AM.queueDownload("./img/flags/spritesheet.png");
 AM.queueDownload("./img/CrookedHillary.png");
-AM.queueDownload("./img/LyinTed.png");
+//AM.queueDownload("./img/LyinTed.png");
 AM.queueDownload("./img/Canada.PNG");
 AM.queueDownload("./img/ivanka.png");
 AM.queueDownload("./img/reporter.png");
@@ -25,6 +25,16 @@ AM.queueDownload("./img/enemies.png");
 AM.queueDownload("./img/pointingTrump.png");
 AM.queueDownload("./img/allies.png");
 AM.queueDownload("./img/womenscard.PNG");
+
+AM.queueDownload("./img/MarcoRed.png");
+AM.queueDownload("./img/TedRed.png");
+AM.queueDownload("./img/CruzCircle.png");
+AM.queueDownload("./img/HillaryBlue.png");
+AM.queueDownload("./img/CannonE1.png");
+AM.queueDownload("./img/whiteBG.jpg");
+AM.queueDownload("./img/squareMid1.png");
+AM.queueDownload("./img/squareMid2.png");
+
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
@@ -94,7 +104,7 @@ AM.downloadAll(function () {
     gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
     gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
     gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-    
+
 })
 var FLAGS = AM.getAsset("./img/flags/spritesheet.png");
 function getRandomCoordinates(characters) {
