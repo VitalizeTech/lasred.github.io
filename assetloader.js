@@ -30,6 +30,7 @@ AM.queueDownload("./img/MarcoRed.png");
 AM.queueDownload("./img/TedRed.png");
 AM.queueDownload("./img/CruzCircle.png");
 AM.queueDownload("./img/HillaryBlue.png");
+AM.queueDownload("./img/ClintonCircle.png");
 AM.queueDownload("./img/CannonE1.png");
 AM.queueDownload("./img/whiteBG.jpg");
 AM.queueDownload("./img/squareMid1.png");

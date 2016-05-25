@@ -54,8 +54,8 @@ function Background(game) {
 
     this.image = AM.getAsset("./img/whiteBG.jpg");
 
-    this.TedRedAsset = AM.getAsset("./img/CruzCircle.png");
-    this.HillaryBlueAsset = AM.getAsset("./img/HillaryBlue.png");
+    this.TedAsset = AM.getAsset("./img/CruzCircle.png");
+    this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
 
     this.CannonAsset = AM.getAsset("./img/CannonE1.png");
     this.Block1Asset = AM.getAsset("./img/squareMid1.png");
@@ -122,8 +122,17 @@ Background.prototype.draw = function (ctx) {
     }
 
     ctx.drawImage(this.Block2Asset, 473, 236, 105, 105);
-    //ctx.drawImage(this.TedRedAsset, 495, 245, 65, 85);
-    ctx.drawImage(this.TedRedAsset, 484, 248, 85, 85);
+
+    if (this.game.scoreType.innerHTML == "Delegates") {
+		ctx.drawImage(this.TedAsset, 480, 245, 93, 89);
+	} else {
+        ctx.drawImage(this.HillaryAsset, 480, 245, 93, 89);
+	}
+
+
+
+
+
 
 }
 Background.prototype.update = function () { };
