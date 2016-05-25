@@ -16,6 +16,7 @@ function VoteCoin(flag, coords) {
     this.height = flag.height;
     this.flagx = flag.x;
     this.flagy = flag.y;
+
 }
 
 var FLAG_LIST = [];
@@ -53,23 +54,32 @@ function getRandom(gameEngine) {
         var ycoord = Math.round(547 * Math.random());
         acoord = new CoordPoint(xcoord, ycoord);
 
-        // Check against existing coins
-        for (var q = 0; q < activelist.length; q++) {
-            if (Math.abs(acoord.x - activelist[q].x) < 200) {
-                if (Math.abs(acoord.y - activelist[q].y) < 150) {
-                    goodfit = false;
+        //Check against the central enemy, if the coords of this flag are where the enemy is then this is a bad fit.
+        if (xcoord < 603 && xcoord > (448 - 100)) {
+            if (ycoord < 366 && ycoord > 211) {
+                goodfit = false;
+            }
+        }
+        // Check against Trump's current location
+        else if (((gameEngine.characters[0].x - acoord.x < 220) && (gameEngine.characters[0].x - acoord.x > 0))
+                || ((acoord.x - gameEngine.characters[0].x) < 30 && (acoord.x - gameEngine.characters[0].x > 0))) {
+
+                    if (((gameEngine.characters[0].y - acoord.y < 170) && (gameEngine.characters[0].y - acoord.y > 0))
+                    || ((acoord.y - gameEngine.characters[0].x < 30) && (acoord.y - gameEngine.characters[0].x))) {
+
+                        goodfit = false;
+                    }
+        } else {
+            // Check against existing coins
+            for (var q = 0; q < activelist.length; q++) {
+                if (Math.abs(acoord.x - activelist[q].x) < 200) {
+                    if (Math.abs(acoord.y - activelist[q].y) < 150) {
+                        goodfit = false;
+                    }
                 }
             }
         }
 
-        // Check against Trump's current location
-        if (((gameEngine.characters[0].x - acoord.x < 220) && (gameEngine.characters[0].x - acoord.x > 0))
-        || ((acoord.x - gameEngine.characters[0].x) < 30 && (acoord.x - gameEngine.characters[0].x > 0))) {
-                if (((gameEngine.characters[0].y - acoord.y < 170) && (gameEngine.characters[0].y - acoord.y > 0))
-                || ((acoord.y - gameEngine.characters[0].x < 30) && (acoord.y - gameEngine.characters[0].x))) {
-                    goodfit = false;
-                }
-        }
     } while (!goodfit)
 
     return acoord;

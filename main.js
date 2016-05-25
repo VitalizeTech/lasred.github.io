@@ -87,7 +87,11 @@ Background.prototype.draw = function (ctx) {
 		}
 		this.game.entities.push(newBullet);
 	}
+    
+    //draw the whole background
     ctx.drawImage(this.image, 0, 0, 1170, 600);
+
+    //draw the the lowest block which goes under the cannon.
     ctx.drawImage(this.Block1Asset, 448, 211, 155, 155);
 
 	ctx.save();
@@ -95,17 +99,7 @@ Background.prototype.draw = function (ctx) {
 	ctx.rotate(this.degree*Math.PI/180);
 	ctx.translate(0, 0);
 
-    /**
-	if (this.game.scoreType.innerHTML == "Delegates") {
-		//ctx.drawImage(this.lyinTedAsset, -50, -70, 125, 125);
-        ctx.drawImage(this.TedRedAsset, -50, -70, 125, 125);
-	} else {
-		//ctx.drawImage(this.crookedHillaryAsset, -62.5, -62.5, 125, 125);
-        ctx.drawImage(this.HillaryBlueAsset, -62.5, -62.5, 125, 125);
-	}
-
-    **/
-
+    //draw the cannon.
     ctx.drawImage(this.CannonAsset, -32.5, -62.5, 125, 125);
 
 
@@ -121,6 +115,7 @@ Background.prototype.draw = function (ctx) {
         ctx.wrapText(coin.state + "\n\t" + coin.vote, coin.x + 5, coin.y + 15, 160, 16);
     }
 
+    //draw the upper box which goes above the cannon but below the enemy's face
     ctx.drawImage(this.Block2Asset, 473, 236, 105, 105);
 
     if (this.game.scoreType.innerHTML == "Delegates") {
