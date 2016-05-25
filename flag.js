@@ -56,7 +56,7 @@ function getRandom(gameEngine) {
 
         //Check against the central enemy, if the coords of this flag are where the enemy is then this is a bad fit.
         if (xcoord < 603 && xcoord > (448 - 100)) {
-            if (ycoord < 366 && ycoord > 211) {
+            if (ycoord < 366 && ycoord > (211 -50)) {
                 goodfit = false;
             }
         }
