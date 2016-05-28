@@ -69,7 +69,7 @@ Background.prototype.draw = function (ctx) {
 	this.degree += 0.9;
 	if(timeElapsed == 50) {
 		timeElapsed = 0;
-		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.png"), this.degree);
+		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree);
 		this.game.entities.push(newBullet);
 	}
     ctx.drawImage(this.image, 0, 0, 1170, 700);
