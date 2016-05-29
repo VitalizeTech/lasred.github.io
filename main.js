@@ -76,6 +76,7 @@ Background.prototype.draw = function (ctx) {
 	this.degree += 0.9;
 	if(timeElapsed == 50) {
 		timeElapsed = 0;
+<<<<<<< HEAD
 		var newBullet;
 		if(this.game.scoreType.innerHTML == "Delegates") {
 			newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree - 222);
@@ -83,6 +84,9 @@ Background.prototype.draw = function (ctx) {
 		else {
 			newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.PNG"), this.degree - 230);
 		}
+=======
+		var newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree);
+>>>>>>> master
 		this.game.entities.push(newBullet);
 	}
     

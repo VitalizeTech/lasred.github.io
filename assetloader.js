@@ -4,7 +4,7 @@ AM.queueDownload("./img/Trump.png");
 AM.queueDownload("./img/MAGABackground.png");
 AM.queueDownload("./img/flags/spritesheet.png");
 AM.queueDownload("./img/CrookedHillary.png");
-//AM.queueDownload("./img/LyinTed.png");
+AM.queueDownload("./img/LyinTed.png");
 AM.queueDownload("./img/Canada.PNG");
 AM.queueDownload("./img/ivanka.png");
 AM.queueDownload("./img/reporter.png");
@@ -36,6 +36,7 @@ AM.queueDownload("./img/whiteBG.jpg");
 AM.queueDownload("./img/squareMid1.png");
 AM.queueDownload("./img/squareMid2.png");
 
+AM.queueDownload("./img/carson.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
@@ -64,7 +65,7 @@ AM.downloadAll(function () {
 	gameEngine.characters.push(reporterWalker);
 	gameEngine.addEntity(reporterWalker);
     var benCarsonLocation = getRandomCoordinates(gameEngine.characters);
-    var benCarsonWalker = new BenCarsonWalker(gameEngine, AM.getAsset("./img/Trump.png"), 49, 48.2, 3, benCarsonLocation.x, benCarsonLocation.y, 0.1, 12, 100);
+    var benCarsonWalker = new BenCarsonWalker(gameEngine, AM.getAsset("./img/carson.png"), 49, 48.2, 3, benCarsonLocation.x, benCarsonLocation.y, 0.1, 12, 100);
     gameEngine.characters.push(benCarsonWalker);
     gameEngine.addEntity(benCarsonWalker);
     var secretServiceLocation = getRandomCoordinates(gameEngine.characters);
