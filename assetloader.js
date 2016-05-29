@@ -1,6 +1,7 @@
 var AM = new AssetManager();
 
 AM.queueDownload("./img/Trump.png");
+AM.queueDownload("./img/marcoBullet.PNG");
 AM.queueDownload("./img/MAGABackground.png");
 AM.queueDownload("./img/flags/spritesheet.png");
 AM.queueDownload("./img/CrookedHillary.png");
@@ -26,8 +27,7 @@ AM.queueDownload("./img/pointingTrump.png");
 AM.queueDownload("./img/allies.png");
 AM.queueDownload("./img/womenscard.PNG");
 
-AM.queueDownload("./img/MarcoRed.png");
-AM.queueDownload("./img/TedRed.png");
+AM.queueDownload("./img/RubioCircle.png");
 AM.queueDownload("./img/CruzCircle.png");
 AM.queueDownload("./img/HillaryBlue.png");
 AM.queueDownload("./img/ClintonCircle.png");

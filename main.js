@@ -51,7 +51,7 @@ function Background(game) {
     this.image = AM.getAsset("./img/debateRoom.jpg");
 	//this.lyinTedAsset = AM.getAsset("./img/LyinTed.png");
 	//this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
-
+	this.marcoAsset = AM.getAsset("./img/RubioCircle.png");
     this.TedAsset = AM.getAsset("./img/CruzCircle.png");
     this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
 
@@ -78,7 +78,11 @@ Background.prototype.draw = function (ctx) {
 		timeElapsed = 0;
 		var newBullet;
 		if(this.game.scoreType.innerHTML == "Delegates") {
-			newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree - 222);
+			if(this.game.scoreBoard.innerHTML <= 600) {
+				newBullet = new Bullet(this.game, AM.getAsset("./img/marcoBullet.PNG"), this.degree - 222);
+			} else {
+				newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree - 222);
+			}
 		}
 		else {
 			newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.PNG"), this.degree - 230);
@@ -117,7 +121,11 @@ Background.prototype.draw = function (ctx) {
     ctx.drawImage(this.Block2Asset, 473, 236, 105, 105);
 
     if (this.game.scoreType.innerHTML == "Delegates") {
-		ctx.drawImage(this.TedAsset, 480, 245, 93, 89);
+		if(this.game.scoreBoard.innerHTML <= 600) {
+		 	ctx.drawImage(this.marcoAsset,	480, 245, 93, 89);
+		} else {
+			ctx.drawImage(this.TedAsset, 480, 245, 93, 89);
+		}
 	} else {
         ctx.drawImage(this.HillaryAsset, 480, 245, 93, 89);
 	}
