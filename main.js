@@ -48,11 +48,9 @@ Animation.prototype.isDone = function () {
 function Background(game) {
     this.game = game;
     this.ctx = game.ctx;
-    //this.image = AM.getAsset("./img/debateRoom.jpg");
+    this.image = AM.getAsset("./img/debateRoom.jpg");
 	//this.lyinTedAsset = AM.getAsset("./img/LyinTed.png");
 	//this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
-
-    this.image = AM.getAsset("./img/whiteBG.jpg");
 
     this.TedAsset = AM.getAsset("./img/CruzCircle.png");
     this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
