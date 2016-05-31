@@ -5,7 +5,7 @@ function Bullet(game, spritesheet, degree) {
     this.speed = 4;
 	this.degree = degree + 15;
 	this.position = this.game.entities.length - 1;
-	var newPoint = findNewPoint(510, 275, this.degree, 40);
+	var newPoint = findNewPoint(510, 275, this.degree, 75);
     this.x = newPoint.x;
     this.y = newPoint.y;
 }
@@ -19,7 +19,7 @@ Bullet.prototype.update = function () {
 	this.y += Math.sin( toRadians(this.degree + 180)) * this.speed;
 	if(this.x < 0 || this.x > 1060  || this.y < 0 || this.y > 700) {
         //if(this.game.entities.length > 11) {
-            this.game.entities.splice(12, 1);
+            this.game.entities.splice(13, 1);
         //}
 		//this.game.removeEntity(this.position);
 	} 
