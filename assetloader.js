@@ -8,6 +8,7 @@ AM.queueDownload("./img/LyinTed.png");
 AM.queueDownload("./img/Canada.png");
 AM.queueDownload("./img/ivanka.png");
 AM.queueDownload("./img/reporter.png");
+AM.queueDownload("./img/Jeb_Bush.png");
 AM.queueDownload("./img/cartel.png");
 AM.queueDownload("./img/assassin.png");
 AM.queueDownload("./img/secret_service.png");
@@ -25,6 +26,18 @@ AM.queueDownload("./img/enemies.png");
 AM.queueDownload("./img/pointingTrump.png");
 AM.queueDownload("./img/allies.png");
 AM.queueDownload("./img/carson.png");
+AM.queueDownload("./img/womenscard.png");
+AM.queueDownload("./img/MarcoRed.png");
+AM.queueDownload("./img/TedRed.png");
+AM.queueDownload("./img/CruzCircle.png");
+AM.queueDownload("./img/HillaryBlue.png");
+AM.queueDownload("./img/ClintonCircle.png");
+AM.queueDownload("./img/CannonE1.png");
+AM.queueDownload("./img/whiteBG.jpg");
+AM.queueDownload("./img/squareMid1.png");
+AM.queueDownload("./img/squareMid2.png");
+AM.queueDownload("./img/RubioCircle.png");
+AM.queueDownload("./img/marcoBullet.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
@@ -60,6 +73,10 @@ AM.downloadAll(function () {
     var benCarsonWalker = new BenCarsonWalker(gameEngine, AM.getAsset("./img/carson.png"), 49, 48.2, 3, benCarsonLocation.x, benCarsonLocation.y, 0.1, 12, 100);
     gameEngine.characters.push(benCarsonWalker);
     gameEngine.addEntity(benCarsonWalker);
+    var jebBushLocation = getRandomCoordinates(gameEngine.characters);
+    var jebBushWalker = new JebBushWalker(gameEngine, AM.getAsset("./img/Jeb_Bush.png"), 49, 48.2, 3, jebBushLocation.x, jebBushLocation.y, 0.1, 12, 100);
+    gameEngine.characters.push(jebBushWalker);
+    gameEngine.addEntity(jebBushWalker);
     var secretServiceLocation = getRandomCoordinates(gameEngine.characters);
     var secretServiceWalker = new SecretServiceWalker(gameEngine, AM.getAsset("./img/secret_service.png"), 49, 48.2, 3, secretServiceLocation.x, secretServiceLocation.y, 0.1, 12, 90);
     gameEngine.characters.push(secretServiceWalker);
@@ -88,7 +105,7 @@ AM.downloadAll(function () {
     var assassinWalkerThree = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 32, 48, 4, assassinThreeLocation.x,  assassinThreeLocation.y, 0.1, 16, 90);
     gameEngine.characters.push(assassinWalkerThree);
     gameEngine.addEntity(assassinWalkerThree);
-    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/Canada.png"), gameEngine.entities[0].degree);
+    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/marcoBullet.png"), gameEngine.entities[0].degree);
     firstBullet.entityPos = gameEngine.entities.length;
 	gameEngine.addEntity(firstBullet);
 })
@@ -121,21 +138,21 @@ function getEnemyRandomCoordinates(characters) {
         goodfit = true; //reset
         //gets random x and y coordinates that are outside the playing area
         if(Math.random() > .5) {
-             xcoord = ((Math.random() * 2170) + 1400);
+             xcoord = ((Math.random() * 400) + 1200);
             if(Math.random() > .5) {
-               ycoord = ((Math.random() * 1400) + 900);
+               ycoord = ((Math.random() * 200) + 900);
             }
             else {
-                ycoord = (((Math.random() * 1400) + 900)*-1);
+                ycoord = (((Math.random() * 200))*-1);
             }
         }
         else {
-            xcoord = (((Math.random() * 2170) + 1400)*-1);
+            xcoord = (((Math.random() * 400))*-1);
             if(Math.random() > .5) {
-                ycoord = ((Math.random() * 1400) + 900);
+                ycoord = ((Math.random() * 200) + 900);
             }
             else {
-                ycoord = (((Math.random() * 1400) + 900)*-1);
+                ycoord = (((Math.random() * 200))*-1);
             }
         }
         acoord = new CoordPoint(xcoord, ycoord);
