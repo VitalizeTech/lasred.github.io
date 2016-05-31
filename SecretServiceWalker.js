@@ -15,7 +15,7 @@ function SecretServiceWalker(game, spritesheet,  frameHeight, frameWidth, sheetW
     this.pDirection = 2;
     this.slap = document.getElementById("securitySlap");
     this.grunt = document.getElementById("personGrunt");
-    
+
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -35,20 +35,40 @@ function SecretServiceWalker(game, spritesheet,  frameHeight, frameWidth, sheetW
             }
         }
     }
-    
+
     this.canMove = function (direction) {
         var nextPos = this.nextPosition(direction);
         switch (direction) {
             case 0: {
-                return (nextPos <= (botLimit - this.botLimit));
+                if ((this.x > 448 - 49 + 22) && (this.x < (448 + 155 - 20))) {
+                    if (this.y > 211 - 49 && this.y < 350 - 49) {
+                        return false;
+                    }
+                }
+                return ((nextPos < (botLimit - this.botLimit)));
             }
             case 1: {
-                return (nextPos >= this.leftLimit);
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 22 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos > this.leftLimit);
             }
             case 2: {
-                return (nextPos <= (rightLimit - this.rightLimit));
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos < (rightLimit - this.rightLimit));
             }
             case 3: {
+                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 100))) {
+                    if (this.y <= 350 && this.y >= 211) {
+                        return false;
+                    }
+                }
                 return (nextPos >= this.topLimit);
             }
         }
@@ -62,39 +82,39 @@ SecretServiceWalker.prototype.update = function () {
     var upDist = 0;
     var downDist = 0;
     var closestMove = 0;
-    
+
     //find Trump Location
     var trumpX = this.game.entities[1].x;
     var trumpY = this.game.entities[1].y;
-    
+
     //find SecretService Location
     var serveX = this.game.entities[5].x;
     var serveY = this.game.entities[5].y;
-    
+
     //variables to find closest enemy to SecretServicewalker
     var enemyX = 0;
     var enemyY = 0;
     var closestCurrentThreat = 0;
     var closestDist = 10000;
-    
+
     for(var i = 6; i < 12; i++) {
         enemyX = this.game.entities[i].x;
         enemyY = this.game.entities[i].y;
-        
+
         var eX = serveX - enemyX;
         var eY = serveY - enemyY;
-        
+
         var enemyDist = Math.sqrt(eX * eX + eY * eY);
         if(enemyDist < closestDist) {
             closestDist = enemyDist;
             closestCurrentThreat = i;
         }
     }
-    
+
     //distance x and y for trump
     var dX = serveX - trumpX;
     var dY = serveY - trumpY;
-    
+
     //finds current distance from trumpWalker
     var baseDist = Math.sqrt(dX * dX + dY * dY);
 
@@ -132,10 +152,10 @@ SecretServiceWalker.prototype.update = function () {
             rightDist = Math.sqrt((dX+1) * (dX+1) + dY * dY);
             upDist = Math.sqrt(dX * dX + (dY-1) * (dY-1));
             downDist = Math.sqrt(dX * dX + (dY+1) * (dY+1));
-            
+
             this.slap.volume = .2;
             this.grunt.volume = .2;
-            
+
             this.slap.play();
             this.grunt.play();
         }
@@ -147,7 +167,7 @@ SecretServiceWalker.prototype.update = function () {
             upDist = Math.sqrt((serveX - enemyX) * (serveX - enemyX) + (serveY - enemyY-1) * (serveY - enemyY-1));
             downDist = Math.sqrt((serveX - enemyX) * (serveX - enemyX) + (serveY - enemyY+1) * (serveY - enemyY+1));
         }
-        
+
     }
     else {
         //finds distance if secretServiceWalker moves in any direction
@@ -172,8 +192,8 @@ SecretServiceWalker.prototype.update = function () {
     if(this.direction === 5) {
         currentDirDist = baseDist;
     }
-    
-    
+
+
     //get lowest distance and set that as new direction
     var lowestDist = Math.min(leftDist, rightDist, upDist, downDist, baseDist);
     if((currentDirDist - lowestDist) > .2) {
@@ -193,8 +213,8 @@ SecretServiceWalker.prototype.update = function () {
             this.direction = Math.floor(Math.random() * 4);
         }
     }
-    
-    
+
+
     if (this.direction === 3) {
         this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
         this.direction = 3;
@@ -212,7 +232,7 @@ SecretServiceWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
-    
+
     //bullet collision against secretServiceWalker
     //get length of array
     var l = this.game.entities.length;
@@ -254,7 +274,7 @@ SecretServiceWalker.prototype.update = function () {
             //this.game.entities[4].removeFromWorld = true;
         }
     }
-    
+
     //helps with animation don't delete or modify
     if (isMoving) {
         this.isPaused = false;
@@ -295,5 +315,3 @@ SecretServiceWalker.prototype.draw = function (ctx) {
                        anim.frameWidth,
                        anim.frameHeight);
 };
-
-

@@ -36,15 +36,35 @@ function BasicWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x,
         var nextPos = this.nextPosition(direction);
         switch (direction) {
             case 0: {
-                return (nextPos <= (botLimit - this.botLimit));
+                if ((this.x > 448 - 49 + 22) && (this.x < (448 + 155 - 20))) {
+                    if (this.y > 211 - 49 && this.y < 350 - 49) {
+                        return false;
+                    }
+                }
+                return ((nextPos < (botLimit - this.botLimit)));
             }
-			case 1: {
-                return (nextPos >= this.leftLimit);
+            case 1: {
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 22 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos > this.leftLimit);
             }
             case 2: {
-                return (nextPos <= (rightLimit - this.rightLimit));
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos < (rightLimit - this.rightLimit));
             }
             case 3: {
+                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 100))) {
+                    if (this.y <= 350 && this.y >= 211) {
+                        return false;
+                    }
+                }
                 return (nextPos >= this.topLimit);
             }
         }
@@ -70,13 +90,13 @@ BasicWalker.prototype.setDirectionTowards =  function(x, y) {
 			moveX = this.x > x? 1: 2;
 		}
 		if(Math.abs(this.y - y) > 3) {
-			moveY = this.y > y? 3: 0; 
+			moveY = this.y > y? 3: 0;
 		}
 		if(moveX == -1|| moveY == -1){
 			this.direction = moveX == -1? moveY: moveX;
 		} else {
 			this.direction = moveX;
-		}	
+		}
 }
 
 BasicWalker.prototype.walkInDirection = function(direction) {
@@ -97,7 +117,7 @@ BasicWalker.prototype.takeStepTowards = function(x, y, distanceAway) {
 		if (this.direction > -1) {
 			this.walkInDirection(this.direction);
 			this.isPaused = false;
-		} 
+		}
 	} else {
 		if(x == 300 && y == 175) {
 			this.game.leader  = this;
@@ -129,4 +149,3 @@ BasicWalker.prototype.draw = function (ctx) {
                  yindex * anim.frameHeight, anim.frameWidth, anim.frameHeight,
                  this.x, this.y, 50, 50);
 };
-

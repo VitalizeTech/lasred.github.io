@@ -89,7 +89,7 @@ Background.prototype.draw = function (ctx) {
 		}
 		this.game.entities.push(newBullet);
 	}
-    
+
     //draw the whole background
     ctx.drawImage(this.image, 0, 0, 1170, 600);
 
