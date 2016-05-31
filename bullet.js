@@ -50,9 +50,8 @@ Bullet.prototype.update = function () {
         }
 	}
 	if(this.x < 0 || this.x > 1060  || this.y < 0 || this.y > 700) {
-                   this.game.entities.splice(12, 1);
-
-	}
+            this.game.entities.splice(13, 1);
+	} 
 }
 
 function findNewPoint(x, y, angle, distance) {

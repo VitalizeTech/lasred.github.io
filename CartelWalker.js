@@ -13,6 +13,7 @@ function CartelWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
     this.isPaused = true;
     this.pausedFor = 0;
     this.pDirection = 2;
+    this.pureSpeed = speed;
     
     this.nextPosition = function (direction) {
         switch (direction) {
@@ -56,6 +57,7 @@ function CartelWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
 CartelWalker.prototype.update = function () {
     //if Game score reaches a certain point each cartel gets a speed change to up the difficulty
     var gameScore = this.game.scoreBoard.innerHTML;
+    this.speed = this.pureSpeed;
     var cartelNum = 0;
     if(gameScore > 600) {
         this.speed = 90;
@@ -66,6 +68,8 @@ CartelWalker.prototype.update = function () {
             this.speed = 100;
         }
     }
+    this.pureSpeed = this.speed;
+    this.speed = (this.speed*this.game.jebBoost);
     
     var isMoving = false;
     var cartelX = 0;

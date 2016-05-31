@@ -79,6 +79,28 @@ TrumpWalker.prototype.update = function () {
     var l = this.game.entities.length;
     //for loop to check each bullets position in relation to Trump to check for collision
     for(var i = 4; i < l; i++) {
+        var eWidth = 0;
+        var eHeight = 0;
+        var tWidth = 0;
+        var tHeight = 0;
+        if(i > 12) {
+            eWidth = 12;
+            eHeight = 14;
+            tWidth = 37;
+            tHeight = 45;
+        }
+        else if( i > 9) {
+            eWidth = 20;
+            eHeight = 20;
+            tWidth = 24.1;
+            tHeight = 25;
+        }
+        else {
+            eWidth = 24.1;
+            eHeight = 25;
+            tWidth = 24.1;
+            tHeight = 25;
+        }
         //getting the x and y coordinates of the bullet
         var eX = this.game.entities[i].x;
         var eY = this.game.entities[i].y;
@@ -86,19 +108,51 @@ TrumpWalker.prototype.update = function () {
         var tX = this.game.entities[1].x;
         var tY = this.game.entities[1].y;
         //calculate distance bullet is from TrumpWalker
-        var dX = tX - eX;
-        var dY = tY - eY;
-        var dist = Math.sqrt(dX * dX + dY * dY);
+        //calculating distances along x and y (24.1 half of sprite width)
+        //initialized dX and dY with large numbers so it doesn't trigger false collision.
+        var dX = 1000;
+        var dY = 1000;
+        //calculating x-axis distance from trump
+        //enemy from the left
+        if(eX < tX) {
+            dX = tX - (eX+eWidth);
+        }
+        //enemy from the right
+        else if(eX > tX) {
+            dX = eX - (tX+tWidth);
+        }
+        //enemy dead on
+        else {
+            dX = 0;
+        }
+        //calculating y-axis distance from trump
+        //enemy from top
+        if(eY < tY) {
+            dY = tY - (eY+eHeight);
+        }
+        //enemy from bottom
+        else if(eY > tY) {
+            dY = eY - (tY+tHeight);
+        }
+        //enemy dead on
+        else {
+            dY = 0;
+        }
+        
+        //var dX = tX - eX;
+        //var dY = tY - eY;
+        //var dist = Math.sqrt(dX * dX + dY * dY);
         //check for collison
-        if(dist < 30) {
-            if(i > 5) {
+        //if(dist < 30) {
+        if((dX <= 0) && (dY <= 0)) {
+            if(i > 6) {
                 //if the collision is a bullet remove it from the world
-                if(i > 11) {
+                if(i > 12) {
                     this.game.entities[i].removeFromWorld = true;
                 }
                 //if the collision is the assassin or the cartel move them off the playable area
-                if(i < 12) {
-                    if( i > 8) {
+                if(i < 13) {
+                    if( i > 9) {
                         this.game.scoreMessage.innerHTML = 'The Assassin slipped past your defenses and caused you harm!';
                     }
                     else {
@@ -129,21 +183,21 @@ TrumpWalker.prototype.update = function () {
 						}
 					}
                     if(Math.random() > .5) {
-                        this.game.entities[i].x = ((Math.random() * 2170) + 1400);
+                        this.game.entities[i].x = ((Math.random() * 400) + 1200);
                         if(Math.random() > .5) {
-                            this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                            this.game.entities[i].y = ((Math.random() * 200) + 900);
                         }
                         else {
-                            this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                            this.game.entities[i].y = (((Math.random() * 200))*-1);
                         }
                     }
                     else {
-                        this.game.entities[i].x = (((Math.random() * 2170) + 1400)*-1);
+                        this.game.entities[i].x = (((Math.random() * 400))*-1);
                         if(Math.random() > .5) {
-                            this.game.entities[i].y = ((Math.random() * 1400) + 900);
+                            this.game.entities[i].y = ((Math.random() * 200) + 900);
                         }
                         else {
-                            this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
+                            this.game.entities[i].y = (((Math.random() * 200))*-1);
                         }
                     }
                 }
