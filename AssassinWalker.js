@@ -13,6 +13,7 @@ function AssassinWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
     this.isPaused = true;
     this.pausedFor = 0;
     this.pDirection = 2;
+    this.pureSpeed = speed;
     
     this.nextPosition = function (direction) {
         switch (direction) {
@@ -56,6 +57,7 @@ function AssassinWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
 AssassinWalker.prototype.update = function () {
     //if Game score reaches a certain point each assassin gets a speed change to up the difficulty
     var gameScore = this.game.scoreBoard.innerHTML;
+    this.speed = this.pureSpeed;
     var assassinNum = 0;
     if(gameScore > 600) {
         this.speed = 90;
@@ -66,6 +68,8 @@ AssassinWalker.prototype.update = function () {
             this.speed = 100;
         }
     }
+    this.pureSpeed = this.speed;
+    this.speed = (this.speed*this.game.jebBoost);
     
     var isMoving = false;
     var assassinX = 0;
