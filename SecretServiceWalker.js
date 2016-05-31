@@ -68,8 +68,8 @@ SecretServiceWalker.prototype.update = function () {
     var trumpY = this.game.entities[1].y;
     
     //find SecretService Location
-    var serveX = this.game.entities[5].x;
-    var serveY = this.game.entities[5].y;
+    var serveX = this.game.entities[6].x;
+    var serveY = this.game.entities[6].y;
     
     //variables to find closest enemy to SecretServicewalker
     var enemyX = 0;
@@ -77,7 +77,7 @@ SecretServiceWalker.prototype.update = function () {
     var closestCurrentThreat = 0;
     var closestDist = 10000;
     
-    for(var i = 6; i < 12; i++) {
+    for(var i = 7; i < 13; i++) {
         enemyX = this.game.entities[i].x;
         enemyY = this.game.entities[i].y;
         
@@ -104,27 +104,27 @@ SecretServiceWalker.prototype.update = function () {
             //var testSlap = new Audio("./music/slap.wav");
             //testSlap.play();
             if(Math.random() > .5) {
-                this.game.entities[closestCurrentThreat].x = ((Math.random() * 2170) + 1400);
+                this.game.entities[closestCurrentThreat].x = ((Math.random() * 400) + 1200);
                 if(Math.random() > .5) {
-                    this.game.entities[closestCurrentThreat].y = ((Math.random() * 1400) + 900);
+                    this.game.entities[closestCurrentThreat].y = ((Math.random() * 200) + 900);
                 }
                 else {
-                    this.game.entities[closestCurrentThreat].y = (((Math.random() * 1400) + 900)*-1);
+                    this.game.entities[closestCurrentThreat].y = (((Math.random() * 200))*-1);
                 }
             }
             else {
-                this.game.entities[closestCurrentThreat].x = (((Math.random() * 2170) + 1400)*-1);
+                this.game.entities[closestCurrentThreat].x = (((Math.random() * 400))*-1);
                 if(Math.random() > .5) {
-                    this.game.entities[closestCurrentThreat].y = ((Math.random() * 1400) + 900);
+                    this.game.entities[closestCurrentThreat].y = ((Math.random() * 200) + 900);
                 }
                 else {
-                    this.game.entities[closestCurrentThreat].y = (((Math.random() * 1400) + 900)*-1);
+                    this.game.entities[closestCurrentThreat].y = (((Math.random() * 200))*-1);
                 }
             }
-            if(closestCurrentThreat > 5 && closestCurrentThreat < 9) {
+            if(closestCurrentThreat > 6 && closestCurrentThreat < 10) {
                 this.game.scoreMessage.innerHTML = 'Your Secret Service caught up with the Cartel. They have been stopped...for now...';
             }
-            if(closestCurrentThreat > 8) {
+            if(closestCurrentThreat > 9) {
                 this.game.scoreMessage.innerHTML = 'Your Secret Service caught up with the Assassin. They have been stopped....for now...';
             }
             //finds distance if secretServiceWalker moves in any direction
@@ -194,23 +194,27 @@ SecretServiceWalker.prototype.update = function () {
         }
     }
     
-    
-    if (this.direction === 3) {
-        this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
-        this.direction = 3;
-        isMoving = true;
-    } if (this.direction === 0) {
-        this.y = this.canMove(0) ? this.nextPosition(0) : this.y;
-        this.direction = 0;
-        isMoving = true;
-    } if (this.direction === 2) {
-        this.x = this.canMove(2) ? this.nextPosition(2) : this.x;
-        this.direction = 2;
-        isMoving = true;
-    } if (this.direction === 1) {
-        this.x = this.canMove(1) ? this.nextPosition(1) : this.x;
-        this.direction = 1;
-        isMoving = true;
+    if(baseDist > 30) {
+        if (this.direction === 3) {
+            this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
+            this.direction = 3;
+            isMoving = true;
+        } if (this.direction === 0) {
+            this.y = this.canMove(0) ? this.nextPosition(0) : this.y;
+            this.direction = 0;
+            isMoving = true;
+        } if (this.direction === 2) {
+            this.x = this.canMove(2) ? this.nextPosition(2) : this.x;
+            this.direction = 2;
+            isMoving = true;
+        } if (this.direction === 1) {
+            this.x = this.canMove(1) ? this.nextPosition(1) : this.x;
+            this.direction = 1;
+            isMoving = true;
+        }
+    }
+    else {
+        isMoving = false;
     }
     
     //bullet collision against secretServiceWalker
@@ -222,8 +226,8 @@ SecretServiceWalker.prototype.update = function () {
         var eX = this.game.entities[i].x;
         var eY = this.game.entities[i].y;
         //getting the x and y coordinates of SecretServiceWalker
-        var tX = this.game.entities[5].x;
-        var tY = this.game.entities[5].y;
+        var tX = this.game.entities[6].x;
+        var tY = this.game.entities[6].y;
         //calculate distance bullet is from SecretServiceWalker
         var dX = tX - eX;
         var dY = tY - eY;
@@ -233,21 +237,21 @@ SecretServiceWalker.prototype.update = function () {
             this.grunt.volume = .2;
             this.grunt.play();
             if(Math.random() > .5) {
-                this.game.entities[5].x = ((Math.random() * 2170) + 1170);
+                this.game.entities[6].x = ((Math.random() * 2170) + 1170);
                 if(Math.random() > .5) {
-                    this.game.entities[5].y = ((Math.random() * 1400) + 700);
+                    this.game.entities[6].y = ((Math.random() * 1400) + 700);
                 }
                 else {
-                    this.game.entities[5].y = (((Math.random() * 1400) + 700)*-1);
+                    this.game.entities[6].y = (((Math.random() * 1400) + 700)*-1);
                 }
             }
             else {
-                this.game.entities[5].x = (((Math.random() * 2170) + 1170)*-1);
+                this.game.entities[6].x = (((Math.random() * 2170) + 1170)*-1);
                 if(Math.random() > .5) {
-                    this.game.entities[5].y = ((Math.random() * 1400) + 700);
+                    this.game.entities[6].y = ((Math.random() * 1400) + 700);
                 }
                 else {
-                    this.game.entities[5].y = (((Math.random() * 1400) + 700)*-1);
+                    this.game.entities[6].y = (((Math.random() * 1400) + 700)*-1);
                 }
             }
             this.game.scoreMessage.innerHTML = 'Your Secret Service took a bullet for you. They are at the hospital recovering but a replacement for him will arrive soon.';
