@@ -57,14 +57,14 @@ function SecretServiceWalker(game, spritesheet,  frameHeight, frameWidth, sheetW
             }
             case 2: {
                 if ((this.y > 211 - 45) && (this.y < 345)) {
-                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 10) {
+                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 100) {
                         return false;
                     }
                 }
                 return (nextPos < (rightLimit - this.rightLimit));
             }
             case 3: {
-                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 100))) {
+                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 20))) {
                     if (this.y <= 350 && this.y >= 211) {
                         return false;
                     }
