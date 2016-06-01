@@ -126,7 +126,11 @@ Background.prototype.draw = function (ctx) {
         ctx.drawImage(
                       FLAGS, coin.flagx, coin.flagy, coin.width, coin.height, coin.x, coin.y, coin.width * 0.2, coin.height * 0.2);
         ctx.fillStyle = "black";
-        ctx.wrapText(coin.state + "\n\t" + coin.vote, coin.x + 5, coin.y + 15, 160, 16);
+		var coinValue = coin.vote;
+		if(this.game.scoreType.innerHTML != "Delegates") {
+			coinValue = coin.electorVote;
+		}
+        ctx.wrapText(coin.state + "\n\t" + coinValue, coin.x + 5, coin.y + 15, 160, 16);
     }
 
     

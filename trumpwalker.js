@@ -241,9 +241,12 @@ TrumpWalker.prototype.update = function () {
             if (dx > -40 && dx < 70 && dy > -50 && dy < 50) {
                 // collision detected!
                 this.game.activeVoteCoins.splice(i, 1);
-
-                this.game.scoreBoard.innerHTML = Math.round((parseInt(voteCoin.vote) * this.game.ivankaBoost * this.game.reporterBoost)) + parseInt(this.game.scoreBoard.innerHTML);
-                if (this.game.scoreBoard.innerHTML >= 270) { //270
+				if(this.game.scoreType.innerHTML == "Delegates") {                
+					this.game.scoreBoard.innerHTML = Math.round((parseInt(voteCoin.vote) * this.game.ivankaBoost * this.game.reporterBoost)) + parseInt(this.game.scoreBoard.innerHTML);
+                } else {
+					this.game.scoreBoard.innerHTML = Math.round((parseInt(voteCoin.electorVote) * this.game.ivankaBoost * this.game.reporterBoost)) + parseInt(this.game.scoreBoard.innerHTML);
+				}
+				if (this.game.scoreBoard.innerHTML >= 270) { //270
                     if (this.game.scoreType.innerHTML == "Electors") {
                         this.game.scoreMessage.innerHTML = this.game.scoreMessage.innerHTML = 'You won the presidential election!';
                         for(var k = 0; k < this.game.entities.length; k++) {
