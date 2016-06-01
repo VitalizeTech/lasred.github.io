@@ -33,23 +33,12 @@ AM.queueDownload("./img/CruzCircle.png");
 AM.queueDownload("./img/HillaryBlue.png");
 AM.queueDownload("./img/ClintonCircle.png");
 AM.queueDownload("./img/CannonE1.png");
-AM.queueDownload("./img/whiteBG.jpg");
 AM.queueDownload("./img/squareMid1.png");
 AM.queueDownload("./img/squareMid2.png");
 
 AM.queueDownload("./img/carson.png");
-AM.queueDownload("./img/womenscard.png");
 AM.queueDownload("./img/MarcoRed.png");
 AM.queueDownload("./img/TedRed.png");
-AM.queueDownload("./img/CruzCircle.png");
-AM.queueDownload("./img/HillaryBlue.png");
-AM.queueDownload("./img/ClintonCircle.png");
-AM.queueDownload("./img/CannonE1.png");
-AM.queueDownload("./img/whiteBG.jpg");
-AM.queueDownload("./img/squareMid1.png");
-AM.queueDownload("./img/squareMid2.png");
-AM.queueDownload("./img/RubioCircle.png");
-AM.queueDownload("./img/marcoBullet.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     canvas.focus();
@@ -113,7 +102,7 @@ AM.downloadAll(function () {
     var assassinWalkerThree = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 32, 48, 4, assassinThreeLocation.x,  assassinThreeLocation.y, 0.1, 16, 90);
     gameEngine.characters.push(assassinWalkerThree);
     gameEngine.addEntity(assassinWalkerThree);
-    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/marcoBullet.png"), gameEngine.entities[0].degree);
+    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/marcoBullet.PNG"), gameEngine.entities[0].degree);
     firstBullet.entityPos = gameEngine.entities.length;
 	gameEngine.addEntity(firstBullet);
 
