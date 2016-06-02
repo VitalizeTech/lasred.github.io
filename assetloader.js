@@ -126,7 +126,12 @@ function getRandomCoordinates(characters) {
         // Check against existing characters
         for (var q = 0; q < characters.length; q++) {
             if (Math.abs(acoord.x - characters[q].x) < 200 && Math.abs(acoord.y - characters[q].y) < 150) {
-                    goodfit = false;
+                goodfit = false;
+            }
+
+            //check against center enemy
+            if ((acoord.x < 473 + 165 && acoord.x > 473 - 75) && (acoord.y < 236 + 120 && acoord.y > 236 - 90)){
+                goodfit = false;
             }
         }
      } while (!goodfit)

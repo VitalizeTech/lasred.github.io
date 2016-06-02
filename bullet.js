@@ -16,8 +16,25 @@ function toRadians (angle) {
 }
 
 Bullet.prototype.update = function () {
-	this.x += Math.cos( toRadians(this.degree + 180)) * this.speed;
-	this.y += Math.sin( toRadians(this.degree + 180)) * this.speed;
+
+	//update position of the bullet on the map.
+	//Note that the bullet travels at different speeds depending on who the center enemy is.
+	if (this.game.scoreType.innerHTML == "Delegates") {
+		if(this.game.scoreBoard.innerHTML <= 600) { //rubio
+			this.x += Math.cos( toRadians(this.degree + 180)) * this.speed;
+			this.y += Math.sin( toRadians(this.degree + 180)) * this.speed;
+		} else { //ted
+			this.x += Math.cos( toRadians(this.degree + 180)) * this.speed * 1.3;
+			this.y += Math.sin( toRadians(this.degree + 180)) * this.speed * 1.3;
+		}
+	} else { //hillary
+		this.x += Math.cos( toRadians(this.degree + 180)) * this.speed * 1.8;
+		this.y += Math.sin( toRadians(this.degree + 180)) * this.speed * 1.8;
+
+	}
+
+
+
 	var trump = this.game.leader;
 	var rect1 = {x: trump.x, y: trump.y, width: 50, height: 50};
 	var rect2 = {x: this.x, y: this.y, width: 25, height: 25};

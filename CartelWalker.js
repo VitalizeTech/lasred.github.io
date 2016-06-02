@@ -14,7 +14,6 @@ function CartelWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
     this.pausedFor = 0;
     this.pDirection = 2;
     this.pureSpeed = speed;
-    
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -34,20 +33,40 @@ function CartelWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
             }
         }
     }
-    
+
     this.canMove = function (direction) {
         var nextPos = this.nextPosition(direction);
         switch (direction) {
             case 0: {
-                return (nextPos <= (botLimit - this.botLimit));
+                if ((this.x > 448 - 49 + 22) && (this.x < (448 + 155 - 20))) {
+                    if (this.y > 211 - 49 && this.y < 350 - 49) {
+                        return false;
+                    }
+                }
+                return ((nextPos < (botLimit - this.botLimit)));
             }
             case 1: {
-                return (nextPos >= this.leftLimit);
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 22 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos > this.leftLimit);
             }
             case 2: {
-                return (nextPos <= (rightLimit - this.rightLimit));
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 100) {
+                        return false;
+                    }
+                }
+                return (nextPos < (rightLimit - this.rightLimit));
             }
             case 3: {
+                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 20))) {
+                    if (this.y <= 350 && this.y >= 211) {
+                        return false;
+                    }
+                }
                 return (nextPos >= this.topLimit);
             }
         }
@@ -70,7 +89,7 @@ CartelWalker.prototype.update = function () {
     }
     this.pureSpeed = this.speed;
     this.speed = (this.speed*this.game.jebBoost);
-    
+
     var isMoving = false;
     var cartelX = 0;
     var cartelY = 0;
@@ -86,12 +105,12 @@ CartelWalker.prototype.update = function () {
             cartelNum = i;
         }
     }
-    
+
     //calculate distance on x and y from trump
     var dX = cartelX - trumpX;
     var dY = cartelY - trumpY;
-    
-    
+
+
     var closestMove = 0;
     //finds current distance from trumpWalker
     var baseDist = Math.sqrt(dX * dX + dY * dY);
@@ -116,8 +135,8 @@ CartelWalker.prototype.update = function () {
     if(this.direction === 5) {
         currentDirDist = baseDist;
     }
-    
-    
+
+
     //get lowest distance and set that as new direction
     var lowestDist = Math.min(leftDist, rightDist, upDist, downDist, baseDist);
     if((currentDirDist - lowestDist) > .125) {
@@ -137,8 +156,8 @@ CartelWalker.prototype.update = function () {
             this.direction = Math.floor(Math.random() * 4);
         }
     }
-    
-    
+
+
     if (this.direction === 3) {
         this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
         this.direction = 3;
@@ -156,7 +175,7 @@ CartelWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
-    
+
     //release check for the second and third cartel. Once a certain score is reached they are allowed to enter the playable area
     if((cartelNum === 7 && gameScore < 900 && this.game.scoreType.innerHTML == "Delegates") || (cartelNum === 8 && this.game.scoreType.innerHTML == "Delegates")){
         if(Math.random() > .5) {
@@ -178,7 +197,7 @@ CartelWalker.prototype.update = function () {
             }
         }
     }
-    
+
     //helps with animation don't delete or modify
     if (isMoving) {
         this.isPaused = false;
