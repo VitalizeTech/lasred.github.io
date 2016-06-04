@@ -9,6 +9,8 @@ function Bullet(game, spritesheet, degree) {
     this.x = newPoint.x;
     this.y = newPoint.y;
 	this.hasCollidedWithTrump = false;
+	this.weDying = document.getElementById("trumpDying");
+    this.weDead = document.getElementById("trumpDead");
 }
 
 function toRadians (angle) {
@@ -44,15 +46,23 @@ Bullet.prototype.update = function () {
         if(this.game.healthBar.src.match("./img/4-4health.png")) {
             this.game.healthBar.src = "./img/3-4health.png";
 			this.game.health.innerHTML = "3";
+			this.weDying.volume = 1;
+			this.weDying.play();
         } else if(this.game.healthBar.src.match("./img/3-4health.png")) {
             this.game.healthBar.src = "./img/2-4health.png";
 			this.game.health.innerHTML = "2";
+			this.weDying.volume = 1;
+			this.weDying.play();
         } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
             this.game.healthBar.src = "./img/1-4health.png";
 			this.game.health.innerHTML = "1";
+			this.weDying.volume = 1;
+			this.weDying.play();
         } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
             this.game.healthBar.src = "./img/0-4health.png";
             this.game.health.innerHTML = "0";
+            this.weDead.volume = 1;
+			this.weDead.play();
             this.game.entities[1].removeFromWorld = true;
             if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
 				location.reload();

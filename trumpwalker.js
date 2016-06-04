@@ -181,15 +181,23 @@ TrumpWalker.prototype.update = function () {
 					if(this.game.healthBar.src.match("./img/4-4health.png")) {
 						this.game.healthBar.src = "./img/3-4health.png";
 						this.game.health.innerHTML = "3";
+						this.weDying.volume = 1;
+						this.weDying.play();
 					} else if(this.game.healthBar.src.match("./img/3-4health.png")) {
 						this.game.healthBar.src = "./img/2-4health.png";
 						this.game.health.innerHTML = "2";
+						this.weDying.volume = 1;
+						this.weDying.play();
 					} else if(this.game.healthBar.src.match("./img/2-4health.png")) {
 						this.game.healthBar.src = "./img/1-4health.png";
 						this.game.health.innerHTML = "1";
+						this.weDying.volume = 1;
+						this.weDying.play();
 					} else if(this.game.healthBar.src.match("./img/1-4health.png")) {
 						this.game.healthBar.src = "./img/0-4health.png";
 						this.game.health.innerHTML = "0";
+						this.weDead.volume = 1;
+						this.weDead.play();
 						this.game.entities[1].removeFromWorld = true;
 						if(confirm("You bit the bullet! Would you like to start a new game?") == true) {
 							location.reload();
@@ -222,9 +230,10 @@ TrumpWalker.prototype.update = function () {
                     }
                 }
             }
-            //if the collision is the assassin or the cartel move them off the playable area
+            //if the collision is carson, move him off the playable area
             if(i === 4) {
                 this.game.scoreMessage.innerHTML = 'You caught up to Ben Carson and he has healed you a little bit.';
+                
                 if(Math.random() > .5) {
                     this.game.entities[i].x = ((Math.random() * 2170) + 1400);
                     if(Math.random() > .5) {
@@ -242,6 +251,18 @@ TrumpWalker.prototype.update = function () {
                     else {
                         this.game.entities[i].y = (((Math.random() * 1400) + 900)*-1);
                     }
+                }
+                
+                //update health bar based on current health
+                if(this.game.healthBar.src.match("./img/3-4health.png")) {
+                    this.game.healthBar.src = "./img/4-4health.png";
+                    this.game.health.innerHTML = "4";
+                } else if(this.game.healthBar.src.match("./img/2-4health.png")) {
+                    this.game.healthBar.src = "./img/3-4health.png";
+                    this.game.health.innerHTML = "3";
+                } else if(this.game.healthBar.src.match("./img/1-4health.png")) {
+                    this.game.healthBar.src = "./img/2-4health.png";
+                    this.game.health.innerHTML = "2";
                 }
             }
         }
