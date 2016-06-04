@@ -90,7 +90,7 @@ SecretServiceWalker.prototype.update = function () {
     //find SecretService Location
     var serveX = this.game.entities[6].x;
     var serveY = this.game.entities[6].y;
-   
+
     //variables to find closest enemy to SecretServicewalker
     var enemyX = 0;
     var enemyY = 0;
@@ -98,7 +98,6 @@ SecretServiceWalker.prototype.update = function () {
     var closestDist = 10000;
     
     for(var i = 7; i < 13; i++) {
-
         enemyX = this.game.entities[i].x;
         enemyY = this.game.entities[i].y;
 

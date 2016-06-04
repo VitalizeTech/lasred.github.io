@@ -49,57 +49,56 @@ function Background(game) {
     this.game = game;
     this.ctx = game.ctx;
     this.image = AM.getAsset("./img/debateRoom.jpg");
-	//this.lyinTedAsset = AM.getAsset("./img/LyinTed.png");
-	//this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
-	this.marcoAsset = AM.getAsset("./img/RubioCircle.png");
-    this.TedAsset = AM.getAsset("./img/CruzCircle.png");
-    this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
-
-    this.CannonAsset = AM.getAsset("./img/CannonE1.png");
-    this.Block1Asset = AM.getAsset("./img/squareMid1.png");
-    this.Block2Asset = AM.getAsset("./img/squareMid2.png");
-
-	this.degree = 0;
-	this.fire = true;
-    //this.lyinTedAsset = AM.getAsset("./img/LyinTed.png");
-    //this.crookedHillaryAsset = AM.getAsset("./img/CrookedHillary.png");
     this.marcoAsset = AM.getAsset("./img/RubioCircle.png");
     this.TedAsset = AM.getAsset("./img/CruzCircle.png");
     this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
-    
+
+    this.degree = 0;
+    this.fire = true;
+    this.timeToFire = 50;
+    this.timeElapsed = 0;
+    this.marcoAsset = AM.getAsset("./img/RubioCircle.png");
+    this.TedAsset = AM.getAsset("./img/CruzCircle.png");
+    this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
+
     this.CannonAsset = AM.getAsset("./img/CannonE1.png");
     this.Block1Asset = AM.getAsset("./img/squareMid1.png");
     this.Block2Asset = AM.getAsset("./img/squareMid2.png");
-    
+
     this.degree = 0;
     this.fire = true;
 }
 
-function rotatePoint(point, center, angle) {
-    angle = (angle) * (Math.PI / 180); // Convert to radians
-    var rotatedX = Math.cos(angle) * (point.x - center.x) - Math.sin(angle) * (point.y - center.y) + center.x;
-    var rotatedY = Math.sin(angle) * (point.x - center.x) + Math.cos(angle) * (point.y - center.y) + center.y;
-    return { x: rotatedX, y: rotatedY };
-}
-var timeElapsed = 0;
 Background.prototype.draw = function (ctx) {
-	timeElapsed += 1;
-	this.degree += 0.9;
-	if(timeElapsed == 50) {
-		timeElapsed = 0;
-		var newBullet;
-		if(this.game.scoreType.innerHTML == "Delegates") {
-			if(this.game.scoreBoard.innerHTML <= 600) {
-				newBullet = new Bullet(this.game, AM.getAsset("./img/marcoBullet.PNG"), this.degree - 222);
-			} else {
-				newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree - 222);
-			}
-		}
-		else {
-			newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.PNG"), this.degree - 230);
-		}
-		this.game.entities.push(newBullet);
-	}
+    this.timeElapsed += 1;
+    this.degree += 0.9;
+    this.degree %= 360;
+
+    //// get Trump's angle from center
+    //var trump = this.game.characters[0];
+    //this.degree = 0;
+    //var diff = findDegreeDifference(trump.x, trump.y, this.degree);
+    //var angle = TrumpAngle(trump.x, trump.y);
+    //console.log(angle);
+
+    if (this.timeElapsed == this.timeToFire) {
+
+        this.timeElapsed = 0;
+        var newBullet;
+        if (this.game.scoreType.innerHTML == "Delegates") {
+            if (this.game.scoreBoard.innerHTML <= 600) {
+                newBullet = new Bullet(this.game, AM.getAsset("./img/marcoBullet.PNG"), this.degree, 1);
+            } else {
+                newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree, 1.4);
+                this.timeToFire = 45;
+            }
+        }
+        else {
+            newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.PNG"), this.degree, 1.8);
+            this.timeToFire = 40;
+        }
+        this.game.entities.push(newBullet);
+    }
 
     //draw the whole background
     ctx.drawImage(this.image, 0, 0, 1170, 600);
@@ -107,17 +106,14 @@ Background.prototype.draw = function (ctx) {
     //draw the the lowest block which goes under the cannon.
     ctx.drawImage(this.Block1Asset, 448, 211, 155, 155);
 
-	ctx.save();
-	ctx.translate( 525.5, 287.5);
-	ctx.rotate(this.degree*Math.PI/180);
-	ctx.translate(0, 0);
+    ctx.save();
+    ctx.translate(525.5, 287.5);
+    ctx.rotate(toRadians(this.degree));
+    ctx.translate(0, 0);
 
     //draw the cannon.
     ctx.drawImage(this.CannonAsset, -32.5, -62.5, 125, 125);
-
-
-
-	ctx.restore();
+    ctx.restore();
 
     ctx.font = "14px Arial";
     var arrayLength = this.game.activeVoteCoins.length;
@@ -126,20 +122,20 @@ Background.prototype.draw = function (ctx) {
         ctx.drawImage(
                       FLAGS, coin.flagx, coin.flagy, coin.width, coin.height, coin.x, coin.y, coin.width * 0.2, coin.height * 0.2);
         ctx.fillStyle = "black";
-		var coinValue = coin.vote;
-		if(this.game.scoreType.innerHTML != "Delegates") {
-			coinValue = coin.electorVote;
-		}
+        var coinValue = coin.vote;
+        if (this.game.scoreType.innerHTML != "Delegates") {
+            coinValue = coin.electorVote;
+        }
         ctx.wrapText(coin.state + "\n\t" + coinValue, coin.x + 5, coin.y + 15, 160, 16);
     }
 
-    
+
     //draw the upper box which goes above the cannon but below the enemy's face
     ctx.drawImage(this.Block2Asset, 473, 236, 105, 105);
-    
+
     if (this.game.scoreType.innerHTML == "Delegates") {
-        if(this.game.scoreBoard.innerHTML <= 600) {
-            ctx.drawImage(this.marcoAsset,	480, 245, 93, 89);
+        if (this.game.scoreBoard.innerHTML <= 600) {
+            ctx.drawImage(this.marcoAsset, 480, 245, 93, 89);
         } else {
             ctx.drawImage(this.TedAsset, 480, 245, 93, 89);
         }

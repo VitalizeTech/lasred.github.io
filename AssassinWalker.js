@@ -88,7 +88,7 @@ AssassinWalker.prototype.update = function () {
         }
     }
     this.pureSpeed = this.speed;
-    this.speed = (this.speed*this.game.jebBoost);
+    this.speed = (this.speed * this.game.jebBoost);
 
     var isMoving = false;
     var assassinX = 0;

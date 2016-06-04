@@ -102,9 +102,6 @@ AM.downloadAll(function () {
     var assassinWalkerThree = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 32, 48, 4, assassinThreeLocation.x,  assassinThreeLocation.y, 0.1, 16, 90);
     gameEngine.characters.push(assassinWalkerThree);
     gameEngine.addEntity(assassinWalkerThree);
-    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/marcoBullet.PNG"), gameEngine.entities[0].degree);
-    firstBullet.entityPos = gameEngine.entities.length;
-	gameEngine.addEntity(firstBullet);
 
     createFlags();
     gameEngine.activeVoteCoins = [];

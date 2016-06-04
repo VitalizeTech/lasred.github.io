@@ -516,7 +516,6 @@ ReporterWalker.prototype.update = function () {
 };
 
 ReporterWalker.prototype.draw = function (ctx) {
-	console.log("here");
     var anim = this.animation;
     anim.elapsedTime += this.game.clockTick;
     if (anim.isDone()) {

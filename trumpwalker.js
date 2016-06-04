@@ -158,12 +158,7 @@ TrumpWalker.prototype.update = function () {
         else {
             dY = 0;
         }
-        
-        //var dX = tX - eX;
-        //var dY = tY - eY;
-        //var dist = Math.sqrt(dX * dX + dY * dY);
         //check for collison
-        //if(dist < 30) {
         if((dX <= 0) && (dY <= 0)) {
             if(i > 6) {
                 //if the collision is a bullet remove it from the world

@@ -14,6 +14,7 @@ function CartelWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
     this.pausedFor = 0;
     this.pDirection = 2;
     this.pureSpeed = speed;
+    
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -88,7 +89,7 @@ CartelWalker.prototype.update = function () {
         }
     }
     this.pureSpeed = this.speed;
-    this.speed = (this.speed*this.game.jebBoost);
+    this.speed = (this.speed * this.game.jebBoost);
 
     var isMoving = false;
     var cartelX = 0;
