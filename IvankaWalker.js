@@ -39,15 +39,35 @@ function IvankaWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth, x
         var nextPos = this.nextPosition(direction);
         switch (direction) {
             case 0: {
-                return (nextPos <= (botLimit - this.botLimit));
+                if ((this.x > 448 - 49 + 22) && (this.x < (448 + 155 - 20))) {
+                    if (this.y > 211 - 49 && this.y < 350 - 49) {
+                        return false;
+                    }
+                }
+                return ((nextPos < (botLimit - this.botLimit)));
             }
             case 1: {
-                return (nextPos >= this.leftLimit);
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 22 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos > this.leftLimit);
             }
             case 2: {
-                return (nextPos <= (rightLimit - this.rightLimit));
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 100) {
+                        return false;
+                    }
+                }
+                return (nextPos < (rightLimit - this.rightLimit));
             }
             case 3: {
+                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 20))) {
+                    if (this.y <= 350 && this.y >= 211) {
+                        return false;
+                    }
+                }
                 return (nextPos >= this.topLimit);
             }
         }

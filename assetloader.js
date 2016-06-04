@@ -102,9 +102,6 @@ AM.downloadAll(function () {
     var assassinWalkerThree = new AssassinWalker(gameEngine, AM.getAsset("./img/assassin.png"), 32, 48, 4, assassinThreeLocation.x,  assassinThreeLocation.y, 0.1, 16, 90);
     gameEngine.characters.push(assassinWalkerThree);
     gameEngine.addEntity(assassinWalkerThree);
-    var firstBullet = new Bullet(gameEngine, AM.getAsset("./img/marcoBullet.PNG"), gameEngine.entities[0].degree);
-    firstBullet.entityPos = gameEngine.entities.length;
-	gameEngine.addEntity(firstBullet);
 
     createFlags();
     gameEngine.activeVoteCoins = [];
@@ -126,7 +123,12 @@ function getRandomCoordinates(characters) {
         // Check against existing characters
         for (var q = 0; q < characters.length; q++) {
             if (Math.abs(acoord.x - characters[q].x) < 200 && Math.abs(acoord.y - characters[q].y) < 150) {
-                    goodfit = false;
+                goodfit = false;
+            }
+
+            //check against center enemy
+            if ((acoord.x < 473 + 165 && acoord.x > 473 - 75) && (acoord.y < 236 + 120 && acoord.y > 236 - 90)){
+                goodfit = false;
             }
         }
      } while (!goodfit)

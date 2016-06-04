@@ -14,7 +14,7 @@ function ReporterWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
     this.pausedFor = 0;
     this.pDirection = 2;
     this.reportTimer = 0;
-    
+
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -34,20 +34,40 @@ function ReporterWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
             }
         }
     }
-    
+
     this.canMove = function (direction) {
         var nextPos = this.nextPosition(direction);
         switch (direction) {
             case 0: {
-                return (nextPos <= (botLimit - this.botLimit));
+                if ((this.x > 448 - 49 + 22) && (this.x < (448 + 155 - 20))) {
+                    if (this.y > 211 - 49 && this.y < 350 - 49) {
+                        return false;
+                    }
+                }
+                return ((nextPos < (botLimit - this.botLimit)));
             }
             case 1: {
-                return (nextPos >= this.leftLimit);
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 22 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos > this.leftLimit);
             }
             case 2: {
-                return (nextPos <= (rightLimit - this.rightLimit));
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 100) {
+                        return false;
+                    }
+                }
+                return (nextPos < (rightLimit - this.rightLimit));
             }
             case 3: {
+                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 20))) {
+                    if (this.y <= 350 && this.y >= 211) {
+                        return false;
+                    }
+                }
                 return (nextPos >= this.topLimit);
             }
         }
@@ -59,15 +79,15 @@ ReporterWalker.prototype.update = function () {
     //find Trump Location
     var trumpX = this.game.entities[1].x;
     var trumpY = this.game.entities[1].y;
-    
+
     //find ReporterLocation
     var serveX = this.game.entities[3].x;
     var serveY = this.game.entities[3].y;
-    
+
     var dX = serveX - trumpX;
     var dY = serveY - trumpY;
-    
-    
+
+
     //finds current distance from trumpWalker and if you have met up conduct an interview
     var baseDist = Math.sqrt(dX * dX + dY * dY);
     this.reportTimer--;
@@ -102,8 +122,8 @@ ReporterWalker.prototype.update = function () {
     if(Math.random() > .95) {
         this.direction = Math.floor(Math.random() *4);
     }
-    
-    
+
+
     if (this.direction === 3) {
         this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
         this.direction = 3;
@@ -121,8 +141,8 @@ ReporterWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
-    
-    
+
+
     //helps with animation don't delete or modify
     if (isMoving) {
         this.isPaused = false;
@@ -179,7 +199,7 @@ function ReporterWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
     this.pausedFor = 0;
     this.pDirection = 2;
     this.reportTimer = 0;
-    
+
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -199,7 +219,7 @@ function ReporterWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
             }
         }
     }
-    
+
     this.canMove = function (direction) {
         var nextPos = this.nextPosition(direction);
         switch (direction) {
@@ -224,15 +244,15 @@ ReporterWalker.prototype.update = function () {
     //find Trump Location
     var trumpX = this.game.entities[1].x;
     var trumpY = this.game.entities[1].y;
-    
+
     //find ReporterLocation
     var serveX = this.game.entities[3].x;
     var serveY = this.game.entities[3].y;
-    
+
     var dX = serveX - trumpX;
     var dY = serveY - trumpY;
-    
-    
+
+
     //finds current distance from trumpWalker and if you have met up conduct an interview
     var baseDist = Math.sqrt(dX * dX + dY * dY);
     this.reportTimer--;
@@ -247,8 +267,8 @@ ReporterWalker.prototype.update = function () {
             this.game.reporterBoost = .75;
             this.reportTimer = 1000;
         }
-        
-        
+
+
         if(Math.random() > .5) {
             this.game.entities[3].x = ((Math.random() * 2170) + 1400);
             if(Math.random() > .5) {
@@ -267,19 +287,19 @@ ReporterWalker.prototype.update = function () {
                 this.game.entities[3].y = (((Math.random() * 1400) + 900)*-1);
             }
         }
-        
+
     }
-    
+
     if(this.reportTimer < 1) {
             this.game.reporterBoost = 1;
     }
-        
+
     //calculate next directional move
     if(Math.random() > .95) {
         this.direction = Math.floor(Math.random() *4);
     }
-    
-    
+
+
     if (this.direction === 3) {
         this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
         this.direction = 3;
@@ -297,8 +317,8 @@ ReporterWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
-    
-    
+
+
     //helps with animation don't delete or modify
     if (isMoving) {
         this.isPaused = false;
@@ -355,7 +375,7 @@ function ReporterWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
     this.pausedFor = 0;
     this.pDirection = 2;
     this.reportTimer = 0;
-    
+
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -375,7 +395,7 @@ function ReporterWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth,
             }
         }
     }
-    
+
     this.canMove = function (direction) {
         var nextPos = this.nextPosition(direction);
         switch (direction) {
@@ -400,15 +420,15 @@ ReporterWalker.prototype.update = function () {
     //find Trump Location
     var trumpX = this.game.entities[1].x;
     var trumpY = this.game.entities[1].y;
-    
+
     //find ReporterLocation
     var serveX = this.game.entities[3].x;
     var serveY = this.game.entities[3].y;
-    
+
     var dX = serveX - trumpX;
     var dY = serveY - trumpY;
-    
-    
+
+
     //finds current distance from trumpWalker and if you have met up conduct an interview
     var baseDist = Math.sqrt(dX * dX + dY * dY);
     this.reportTimer--;
@@ -423,8 +443,8 @@ ReporterWalker.prototype.update = function () {
             this.game.reporterBoost = .75;
             this.reportTimer = 1000;
         }
-        
-        
+
+
         if(Math.random() > .5) {
             this.game.entities[3].x = ((Math.random() * 2170) + 1400);
             if(Math.random() > .5) {
@@ -443,19 +463,19 @@ ReporterWalker.prototype.update = function () {
                 this.game.entities[3].y = (((Math.random() * 1400) + 900)*-1);
             }
         }
-        
+
     }
-    
+
     if(this.reportTimer < 1) {
             this.game.reporterBoost = 1;
     }
-        
+
     //calculate next directional move
     if(Math.random() > .95) {
         this.direction = Math.floor(Math.random() *4);
     }
-    
-    
+
+
     if (this.direction === 3) {
         this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
         this.direction = 3;
@@ -473,8 +493,8 @@ ReporterWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
-    
-    
+
+
     //helps with animation don't delete or modify
     if (isMoving) {
         this.isPaused = false;
@@ -496,7 +516,6 @@ ReporterWalker.prototype.update = function () {
 };
 
 ReporterWalker.prototype.draw = function (ctx) {
-	console.log("here");
     var anim = this.animation;
     anim.elapsedTime += this.game.clockTick;
     if (anim.isDone()) {

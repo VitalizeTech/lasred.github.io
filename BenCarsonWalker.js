@@ -13,7 +13,7 @@ function BenCarsonWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth
     this.isPaused = true;
     this.pausedFor = 0;
     this.pDirection = 2;
-    
+
     this.nextPosition = function (direction) {
         switch (direction) {
             case 0: {
@@ -33,20 +33,40 @@ function BenCarsonWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth
             }
         }
     }
-    
+
     this.canMove = function (direction) {
         var nextPos = this.nextPosition(direction);
         switch (direction) {
             case 0: {
-                return (nextPos <= (botLimit - this.botLimit));
+                if ((this.x > 448 - 49 + 22) && (this.x < (448 + 155 - 20))) {
+                    if (this.y > 211 - 49 && this.y < 350 - 49) {
+                        return false;
+                    }
+                }
+                return ((nextPos < (botLimit - this.botLimit)));
             }
             case 1: {
-                return (nextPos >= this.leftLimit);
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 22 && this.x < 448 + 155 - 10) {
+                        return false;
+                    }
+                }
+                return (nextPos > this.leftLimit);
             }
             case 2: {
-                return (nextPos <= (rightLimit - this.rightLimit));
+                if ((this.y > 211 - 45) && (this.y < 345)) {
+                    if (this.x > 448 - 49 + 10 && this.x < 448 + 155 - 100) {
+                        return false;
+                    }
+                }
+                return (nextPos < (rightLimit - this.rightLimit));
             }
             case 3: {
+                if ((this.x >= 448 - 49 + 22) && (this.x <= (448 + 155 - 20))) {
+                    if (this.y <= 350 && this.y >= 211) {
+                        return false;
+                    }
+                }
                 return (nextPos >= this.topLimit);
             }
         }
@@ -55,13 +75,13 @@ function BenCarsonWalker(game, spritesheet,  frameHeight, frameWidth, sheetWidth
 
 BenCarsonWalker.prototype.update = function () {
     var isMoving = false;
-    
+
     //calculate next directional move
     if(Math.random() > .95) {
         this.direction = Math.floor(Math.random() *4);
     }
-    
-    
+
+
     if (this.direction === 3) {
         this.y = this.canMove(3) ? this.nextPosition(3) : this.y;
         this.direction = 3;
@@ -79,8 +99,8 @@ BenCarsonWalker.prototype.update = function () {
         this.direction = 1;
         isMoving = true;
     }
-    
-    
+
+
     //helps with animation don't delete or modify
     if (isMoving) {
         this.isPaused = false;
