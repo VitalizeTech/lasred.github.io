@@ -53,6 +53,10 @@ GameEngine.prototype.update = function () {
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i] != null) {
             if (this.entities[i].removeFromWorld) {
+				if(i==0) {
+					this.startAudio.volume = 0;
+					document.getElementById("soundButton").innerHTML = "Off";
+				}
                 this.entities.splice(i, 1);
             }
         }

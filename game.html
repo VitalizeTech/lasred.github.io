@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Trump Adventures</title>
+	<script type="text/javascript" src="./main.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./flag.js"></script>
@@ -9,7 +10,6 @@
 	<script type="text/javascript" src="./BasicWalker.js"></script>
     <script type="text/javascript" src="./trumpwalker.js"></script>
     <script type="text/javascript" src="./IvankaWalker.js"></script>
-    <script type="text/javascript" src="./main.js"></script>
 	<script type="text/javascript" src="./bullet.js"></script>
 	<script type="text/javascript" src="./ReporterWalker.js"></script>
     <script type="text/javascript" src="./BenCarsonWalker.js"></script>
@@ -29,6 +29,35 @@
 		width:40px; height:25px">Score:</h2>
     <h2 id="score" style="position: absolute; top:55px; right:120px; width:60px; height:25px">0</h2>
     <h3 id="score_type" style="position: absolute; top:61px; right:26px; width:100px; height:25px">Delegates</h3>
+	<h3 id="sound" style="position: absolute; top:101px; right:100px; width:100px; height:25px">Sound:
+	<button id="soundButton" onclick='toggleSound()'>On</button> </h3>
+	<script>
+document.getElementById("soundButton").onclick = function() {toggleSound()};
+
+function toggleSound() {
+	var gameAudio = document.getElementById("gameAudio");
+	var securitySlap = document.getElementById("securitySlap");
+	var personGrunt = document.getElementById("personGrunt");
+	var trumpDying = document.getElementById("trumpDying");
+	var trumpDead = document.getElementById("trumpDead");
+	if(gameAudio.volume == 0.2) {
+		gameAudio.volume = 0;
+		securitySlap.volume = 0;
+		personGrunt.volume = 0;
+		trumpDying.volume = 0;
+		trumpDead.volume = 0;
+		document.getElementById("soundButton").innerHTML = "Off";
+	} else {
+		gameAudio.volume = 0.2;
+		securitySlap.volume = 0.2;
+		personGrunt.volume = 0.2;
+		trumpDying.volume = 0.2;
+		trumpDead.volume = 0.2;
+		document.getElementById("soundButton").innerHTML = "On";
+	}
+}
+</script>
+
     <center><h3 id="message" style="position: absolute; top:195px; right:110px; width:130px; height:25px"></h1></center>
     <!--HTML5 - easy way to make games-->
     <canvas id="gameWorld" tabindex="1" width="2000" height="600"></canvas>
