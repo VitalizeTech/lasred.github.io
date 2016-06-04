@@ -21,12 +21,22 @@ function VoteCoin(flag, coords) {
 }
 
 var FLAG_LIST = [];
+var FLAG_LIST_ELECT = [];
 function createFlags() {
     var flags = SPRITESHEET_TXT.split('|');
     for (var i = 0; i  < flags.length; i++) {
         var attr = flags[i].split(',');
         FLAG_LIST.push(new Flag(attr[0], attr[5], attr[1], attr[2], attr[3], attr[4], attr[6]));
+        FLAG_LIST_ELECT.push(new Flag(attr[0], attr[5], attr[1], attr[2], attr[3], attr[4], attr[6]));
     }
+}
+
+function populateFlags(gameEngine) {
+    gameEngine.activeVoteCoins = [];
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
+    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
 }
 
 function createVoteCoin(gameEngine) {

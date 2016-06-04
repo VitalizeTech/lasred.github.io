@@ -48,30 +48,22 @@ Animation.prototype.isDone = function () {
 function Background(game) {
     this.game = game;
     this.ctx = game.ctx;
+    this.degree = 0;
+    this.timeToFire = 50;
+    this.timeElapsed = 0;
+    this.ohSnap = false;
+    this.CannonAsset = AM.getAsset("./img/CannonE1.png");
+    this.Block1Asset = AM.getAsset("./img/squareMid1.png");
+    this.Block2Asset = AM.getAsset("./img/squareMid2.png");
     this.image = AM.getAsset("./img/debateRoom.jpg");
     this.marcoAsset = AM.getAsset("./img/RubioCircle.png");
     this.TedAsset = AM.getAsset("./img/CruzCircle.png");
     this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
-
-    this.degree = 0;
-    this.fire = true;
-    this.timeToFire = 50;
-    this.timeElapsed = 0;
-    this.marcoAsset = AM.getAsset("./img/RubioCircle.png");
-    this.TedAsset = AM.getAsset("./img/CruzCircle.png");
-    this.HillaryAsset = AM.getAsset("./img/ClintonCircle.png");
-
-    this.CannonAsset = AM.getAsset("./img/CannonE1.png");
-    this.Block1Asset = AM.getAsset("./img/squareMid1.png");
-    this.Block2Asset = AM.getAsset("./img/squareMid2.png");
-
-    this.degree = 0;
-    this.fire = true;
 }
 
 Background.prototype.draw = function (ctx) {
     this.timeElapsed += 1;
-    this.degree += 0.9;
+    this.degree += 0.6 + (Math.random() % 0.4);
     this.degree %= 360;
 
     //// get Trump's angle from center
@@ -140,6 +132,11 @@ Background.prototype.draw = function (ctx) {
             ctx.drawImage(this.TedAsset, 480, 245, 93, 89);
         }
     } else {
+        if (!this.ohSnap) {
+            this.ohSnap = true;
+            FLAG_LIST = FLAG_LIST_ELECT;
+            populateFlags(this.game);
+        }
         ctx.drawImage(this.HillaryAsset, 480, 245, 93, 89);
     }
 }

@@ -104,12 +104,7 @@ AM.downloadAll(function () {
     gameEngine.addEntity(assassinWalkerThree);
 
     createFlags();
-    gameEngine.activeVoteCoins = [];
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-    gameEngine.activeVoteCoins.push(createVoteCoin(gameEngine));
-
+    populateFlags(gameEngine);
 })
 var FLAGS = AM.getAsset("./img/flags/spritesheet.png");
 function getRandomCoordinates(characters) {
