@@ -90,12 +90,12 @@ Background.prototype.draw = function (ctx) {
                 newBullet = new Bullet(this.game, AM.getAsset("./img/marcoBullet.PNG"), this.degree, 1);
             } else {
                 newBullet = new Bullet(this.game, AM.getAsset("./img/Canada.PNG"), this.degree, 1.4);
-                this.timeToFire = 40;
+                this.timeToFire = 45;
             }
         }
         else {
             newBullet = new Bullet(this.game, AM.getAsset("./img/womenscard.PNG"), this.degree, 1.8);
-            this.timeToFire = 30;
+            this.timeToFire = 40;
         }
         this.game.entities.push(newBullet);
     }
